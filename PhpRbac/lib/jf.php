@@ -9,19 +9,11 @@ class jf
 	public static $RBAC;
 	
 	public static $DB = null;
-	
-	public static $TABLE_PREFIX;
 
-	static function setTablePrefix($table_prefix)
-	{
-	    self::$TABLE_PREFIX = $table_prefix;
-	}
-	
 	static function TablePrefix()
 	{
-	    return self::$TABLE_PREFIX;
+		return "phprbac_";
 	}
-	
 	/**
 	 * The jf::SQL function. The behavior of this function is as follows:
 	 * On queries with no parameters, it should use query function and fetch all results (no prepared statement)

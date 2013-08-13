@@ -1,4 +1,11 @@
 <?php
+$host="localhost";
+$user="root";
+$pass="";
+$dbname=__DIR__."/phprbac.sqlite3";
+// $dbname="phprbac";
+$adapter="pdo_sqlite";
+// $adapter="pdo_mysql";
 #TODO: test on sqlite
 
 if ($adapter=="pdo_mysql")
