@@ -22,7 +22,6 @@ class Rbac
         }
 
         require_once 'core/lib/jf.php';
-        jf::setTablePrefix($table_prefix);
         
         $this->Permissions = jf::$RBAC->Permissions;
         $this->Roles = jf::$RBAC->Roles;

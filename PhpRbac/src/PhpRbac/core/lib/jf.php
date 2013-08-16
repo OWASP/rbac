@@ -24,13 +24,16 @@ class jf
 	
 	/**
 	 * The jf::SQL function. The behavior of this function is as follows:
-	 * On queries with no parameters, it should use query function and fetch all results (no prepared statement)
-	 * On queries with parameters, parameters are provided as question marks (?) and then additional function arguments will be
-	 * 	bound to question marks.
-	 * On SELECT, it will return 2D array of results or NULL if no result.
-	 * On DELETE, UPDATE it returns affected rows
-	 * On INSERT, if auto-increment is available last insert id, otherwise affected rows
-	 * @todo currently sqlite always returns sequence number for lastInsertId, so there's no way of knowing if insert worked instead of exectue result. all instances of ==1 replaced with >=1 to check for insert
+	 * 
+	 * * On queries with no parameters, it should use query function and fetch all results (no prepared statement)
+	 * * On queries with parameters, parameters are provided as question marks (?) and then additional function arguments will be
+	 * 	 bound to question marks.
+	 * * On SELECT, it will return 2D array of results or NULL if no result.
+	 * * On DELETE, UPDATE it returns affected rows
+	 * * On INSERT, if auto-increment is available last insert id, otherwise affected rows
+	 * 
+	 * @todo currently sqlite always returns sequence number for lastInsertId, so there's no way of knowing if insert worked instead of execute result. all instances of ==1 replaced with >=1 to check for insert
+	 * 
 	 * @param string $Query
 	 * @throws Exception
 	 * @return array|integer|null
@@ -46,6 +49,7 @@ class jf
 			else
 				throw new Exception ( "Unknown database interface type." );
 	}
+	
 	static function SQL_pdo($Query)
 	{
 		$args = func_get_args ();
@@ -70,6 +74,7 @@ class jf
 			$i = 0;
 			foreach ( $args as &$v )
 				$stmt->bindValue ( ++ $i, $v );
+			
 			$success=$stmt->execute ();
 			
 			$type = substr ( trim ( strtoupper ( $Query ) ), 0, 6 );
@@ -94,6 +99,7 @@ class jf
 			}
 		}
 	}
+	
 	static function SQL_mysqli( $Query)
 	{
 		$args = func_get_args ();
@@ -170,5 +176,6 @@ class jf
 	} 
 }
 
+jf::setTablePrefix($table_prefix);
 jf::$RBAC=new RBACManager();
 require_once __DIR__."/../setup.php";

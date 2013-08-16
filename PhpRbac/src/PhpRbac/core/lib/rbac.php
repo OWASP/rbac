@@ -21,6 +21,7 @@ class JModel
 	{
 		return jf::TablePrefix();
 	}
+	
 	protected function IsSQLite()
 	{
 		$Adapter=get_class(jf::$DB);

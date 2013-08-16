@@ -37,6 +37,11 @@ class RbacTest extends \PHPUnit_Framework_TestCase
     	$this->assertInstanceOf('RBACUserManager', self::$rbac->Users);
     }
     
+    public function testReset()
+    {
+    	$this->assertTrue(true);
+    }
+    
     public function testAssign()
     {
         $this->assertTrue(true);

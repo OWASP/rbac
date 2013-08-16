@@ -3,4 +3,6 @@
 .project
 *bak*
 *sqlite*
+*Doxygen*
+*phpdoc*
 index.php
