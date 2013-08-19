@@ -1,0 +1,20 @@
+<phpunit bootstrap="./bootstrap.php">
+	<!--
+    <testsuites>
+        <testsuite name="Core">
+            <directory>../src/PhpRbac/core/tests</directory>
+        </testsuite>
+    </testsuites>
+    -->
+    <testsuites>
+        <testsuite name="Wrapper">
+            <directory>./src</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+    	<var name="DB_DSN" value="mysql:dbname=phprbac_tests;host=localhost" />
+    	<var name="DB_USER" value="phprbac_tests" />
+    	<var name="DB_PASSWD" value="password_tests" />
+    	<var name="DB_DBNAME" value="phprbac_tests" />
+    </php>
+</phpunit>

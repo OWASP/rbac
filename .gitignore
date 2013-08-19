@@ -2,7 +2,8 @@
 .buildpath
 .project
 *bak*
-*sqlite*
+*draft*
+*phprbac.sqlite3*
 *Doxygen*
 *phpdoc*
 index.php

@@ -2,4 +2,4 @@
 
 
 
-**Thanks to the AuraPHP team for helping us bootstrap our Unit Testing methods
+**Thanks to the AuraPHP team for helping us bootstrap our Unit Testing methods**
