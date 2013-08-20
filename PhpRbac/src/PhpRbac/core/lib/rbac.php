@@ -200,8 +200,10 @@ abstract class BaseRBAC extends JModel
 	 *        	such as /some/role/some/where
 	 * @param array $Descriptions
 	 *        	array of descriptions (will add with empty description if not
-	 *        	avialable)
+	 *        	available)
 	 * @return integer NULL components ID
+	 * 
+	 * @todo: Look into alternative for assert()
 	 */
 	function AddPath($Path, array $Descriptions = null)
 	{
@@ -229,6 +231,8 @@ abstract class BaseRBAC extends JModel
 			{
 				$Parent = $t;
 			}
+			
+			$index += 1;
 		}
 		return (int)$Parent;
 	}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <phprbac_permissions ID="1" Lft="0" Rght="17" Title="root" Description="root" />
+    <phprbac_permissions ID="2" Lft="1" Rght="8" Title="blog" Description="Define permissions for the Blog" />
+    <phprbac_permissions ID="3" Lft="2" Rght="3" Title="permissions_title_1" Description="permissions Description 1" />
+    <phprbac_permissions ID="4" Lft="4" Rght="5" Title="permissions_title_2" Description="permissions Description 2" />
+    <phprbac_permissions ID="5" Lft="6" Rght="7" Title="permissions_title_3" Description="permissions Description 3" />
+    <phprbac_permissions ID="6" Lft="9" Rght="16" Title="forum" Description="Define permissions for the Forums" />
+    <phprbac_permissions ID="7" Lft="10" Rght="11" Title="permissions_title_1" Description="permissions Description 1" />
+    <phprbac_permissions ID="8" Lft="12" Rght="13" Title="permissions_title_2" Description="permissions Description 2" />
+    <phprbac_permissions ID="9" Lft="14" Rght="15" Title="permissions_title_3" Description="permissions Description 3" />
+</dataset>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-    <phprbac_permissions ID="1" Lft="0" Rght="7" Title="root" Description="root" />
-    <phprbac_permissions ID="2" Lft="1" Rght="2" Title="view_content" Description="Can view content" />
-    <phprbac_permissions ID="3" Lft="3" Rght="4" Title="edit_content" Description="Can edit content" />
-    <phprbac_permissions ID="4" Lft="5" Rght="6" Title="delete_content" Description="Can delete content" />
-</dataset>

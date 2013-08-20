@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <phprbac_permissions ID="1" Lft="0" Rght="31" Title="root" Description="root" />
+    <phprbac_permissions ID="2" Lft="1" Rght="8" Title="permissions_1" Description="permissions Description 1" />
+    <phprbac_permissions ID="3" Lft="2" Rght="7" Title="permissions_2" Description="permissions Description 2" />
+    <phprbac_permissions ID="4" Lft="3" Rght="4" Title="permissions_3" Description="permissions Description 3" />
+    <phprbac_permissions ID="5" Lft="5" Rght="6" Title="permissions_4" Description="permissions Description 4" />
+    <phprbac_permissions ID="6" Lft="9" Rght="18" Title="permissions_12" Description="permissions Description 12" />
+    <phprbac_permissions ID="7" Lft="10" Rght="13" Title="permissions_13" Description="permissions Description 13" />
+    <phprbac_permissions ID="8" Lft="11" Rght="12" Title="permissions_14" Description="permissions Description 14" />
+    <phprbac_permissions ID="9" Lft="14" Rght="17" Title="permissions_15" Description="permissions Description 15" />
+    <phprbac_permissions ID="10" Lft="15" Rght="16" Title="permissions_11" Description="permissions Description 11" />
+    <phprbac_permissions ID="11" Lft="19" Rght="24" Title="permissions_23" Description="permissions Description 23" />
+    <phprbac_permissions ID="12" Lft="20" Rght="23" Title="permissions_24" Description="permissions Description 24" />
+    <phprbac_permissions ID="13" Lft="21" Rght="22" Title="permissions_25" Description="permissions Description 25" />
+    <phprbac_permissions ID="14" Lft="25" Rght="30" Title="permissions_33" Description="permissions Description 33" />
+    <phprbac_permissions ID="15" Lft="26" Rght="29" Title="permissions_34" Description="permissions Description 34" />
+    <phprbac_permissions ID="16" Lft="27" Rght="28" Title="permissions_35" Description="permissions Description 35" />
+</dataset>

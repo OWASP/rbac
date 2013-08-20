@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <phprbac_roles ID="1" Lft="0" Rght="7" Title="root" Description="root" />
+    <phprbac_roles ID="2" Lft="1" Rght="6" Title="roles_1" Description="" />
+    <phprbac_roles ID="3" Lft="2" Rght="5" Title="roles_2" Description="" />
+    <phprbac_roles ID="4" Lft="3" Rght="4" Title="roles_3" Description="" />
+</dataset>
