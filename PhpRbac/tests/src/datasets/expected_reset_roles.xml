@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <phprbac_roles ID="1" Lft="0" Rght="1" Title="root" Description="root" />
+</dataset>

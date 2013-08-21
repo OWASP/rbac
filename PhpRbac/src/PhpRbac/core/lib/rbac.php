@@ -363,6 +363,9 @@ abstract class BaseRBAC extends JModel
 	 * @param integer $Role        	
 	 * @param integer $Permission        	
 	 * @return boolean inserted or existing
+	 * 
+	 * @todo: Check for valid permissions/roles
+	 * @todo: Implement custom error handler
 	 */
 	function Assign($Role, $Permission)
 	{
