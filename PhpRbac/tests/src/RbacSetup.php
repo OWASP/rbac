@@ -7,11 +7,12 @@ use PhpRbac\Rbac;
  * @file
  * Unit Tests for PhpRbac PSR Wrapper
  *
- * @defgroup phprbac_unit_test_wrapper Unit Tests for RBAC Functionality
+ * @defgroup phprbac_unit_test_wrapper_setup Unit Tests for RBAC Functionality
  * @ingroup phprbac
  * @{
- * Documentation for all Unit Tests regarding PhpRbac related functionality.
+ * Documentation for all Unit Tests regarding RbacSetup functionality.
  */
+
 class RbacSetup extends \Generic_Tests_DatabaseTestCase
 {
     /*
@@ -39,4 +40,4 @@ class RbacSetup extends \Generic_Tests_DatabaseTestCase
     }
 }
 
-/** @} */ // End group phprbac_unit_test_wrapper */
+/** @} */ // End group phprbac_unit_test_wrapper_setup */

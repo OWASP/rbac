@@ -1,6 +1,16 @@
 <?php
 namespace PhpRbac;
 
+/**
+ * @file
+ * Unit Tests for PhpRbac PSR Wrapper
+ *
+ * @defgroup phprbac_unit_test_wrapper_manager Unit Tests for RBACManager Functionality
+ * @ingroup phprbac
+ * @{
+ * Documentation for all Unit Tests regarding RBACManager functionality.
+ */
+
 class RbacManagerTest extends \RbacSetup
 {
 
@@ -25,7 +35,7 @@ class RbacManagerTest extends \RbacSetup
             array('AssignmentDate')
         );
     
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/expected_assign_manager_id.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_id.xml');
     
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -62,10 +72,25 @@ class RbacManagerTest extends \RbacSetup
             array('AssignmentDate')
         );
         
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/expected_assign_' . $this->Type() . '_id.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_' . $this->Type() . '_id.xml');
         
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     //*/
     
+
+    /*
+     * Tests for $this->Instance()->Check()
+     */
+    
+    /*
+     * Tests for $this->Instance()->Enforce()
+     */
+    
+    /*
+     * Tests for $this->Instance()->Reset()
+     */
+    
 }
+
+/** @} */ // End group phprbac_unit_test_wrapper_manager */

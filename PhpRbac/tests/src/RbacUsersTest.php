@@ -1,8 +1,22 @@
 <?php
 namespace PhpRbac;
 
+/**
+ * @file
+ * Unit Tests for PhpRbac PSR Wrapper
+ *
+ * @defgroup phprbac_unit_test_wrapper_user_manager Unit Tests for RBACUserManager Functionality
+ * @ingroup phprbac
+ * @{
+ * Documentation for all Unit Tests regarding RBACUserManager functionality.
+ */
+
 class RbacUsersTest extends \RbacSetup
 {
+    /*
+     * Tests for proper object instantiation
+     */
+    
     public function testUsersInstance() {
         $this->assertInstanceOf('RBACUserManager', self::$rbac->Users);
     }
@@ -43,7 +57,7 @@ class RbacUsersTest extends \RbacSetup
             array('AssignmentDate')
         );
     
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/expected_unassign_' . $this->Type() . '.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign_' . $this->Type() . '.xml');
     
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -52,5 +66,19 @@ class RbacUsersTest extends \RbacSetup
     /*
      * Tests for self::$rbac->Users->ResetAssignments()
      */
+
+    /*
+     * Tests for self::$rbac->Users->HasRole()
+     */
+    
+    /*
+     * Tests for self::$rbac->Users->AllRoles()
+    */
+
+    /*
+     * Tests for self::$rbac->Users->RoleCount()
+     */
     
 }
+
+/** @} */ // End group phprbac_unit_test_wrapper_user_manager */

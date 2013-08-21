@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @file
+ * Unit Tests for PhpRbac PSR Wrapper
+ *
+ * @defgroup phprbac_unit_test_wrapper_generic Unit Tests for Generic_Tests_DatabaseTestCase Functionality
+ * @ingroup phprbac
+ * @{
+ * Documentation for all Unit Tests regarding Generic_Tests_DatabaseTestCase functionality.
+ */
+
 abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
     // only instantiate pdo once for test clean-up/fixture load
@@ -20,3 +30,5 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
         return $this->conn;
     }
 }
+
+/** @} */ // End group phprbac_unit_test_wrapper_generic */
