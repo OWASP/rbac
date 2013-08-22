@@ -583,6 +583,8 @@ class RoleManager extends BaseRBAC
 	 * @param integer $Permission
 	 *        	ID
 	 * @return boolean
+	 * 
+	 * @todo: If we pass a Role that doesn't exist the method just returns false. We may want to check for a valid Role.
 	 */
 	function HasPermission($Role, $Permission)
 	{
@@ -619,8 +621,7 @@ class RoleManager extends BaseRBAC
 	 * @param boolean $OnlyIDs
 	 *        	if true, result would be a 1D array of IDs
 	 * @return Array 2D or 1D or null
-	 *         the two dimensional array would have ID,Title and Description of
-	 *         permissions
+	 *         the two dimensional array would have ID,Title and Description of permissions
 	 */
 	function Permissions($Role, $OnlyIDs = true)
 	{

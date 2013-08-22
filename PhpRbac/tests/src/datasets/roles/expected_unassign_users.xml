@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <phprbac_userroles UserID="1" RoleID="1" />
+    <phprbac_userroles UserID="5" RoleID="2" />
+    <phprbac_userroles UserID="5" RoleID="4" />
+</dataset>

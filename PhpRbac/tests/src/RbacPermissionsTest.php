@@ -35,7 +35,7 @@ class RbacPermissionsTest extends \RbacBase
      * Tests for $this->Instance()->Remove()
      */
 
-    public function testPermissionRemoveSingle()
+    public function testPermissionsRemoveSingle()
     {
         $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
         
@@ -53,7 +53,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 
-    public function testPermissionRemoveSingleRole()
+    public function testPermissionsRemoveSingleRole()
     {
         $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
@@ -81,7 +81,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     
-    public function testPermissionRemoveRecursive()
+    public function testPermissionsRemoveRecursive()
     {
         $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
         $perm_id_2 = $this->Instance()->Add($this->Type() . '_2', $this->Type() . ' Description 2', $perm_id_1);
@@ -113,7 +113,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     
-    public function testPermissionRemoveFalse()
+    public function testPermissionsRemoveFalse()
     {
         $result = $this->Instance()->Remove(5);
         
@@ -124,7 +124,7 @@ class RbacPermissionsTest extends \RbacBase
      * Tests for $this->Instance()->Roles()
      */
     
-    public function testRolesOnlyID()
+    public function testPermissionsRolesOnlyID()
     {
         $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
         
@@ -143,7 +143,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertSame($expected, $result);
     }
     
-    public function testRolesBadIDNull()
+    public function testPermissionsRolesBadIDNull()
     {
         $result = $this->Instance()->Roles(20);
         
@@ -158,12 +158,20 @@ class RbacPermissionsTest extends \RbacBase
     }
     //*/
     
-
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    
+    public function testPermissionsRolesPassNothing()
+    {
+        $result = $this->Instance()->Roles();
+    }
+    
     /*
      * Tests for $this->Instance()->UnassignRoles()
      */
     
-    public function testUnassignRoles()
+    public function testPermissionsUnassignRoles()
     {
         $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
         
@@ -194,7 +202,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     
-    public function testUnassignRolesBadID()
+    public function testPermissionsUnassignRolesBadID()
     {
         $result = $this->Instance()->UnassignRoles(20);
     
