@@ -247,57 +247,121 @@ class RbacUsersTest extends \RbacSetup
     {
         $result = self::$rbac->Users->AllRoles();
     }
-    
-    /*
-     * Tests for self::$rbac->Users->Unassign()
-     *
-     * @todo: Fix for RBACUserManager
-     */
-    
-    /*
-    public function testUsersUnassign()
-    {
-        $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
-        $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
-    
-        $this->Instance()->Assign($role_id, $perm_id);
-        $this->Instance()->Unassign($role_id, $perm_id);
-    
-        $dataSet = $this->getConnection()->createDataSet();
-    
-        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
-        $filterDataSet->addExcludeTables(array(
-            $this->Instance()->TablePrefix() . 'permissions',
-            $this->Instance()->TablePrefix() . 'roles',
-            $this->Instance()->TablePrefix() . 'userroles',
-        ));
-        $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
-        );
-    
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign_' . $this->Type() . '.xml');
-    
-        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
-    }
-    //*/
-    
-    /*
-     * Tests for self::$rbac->Users->ResetAssignments()
-     */
-
-    /*
-     * Tests for self::$rbac->Users->HasRole()
-     */
-    
-    /*
-     * Tests for self::$rbac->Users->AllRoles()
-    */
 
     /*
      * Tests for self::$rbac->Users->RoleCount()
      */
+
+    public function testUsersRoleCount()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
+        $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
     
+        self::$rbac->Users->Assign($role_id_1, 5);
+        self::$rbac->Users->Assign($role_id_2, 5);
+        self::$rbac->Users->Assign($role_id_3, 5);
+    
+        $result = self::$rbac->Users->RoleCount(5);
+    
+        $this->assertSame(3, $result);
+    }
+    
+    public function testUsersRoleCountNoRolesId()
+    {
+        $result = self::$rbac->Users->RoleCount(10);
+    
+        $this->assertSame(0, $result);
+    }
+    
+    public function testUsersRoleCountNoRolesEmpty()
+    {
+        $result = self::$rbac->Users->RoleCount();
+        
+        $this->assertSame(0, $result);
+    }
+
+    /*
+     * Tests for self::$rbac->Users->Unassign()
+     */
+    
+    public function testUsersUnassign()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
+        $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
+    
+        self::$rbac->Users->Assign($role_id_1, 5);
+        self::$rbac->Users->Assign($role_id_2, 5);
+        self::$rbac->Users->Assign($role_id_3, 5);
+    
+        self::$rbac->Users->Unassign($role_id_2, 5);
+
+        $dataSet = $this->getConnection()->createDataSet();
+        
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addIncludeTables(array(
+            self::$rbac->Users->TablePrefix() . 'userroles',
+        ));
+        
+        $filterDataSet->setExcludeColumnsForTable(
+            self::$rbac->Users->TablePrefix() . 'userroles',
+            array('AssignmentDate')
+        );
+    
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
+    
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+    
+    public function testUsersUnassignNoRolesFalse()
+    {
+        $result = self::$rbac->Users->Unassign(5);
+        
+        $this->assertFalse($result);
+    }
+    
+    /*
+     * Tests for self::$rbac->Users->ResetAssignments()
+     */
+    
+    public function testUsersResetAssignments()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
+        $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
+    
+        self::$rbac->Users->Assign($role_id_1, 5);
+        self::$rbac->Users->Assign($role_id_2, 5);
+        self::$rbac->Users->Assign($role_id_3, 5);
+    
+        self::$rbac->Users->ResetAssignments(true);
+
+        $dataSet = $this->getConnection()->createDataSet();
+        
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addIncludeTables(array(
+            self::$rbac->Users->TablePrefix() . 'userroles',
+        ));
+        
+        $filterDataSet->setExcludeColumnsForTable(
+            self::$rbac->Users->TablePrefix() . 'userroles',
+            array('AssignmentDate')
+        );
+    
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_reset_assignments.xml');
+    
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+    
+    /**
+     * @expectedException Exception
+     */
+    
+    public function testUsersResetAssignmentsException()
+    {
+        self::$rbac->Users->ResetAssignments();
+    }
 }
 
 /** @} */ // End group phprbac_unit_test_wrapper_user_manager */

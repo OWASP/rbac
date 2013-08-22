@@ -621,10 +621,8 @@ class RbacBase extends \RbacSetup
         $dataSet = $this->getConnection()->createDataSet();
         
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
-        $filterDataSet->addExcludeTables(array(
-            $this->Instance()->TablePrefix() . 'permissions',
-            $this->Instance()->TablePrefix() . 'roles',
-            $this->Instance()->TablePrefix() . 'userroles',
+        $filterDataSet->addIncludeTables(array(
+            self::$rbac->Users->TablePrefix() . 'rolepermissions',
         ));
         
         $filterDataSet->setExcludeColumnsForTable(
@@ -660,10 +658,10 @@ class RbacBase extends \RbacSetup
         $dataSet = $this->getConnection()->createDataSet();
         
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
-        $filterDataSet->addExcludeTables(array(
-            $this->Instance()->TablePrefix() . 'permissions',
-            $this->Instance()->TablePrefix() . 'roles',
-            $this->Instance()->TablePrefix() . 'userroles',
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addIncludeTables(array(
+            self::$rbac->Users->TablePrefix() . 'rolepermissions',
         ));
         
         $filterDataSet->setExcludeColumnsForTable(
