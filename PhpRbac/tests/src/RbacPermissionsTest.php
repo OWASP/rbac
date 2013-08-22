@@ -24,7 +24,7 @@ class RbacPermissionsTest extends \RbacBase
     }
 
     /*
-     * Tests for proper object instantiation
+     * Test for proper object instantiation
      */
     
     public function testPermissionsInstance() {

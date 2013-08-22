@@ -11,6 +11,10 @@ class jf
 	public static $DB = null;
 	
 	public static $TABLE_PREFIX;
+	
+	static function CurrentUser() {
+	    return 0; // Guest
+	}
 
 	static function setTablePrefix($table_prefix)
 	{

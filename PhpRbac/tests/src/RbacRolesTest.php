@@ -5,7 +5,7 @@ namespace PhpRbac;
  * @file
  * Unit Tests for PhpRbac PSR Wrapper
  *
- * @defgroup phprbac_unit_test_wrapper_role_manager Unit Tests for RoleManager Functionality
+ * @defgroup phprbac_unit_test_wrapper_role_manager Unit Tests for Base RBAC Functionality
  * @ingroup phprbac
  * @{
  * Documentation for all Unit Tests regarding RoleManager functionality.
@@ -24,7 +24,7 @@ class RbacRolesTest extends \RbacBase
     }
 
     /*
-     * Tests for proper object instantiation
+     * Test for proper object instantiation
      */
     
     public function testRolesInstance() {

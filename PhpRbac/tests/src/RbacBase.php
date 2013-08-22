@@ -676,6 +676,15 @@ class RbacBase extends \RbacSetup
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     
+    /**
+     * @expectedException Exception
+     */
+    
+    public function testResetPermRoleAssignmentsException()
+    {
+        $this->Instance()->ResetAssignments();
+    }
+    
     /*
      * Tests for $this->Instance()->Reset()
      */
@@ -699,6 +708,16 @@ class RbacBase extends \RbacSetup
         
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
+
+    /**
+     * @expectedException Exception
+     */
+    
+    public function testResetException()
+    {
+        $this->Instance()->Reset();
+    }
+    
 }
 
 /** @} */ // End group phprbac_unit_test_wrapper_base */

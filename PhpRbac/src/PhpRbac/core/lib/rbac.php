@@ -742,6 +742,8 @@ class RBACUserManager extends JModel
 	 * @param integer $UserID
 	 *        	optional
 	 * @return array null
+	 * 
+	 * // @todo: Odd behavior: (Still need to test and verify this theory) AllRoles treats a string as 0 (zero) or null, which I believe means that '$UserID = jf::CurrentUser ();' will be executed. If the guest user 0 (zero) has roles, a string passed to AllRoles will return all roles attached to 0/guest/CurrentUser
 	 */
 	function AllRoles($UserID)
 	{
