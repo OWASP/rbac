@@ -16,81 +16,251 @@ class RbacManagerTest extends \RbacSetup
 
 
     /*
-     * Tests for $this->Instance()->Assign()
+     * Tests for self::$rbac->Assign()
      */
-    
+
     public function testManagerAssignWithId()
     {
         $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
-    
-        self::$rbac->Assign($role_id, $perm_id);
-    
+
+        self::$rbac->assign($role_id, $perm_id);
+
         $dataSet = $this->getConnection()->createDataSet();
-    
+
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
-        $filterDataSet->addExcludeTables(array(self::$rbac->TablePrefix() . 'userroles'));
+        $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->TablePrefix() . 'rolepermissions',
+            self::$rbac->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
-    
+
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_id.xml');
-    
+
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
-    
-    /*
-     * $Role, $Permission
-     * id, id
-     * path, path
-     *
-     * good, bad
-     * bad, good
-     * bad, bad
-     */
-    
-    /*
-    // Can only assign by path in RBACManager
-    // @todo: Fix for RBACManager
-    //
-    // Note: Can assign by path or title
-    
-    public function testAssignWithPath()
+
+    public function testManagerAssignWithTitle()
+    {
+        $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+        $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+
+        self::$rbac->assign('roles_1', 'permissions_1');
+
+        $dataSet = $this->getConnection()->createDataSet();
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
+        $filterDataSet->setExcludeColumnsForTable(
+            self::$rbac->tablePrefix() . 'rolepermissions',
+            array('AssignmentDate')
+        );
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_title.xml');
+
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+
+    public function testManagerAssignWithPath()
     {
         self::$rbac->Permissions->AddPath('/permissions_1/permissions_2/permissions_3');
         self::$rbac->Roles->AddPath('/roles_1/roles_2/roles_3');
-        
-        $this->Instance()->Assign('/roles_1/roles_2', '/permissions_1/permissions_2');
-        
+
+        self::$rbac->assign('/roles_1/roles_2', '/permissions_1/permissions_2');
+
         $dataSet = $this->getConnection()->createDataSet();
-        
+
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
-        $filterDataSet->addExcludeTables(array($this->Instance()->TablePrefix() . 'userroles'));
+        $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
+
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            self::$rbac->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
-        
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_' . $this->Type() . '_id.xml');
-        
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_path.xml');
+
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
-    //*/
-    
+
+    public function testManagerAssignWithNullRoleNullPermFalse()
+    {
+        $return = self::$rbac->assign(null, null);
+
+        $this->assertFalse($return);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+
+    public function testManagerAssignWithNullRoleNoPermError()
+    {
+        $return = self::$rbac->assign(null);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+
+    public function testManagerAssignWithNoParametersError()
+    {
+        $return = self::$rbac->assign(null);
+    }
 
     /*
-     * Tests for $this->Instance()->Check()
+     * Tests for self::$rbac->Check()
      */
-    
+
+    public function testManagerCheckId()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+
+        self::$rbac->Roles->Assign($role_id_1, $perm_id_1);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->check($perm_id_1, 5);
+
+        $this->assertTrue($result);
+    }
+
+    public function testManagerCheckTitle()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+
+        self::$rbac->Roles->Assign($role_id_1, $perm_id_1);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->check('permissions_1', 5);
+
+        $this->assertTrue($result);
+    }
+
+    public function testManagerCheckPath()
+    {
+        $perm_id_1 = self::$rbac->Permissions->AddPath('/permissions_1/permissions_2/permissions_3');
+        $role_id_1 = self::$rbac->Roles->AddPath('/roles_1/roles_2/roles_3');
+
+        self::$rbac->Roles->Assign($role_id_1, 3);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->check('/permissions_1/permissions_2', 5);
+
+        $this->assertTrue($result);
+    }
+
+    public function testManagerCheckBadPermBadUserFalse()
+    {
+        $result = self::$rbac->check(5, 5);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @expectedException RBACUserNotProvidedException
+     */
+
+    public function testManagerCheckWithNullUserIdException()
+    {
+        self::$rbac->check(5, null);
+    }
+
+    /**
+     * @expectedException RBACPermissionNotFoundException
+     */
+
+    public function testManagerCheckWithNullPermException()
+    {
+        $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+        self::$rbac->check(null, $perm_id);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+
+    public function testManagerCheckWithNoUserIdException()
+    {
+        self::$rbac->check(5);
+    }
+
     /*
-     * Tests for $this->Instance()->Enforce()
+     * Tests for self::$rbac->Enforce()
      */
-    
+
+    public function testManagerEnforceId()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+
+        self::$rbac->Roles->Assign($role_id_1, $perm_id_1);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->enforce($perm_id_1, 5);
+
+        $this->assertTrue($result);
+    }
+
+    public function testManagerEnforceTitle()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+
+        self::$rbac->Roles->Assign($role_id_1, $perm_id_1);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->enforce('permissions_1', 5);
+
+        $this->assertTrue($result);
+    }
+
+    public function testManagerEnforcePath()
+    {
+        $perm_id_1 = self::$rbac->Permissions->AddPath('/permissions_1/permissions_2/permissions_3');
+        $role_id_1 = self::$rbac->Roles->AddPath('/roles_1/roles_2/roles_3');
+
+        self::$rbac->Roles->Assign($role_id_1, 3);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->enforce('/permissions_1/permissions_2', 5);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @expectedException RBACUserNotProvidedException
+     */
+
+    public function testManagerEnforceWithNullUserIdException()
+    {
+        self::$rbac->enforce(5, null);
+    }
+
+    /**
+     * @expectedException RBACPermissionNotFoundException
+     */
+
+    public function testManagerEnforceWithNullPermException()
+    {
+        $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+        self::$rbac->enforce(null, $perm_id);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+
+    public function testManagerEnforceWithNoUserIdException()
+    {
+        self::$rbac->enforce(5);
+    }
+
     /*
-     * Tests for $this->Instance()->Reset()
+     * Tests for self::$rbac->Reset()
      */
-    
+
 }
 
 /** @} */ // End group phprbac_unit_test_wrapper_manager */

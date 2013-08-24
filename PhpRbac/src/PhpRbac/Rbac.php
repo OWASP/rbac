@@ -22,12 +22,12 @@ class Rbac
         }
 
         require_once 'core/lib/jf.php';
-        
+
         $this->Permissions = jf::$RBAC->Permissions;
         $this->Roles = jf::$RBAC->Roles;
         $this->Users = jf::$RBAC->Users;
     }
-    
+
     public function assign($role, $permission)
     {
         return jf::$RBAC->Assign($role, $permission);
@@ -37,17 +37,17 @@ class Rbac
     {
         return jf::$RBAC->Check($permission, $user_id);
     }
-    
-    public function enforce($permission)
+
+    public function enforce($permission, $user_id)
     {
-        return jf::$RBAC->Enforce($permission);
+        return jf::$RBAC->Enforce($permission, $user_id);
     }
-    
+
     public function reset($ensure = false)
     {
         return jf::$RBAC->Reset($ensure);
     }
-    
+
     public function tablePrefix()
     {
         return jf::$RBAC->TablePrefix();
