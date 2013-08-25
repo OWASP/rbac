@@ -16,7 +16,7 @@ class RbacManagerTest extends \RbacSetup
 
 
     /*
-     * Tests for self::$rbac->Assign()
+     * Tests for self::$rbac->assign()
      */
 
     public function testManagerAssignWithId()
@@ -35,7 +35,7 @@ class RbacManagerTest extends \RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_id.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_id.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -56,7 +56,7 @@ class RbacManagerTest extends \RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_title.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_title.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -78,7 +78,7 @@ class RbacManagerTest extends \RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_manager_path.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_path.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -109,7 +109,7 @@ class RbacManagerTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Check()
+     * Tests for self::$rbac->check()
      */
 
     public function testManagerCheckId()
@@ -187,7 +187,7 @@ class RbacManagerTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Enforce()
+     * Tests for self::$rbac->enforce()
      */
 
     public function testManagerEnforceId()
@@ -258,9 +258,46 @@ class RbacManagerTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Reset()
+     * Tests for self::$rbac->reset()
      */
 
+    public function testManagerReset()
+    {
+        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
+
+        self::$rbac->Roles->Assign($role_id_1, $perm_id_1);
+        self::$rbac->Users->Assign($role_id_1, 5);
+
+        $result = self::$rbac->reset(true);
+
+        $dataSet = $this->getConnection()->createDataSet();
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+
+        $filterDataSet->setExcludeColumnsForTable(
+            self::$rbac->TablePrefix() . 'rolepermissions',
+            array('AssignmentDate')
+        );
+
+        $filterDataSet->setExcludeColumnsForTable(
+            self::$rbac->TablePrefix() . 'userroles',
+            array('AssignmentDate')
+        );
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_reset.xml');
+
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+
+    public function testManagerResetFalseException()
+    {
+        self::$rbac->reset();
+    }
 }
 
 /** @} */ // End group phprbac_unit_test_wrapper_manager */

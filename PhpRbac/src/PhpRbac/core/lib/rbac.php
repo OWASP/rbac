@@ -105,7 +105,7 @@ abstract class BaseRBAC extends JModel
 		elseif ($Adapter == "PDO" and jf::$DB->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite")
 			$GroupConcat="GROUP_CONCAT(parent.Title,'/')";
 		else
-			throw new \Exception ( "Unknown Group_Concat on this type of database: {$Adapter}" );
+			throw new \Exception ("Unknown Group_Concat on this type of database: {$Adapter}");
 		$res = jf::SQL ( "SELECT node.ID,{$GroupConcat} AS Path
 				FROM {$this->TablePrefix()}{$this->Type()} AS node,
 				{$this->TablePrefix()}{$this->Type()} AS parent
@@ -197,17 +197,16 @@ abstract class BaseRBAC extends JModel
 	 * Will not replace or create siblings if a component exists.
 	 *
 	 * @param string $Path
-	 *        	such as /some/role/some/where
+	 *        	such as /some/role/some/where - Must begin with a / (slash)
 	 * @param array $Descriptions
-	 *        	array of descriptions (will add with empty description if not
-	 *        	available)
-	 * @return integer NULL components ID
+	 *        	array of descriptions (will add with empty description if not available)
 	 *
-	 * @todo: Look into alternative for assert()
+	 * @return integer NULL components ID
 	 */
 	function AddPath($Path, array $Descriptions = null)
 	{
-		assert ( $Path [0] == "/" );
+		if ($Path[0] !== "/")
+	        throw new \Exception ("The path supplied is not valid.");
 
 		$Path = substr ( $Path, 1 );
 		$Parts = explode ( "/", $Path );
@@ -341,7 +340,7 @@ abstract class BaseRBAC extends JModel
 	{
 		if ($Ensure !== true)
 		{
-			throw new \Exception ( "You must pass true to this function, otherwise it won't work." );
+			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
 		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}{$this->Type()}" );
@@ -398,7 +397,7 @@ abstract class BaseRBAC extends JModel
 	{
 		if ($Ensure !== true)
 		{
-			throw new \Exception ( "You must pass true to this function, otherwise it won't work." );
+			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
 		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}rolepermissions" );
@@ -667,7 +666,7 @@ class RBACUserManager extends JModel
 	function HasRole($Role, $UserID = null)
 	{
 	    if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ( "\$UserID is a required argument." );
+		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		if (is_int ( $Role ))
 		{
@@ -703,7 +702,7 @@ class RBACUserManager extends JModel
 	function Assign($Role, $UserID = null)
 	{
 	   if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ( "\$UserID is a required argument.");
+		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		if (is_int ( $Role ))
 		{
@@ -736,7 +735,7 @@ class RBACUserManager extends JModel
 	function Unassign($Role, $UserID = null)
 	{
 	   if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ( "\$UserID is a required argument.");
+		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		return jf::SQL ( "DELETE FROM {$this->TablePrefix()}userroles
 		WHERE UserID=? AND RoleID=?", $UserID, $Role ) >= 1;
@@ -755,7 +754,7 @@ class RBACUserManager extends JModel
 	function AllRoles($UserID = null)
 	{
 	   if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ( "\$UserID is a required argument.");
+		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		return jf::SQL ( "SELECT TR.*
 			FROM
@@ -775,7 +774,7 @@ class RBACUserManager extends JModel
 	function RoleCount($UserID = null)
 	{
 		if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ( "\$UserID is a required argument.");
+		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		$Res = jf::SQL ( "SELECT COUNT(*) AS Result FROM {$this->TablePrefix()}userroles WHERE UserID=?", $UserID );
 		return (int)$Res [0] ['Result'];
@@ -793,7 +792,7 @@ class RBACUserManager extends JModel
 	{
 		if ($Ensure !== true)
 		{
-			throw new \Exception ( "You must pass true to this function, otherwise it won't work." );
+			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
 		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}userroles" );
@@ -804,7 +803,7 @@ class RBACUserManager extends JModel
 		elseif ($this->IsSQLite())
 			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->TablePrefix () . "_userroles" );
 		else
-			throw new \Exception ( "RBAC can not reset table on this type of database: {$Adapter}" );
+			throw new \Exception ("RBAC can not reset table on this type of database: {$Adapter}");
 		$this->Assign ( "root", 1 /* root user */ );
 		return $res;
 	}
@@ -907,7 +906,7 @@ class RBACManager extends JModel
 	function Check($Permission, $UserID = null)
 	{
 	    if ($UserID === null)
-	        throw new \RBACUserNotProvidedException ( "\$UserID is a required argument." );
+	        throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		// convert permission to ID
 		if (is_int ( $Permission ))
@@ -971,7 +970,7 @@ class RBACManager extends JModel
 	function Enforce($Permission, $UserID = null)
 	{
 		if ($UserID === null)
-	        throw new \RBACUserNotProvidedException ( "\$UserID is a required argument." );
+	        throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
 		if (! $this->Check($Permission, $UserID)) {
 		    header('HTTP/1.1 403 Forbidden');
@@ -993,14 +992,14 @@ class RBACManager extends JModel
 	{
 		if ($Ensure !== true)
 		{
-			throw new \Exception ( "You must pass true to this function, otherwise it won't work." );
+			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
 		$res = true;
-		$res = $res and $this->Roles->ResetAssignments ( True );
+		$res = $res and $this->Roles->ResetAssignments ( true );
 		$res = $res and $this->Roles->Reset ( true );
-		$res = $res and $this->Permissions->Reset ( True );
-		$res = $res and $this->Users->ResetAssignments ( True );
+		$res = $res and $this->Permissions->Reset ( true );
+		$res = $res and $this->Users->ResetAssignments ( true );
 		return $res;
 	}
 }
