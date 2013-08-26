@@ -1,11 +1,4 @@
 <phpunit bootstrap="./bootstrap.php">
-	<!--
-    <testsuites>
-        <testsuite name="Core">
-            <directory>../src/PhpRbac/core/tests</directory>
-        </testsuite>
-    </testsuites>
-    -->
     <testsuites>
         <testsuite name="Wrapper">
             <directory>./src</directory>

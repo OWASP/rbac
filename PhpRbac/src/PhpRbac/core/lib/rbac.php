@@ -113,7 +113,6 @@ abstract class BaseRBAC extends JModel
 				AND  node.Title=?
 				GROUP BY node.ID
 				HAVING Path = ?
-				ORDER BY parent.Lft
 				", $Parts [count ( $Parts ) - 1], $Path );
 		if ($res)
 			return $res [0] ['ID'];
@@ -939,7 +938,7 @@ class RBACManager extends JModel
  							WHERE
  							TUrel.UserID=?
  							AND
- 							TPDirect.ID=?";
+ 							TPdirect.ID=?";
 		}
 		$Res=jf::SQL ( "SELECT COUNT(*) AS Result
  							FROM
