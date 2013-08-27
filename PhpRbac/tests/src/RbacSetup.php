@@ -24,6 +24,10 @@ class RbacSetup extends \Generic_Tests_DatabaseTestCase
     public static function setUpBeforeClass()
     {
     	self::$rbac = new Rbac('unit_test');
+
+    	if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
+    	    self::$rbac->reset(true);
+    	}
     }
 
     protected function tearDown()

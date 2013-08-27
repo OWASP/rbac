@@ -67,8 +67,7 @@ class jf
 		{
 			if (! $stmt = self::$Db->prepare ( $Query ))
 			{
-				$Error = self::$Db->errorInfo ();
-				trigger_error ( "Unable to prepare statement: {$Query}, reason: {$Error[2]}" );
+				return false;
 			}
 			array_shift ( $args ); // remove $Query from args
 			$i = 0;

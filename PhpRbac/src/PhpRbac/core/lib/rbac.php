@@ -268,10 +268,7 @@ abstract class BaseRBAC extends JModel
 		if ($NewDescription !== null)
 			$Data ['Description'] = $NewDescription;
 
-		if (!empty($Data))
-            return $this->{$this->type ()}->EditData ( $Data, "ID=?", $ID ) == 1;
-
-		return false;
+        return $this->{$this->type ()}->EditData ( $Data, "ID=?", $ID ) == 1;
 	}
 
 	/**
