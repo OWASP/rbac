@@ -1,6 +1,7 @@
-#PhpRbac v2.0 Beta
+#PhpRbac v2.0-beta Release
 
 Home Page: [http://phprbac.net/](http://phprbac.net/)
+
 Github Project Page: [https://github.com/OWASP/rbac](https://github.com/OWASP/rbac)
 
 ##PhpRbac's Move Towards PSR Compliance
