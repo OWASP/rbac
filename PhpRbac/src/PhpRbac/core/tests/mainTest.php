@@ -108,7 +108,7 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		{
 			$this->assertFalse ( jf::$RBAC->Check ( "/reports/generalz", 4 ) );
 			$this->fail ( "No error on unknown permission" );
-		} catch ( RBACPermissionNotFoundException $e )
+		} catch ( RbacPermissionNotFoundException $e )
 		{
 		}
 	}
@@ -119,7 +119,7 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		{
 			$this->assertFalse ( jf::$RBAC->Check ( "/reports/generalz", "root" ) );
 			$this->fail ( "No error on unknown permission" );
-		} catch ( RBACPermissionNotFoundException $e )
+		} catch ( RbacPermissionNotFoundException $e )
 		{
 		}
 	}

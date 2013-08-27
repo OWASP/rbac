@@ -2,16 +2,16 @@
 require_once __DIR__."/nestedset/base.php";
 require_once __DIR__."/nestedset/full.php";
 
-class RBACException extends \Exception
+class RbacException extends \Exception
 {
 }
-class RBACRoleNotFoundException extends RBACException
+class RbacRoleNotFoundException extends RbacException
 {
 }
-class RBACPermissionNotFoundException extends RBACException
+class RbacPermissionNotFoundException extends RbacException
 {
 }
-class RBACUserNotProvidedException extends RBACException
+class RbacUserNotProvidedException extends RbacException
 {
 }
 
@@ -41,7 +41,7 @@ class JModel
  * @author abiusx
  * @version 1.0
  */
-abstract class BaseRBAC extends JModel
+abstract class BaseRbac extends JModel
 {
 
 	function rootId()
@@ -71,7 +71,7 @@ abstract class BaseRBAC extends JModel
 	{
 		if ($ParentID === null)
 			$ParentID = $this->rootId ();
-		return (int)$this->{$this->type ()}->InsertChildData ( array ("Title" => $Title, "Description" => $Description ), "ID=?", $ParentID );
+		return (int)$this->{$this->type ()}->insertChildData ( array ("Title" => $Title, "Description" => $Description ), "ID=?", $ParentID );
 	}
 	/**
 	 * Return count of the entity
@@ -439,7 +439,7 @@ abstract class BaseRBAC extends JModel
  * @author abiusx
  * @version 1.0
  */
-class PermissionManager extends BaseRBAC
+class PermissionManager extends BaseRbac
 {
 	/**
 	 * Permissions Nested Set
@@ -528,7 +528,7 @@ class PermissionManager extends BaseRBAC
  * @author abiusx
  * @version 1.0
  */
-class RoleManager extends BaseRBAC
+class RoleManager extends BaseRbac
 {
 	/**
 	 * Roles Nested Set
@@ -677,13 +677,13 @@ class RBACUserManager extends JModel
 	 * @param integer $User
 	 *        	UserID, not optional
 	 *
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacUserNotProvidedException
 	 * @return boolean success
 	 */
 	function HasRole($Role, $UserID = null)
 	{
 	    if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		if (is_int ( $Role ))
 		{
@@ -713,13 +713,13 @@ class RBACUserManager extends JModel
 	 * @param integer $UserID
 	 *        	UserID (use 0 for guest)
 	 *
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacUserNotProvidedException
 	 * @return inserted or existing
 	 */
 	function Assign($Role, $UserID = null)
 	{
 	   if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		if (is_int ( $Role ))
 		{
@@ -746,13 +746,13 @@ class RBACUserManager extends JModel
 	 * @param integer $UserID
 	 *        	UserID (use 0 for guest)
 	 *
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacUserNotProvidedException
 	 * @return boolean success
 	 */
 	function Unassign($Role, $UserID = null)
 	{
 	   if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		return jf::SQL ( "DELETE FROM {$this->tablePrefix()}userroles
 		WHERE UserID=? AND RoleID=?", $UserID, $Role ) >= 1;
@@ -764,14 +764,14 @@ class RBACUserManager extends JModel
 	 * @param integer $UserID
 	 *        	Not optional
 	 *
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacUserNotProvidedException
 	 * @return array null
 	 *
 	 */
 	function AllRoles($UserID = null)
 	{
 	   if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		return jf::SQL ( "SELECT TR.*
 			FROM
@@ -785,13 +785,13 @@ class RBACUserManager extends JModel
 	 *
 	 * @param integer $UserID
 	 *
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacUserNotProvidedException
 	 * @return integer
 	 */
 	function RoleCount($UserID = null)
 	{
 		if ($UserID === null)
-		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		$Res = jf::SQL ( "SELECT COUNT(*) AS Result FROM {$this->tablePrefix()}userroles WHERE UserID=?", $UserID );
 		return (int)$Res [0] ['Result'];
@@ -916,14 +916,14 @@ class RBACManager extends JModel
 	 * @param string|integer $UserID
 	 *        	User ID of a user
 	 *
-	 * @throws RBACPermissionNotFoundException
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacPermissionNotFoundException
+	 * @throws RbacUserNotProvidedException
 	 * @return boolean
 	 */
 	function Check($Permission, $UserID = null)
 	{
 	    if ($UserID === null)
-	        throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		// convert permission to ID
 		if (is_int ( $Permission ))
@@ -940,7 +940,7 @@ class RBACManager extends JModel
 
 		// if invalid, throw exception
 		if ($PermissionID === null)
-			throw new RBACPermissionNotFoundException ( "The permission '{$Permission}' not found." );
+			throw new RbacPermissionNotFoundException ( "The permission '{$Permission}' not found." );
 
 		if ($this->isSQLite())
 		{
@@ -982,12 +982,12 @@ class RBACManager extends JModel
 	 *
 	 * @param integer $UserID
 	 *
-	 * @throws RBACUserNotProvidedException
+	 * @throws RbacUserNotProvidedException
 	 */
 	function Enforce($Permission, $UserID = null)
 	{
 		if ($UserID === null)
-	        throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
+	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		if (! $this->Check($Permission, $UserID)) {
 		    header('HTTP/1.1 403 Forbidden');

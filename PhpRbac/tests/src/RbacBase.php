@@ -7,10 +7,10 @@ use PhpRbac\Rbac;
  * @file
  * Unit Tests for PhpRbac PSR Wrapper
  *
- * @defgroup phprbac_unit_test_wrapper_base Unit Tests for BaseRBAC Functionality
+ * @defgroup phprbac_unit_test_wrapper_base Unit Tests for BaseRbac Functionality
  * @ingroup phprbac
  * @{
- * Documentation for all Unit Tests regarding BaseRBAC functionality.
+ * Documentation for all Unit Tests regarding BaseRbac functionality.
  */
 
 class RbacBase extends \RbacSetup

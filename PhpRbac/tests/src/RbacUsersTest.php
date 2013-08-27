@@ -72,7 +72,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /**
-     * @expectedException RBACUserNotProvidedException
+     * @expectedException RbacUserNotProvidedException
      */
 
     public function testUsersAssignNoUserID()
@@ -151,7 +151,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /**
-     * @expectedException RBACUserNotProvidedException
+     * @expectedException RbacUserNotProvidedException
      */
 
     public function testUsersHasRoleNoUserId()
@@ -219,7 +219,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /**
-     * @expectedException RBACUserNotProvidedException
+     * @expectedException RbacUserNotProvidedException
      */
 
     public function testUsersAllRolesNoRolesEmpty()
@@ -254,7 +254,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /**
-     * @expectedException RBACUserNotProvidedException
+     * @expectedException RbacUserNotProvidedException
      */
 
     public function testUsersRoleCountNoRolesEmpty()
@@ -296,7 +296,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /**
-     * @expectedException RBACUserNotProvidedException
+     * @expectedException RbacUserNotProvidedException
      */
 
     public function testUsersUnassignNoUserIdException()
