@@ -1,0 +1,22 @@
+<phpunit bootstrap="./bootstrap.php">
+	<!--
+    <testsuites>
+        <testsuite name="Core">
+            <directory>../src/PhpRbac/core/tests</directory>
+        </testsuite>
+    </testsuites>
+    -->
+    <testsuites>
+        <testsuite name="Wrapper">
+            <directory>./src</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+    	<var name="DB_ADAPTER" value="pdo_sqlite" />
+    	<var name="DB_DSN" value="sqlite:phprbac.sqlite3" />
+    	<var name="DB_USER" value="root" />
+    	<var name="DB_PASSWD" value="" />
+    	<var name="DB_DBNAME" value="phprbac.sqlite3" />
+    	<var name="DB_PREFIX" value="phprbac_" />
+    </php>
+</phpunit>

@@ -5,6 +5,7 @@
         </testsuite>
     </testsuites>
     <php>
+    	<var name="DB_ADAPTER" value="pdo_mysql" />
     	<var name="DB_DSN" value="mysql:dbname=phprbac_tests;host=localhost" />
     	<var name="DB_USER" value="phprbac_tests" />
     	<var name="DB_PASSWD" value="password_tests" />

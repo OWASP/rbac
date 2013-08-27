@@ -50,7 +50,7 @@ class Rbac
 
     public function tablePrefix()
     {
-        return jf::$RBAC->TablePrefix();
+        return jf::$RBAC->tablePrefix();
     }
 }
 

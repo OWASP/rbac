@@ -17,20 +17,20 @@ class RBACUserNotProvidedException extends RBACException
 
 class JModel
 {
-	function TablePrefix()
+	function tablePrefix()
 	{
-		return jf::TablePrefix();
+		return jf::tablePrefix();
 	}
 
-	protected function IsSQLite()
+	protected function isSQLite()
 	{
-		$Adapter=get_class(jf::$DB);
-		return $Adapter == "PDO" and jf::$DB->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite";
+		$Adapter=get_class(jf::$Db);
+		return $Adapter == "PDO" and jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite";
 	}
-	protected function IsMySql()
+	protected function isMySql()
 	{
-		$Adapter=get_class(jf::$DB);
-		return $Adapter == "mysqli" or ($Adapter == "PDO" and jf::$DB->getAttribute(PDO::ATTR_DRIVER_NAME)=="mysql");
+		$Adapter=get_class(jf::$Db);
+		return $Adapter == "mysqli" or ($Adapter == "PDO" and jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="mysql");
 	}
 }
 /**
@@ -44,7 +44,7 @@ class JModel
 abstract class BaseRBAC extends JModel
 {
 
-	function RootID()
+	function rootId()
 	{
 		return 1;
 	}
@@ -54,7 +54,7 @@ abstract class BaseRBAC extends JModel
 	 *
 	 * @return string
 	 */
-	abstract protected function Type();
+	abstract protected function type();
 	/**
 	 * Adds a new role or permission
 	 * Returns new entry's ID
@@ -70,8 +70,8 @@ abstract class BaseRBAC extends JModel
 	function Add($Title, $Description, $ParentID = null)
 	{
 		if ($ParentID === null)
-			$ParentID = $this->RootID ();
-		return (int)$this->{$this->Type ()}->InsertChildData ( array ("Title" => $Title, "Description" => $Description ), "ID=?", $ParentID );
+			$ParentID = $this->rootId ();
+		return (int)$this->{$this->type ()}->InsertChildData ( array ("Title" => $Title, "Description" => $Description ), "ID=?", $ParentID );
 	}
 	/**
 	 * Return count of the entity
@@ -80,7 +80,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Count()
 	{
-		$Res = jf::SQL ( "SELECT COUNT(*) FROM {$this->TablePrefix()}{$this->Type()}" );
+		$Res = jf::SQL ( "SELECT COUNT(*) FROM {$this->tablePrefix()}{$this->type()}" );
 		return (int)$Res [0] ['COUNT(*)'];
 	}
 
@@ -99,16 +99,31 @@ abstract class BaseRBAC extends JModel
 			$Path = substr ( $Path, 0, strlen ( $Path ) - 1 );
 		$Parts = explode ( "/", $Path );
 
-		$Adapter = get_class(jf::$DB);
-		if ($Adapter == "mysqli" or ($Adapter == "PDO" and jf::$DB->getAttribute(PDO::ATTR_DRIVER_NAME)=="mysql"))
+		$Adapter = get_class(jf::$Db);
+		if ($Adapter == "mysqli" or ($Adapter == "PDO" and jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="mysql")) {
 			$GroupConcat="GROUP_CONCAT(parent.Title ORDER BY parent.Lft SEPARATOR '/')";
-		elseif ($Adapter == "PDO" and jf::$DB->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite")
+
+            $query = jf::SQL ( "SELECT sum(char_length(Title)) FROM " . $this->tablePrefix() . $this->type());
+            $query_char_count = $query[0]['sum(char_length(Title))'];
+		} elseif ($Adapter == "PDO" and jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite") {
 			$GroupConcat="GROUP_CONCAT(parent.Title,'/')";
-		else
+
+            $query = jf::SQL ( "SELECT sum(length(Title)) FROM " . $this->tablePrefix() . $this->type());
+            $query_char_count = $query[0]['sum(length(Title))'];
+		} else {
 			throw new \Exception ("Unknown Group_Concat on this type of database: {$Adapter}");
+		}
+
+		$row_count = jf::SQL ( "SELECT count(*) FROM " . $this->tablePrefix() . $this->type());
+		$separator_count = --$row_count[0]['count(*)'];
+		$total_char_count = $query_char_count + $separator_count;
+
+		if ((int) $total_char_count >= 1024)
+		    throw new Exception ( "Path exceeds character count limit." );
+
 		$res = jf::SQL ( "SELECT node.ID,{$GroupConcat} AS Path
-				FROM {$this->TablePrefix()}{$this->Type()} AS node,
-				{$this->TablePrefix()}{$this->Type()} AS parent
+				FROM {$this->tablePrefix()}{$this->type()} AS node,
+				{$this->tablePrefix()}{$this->type()} AS parent
 				WHERE node.Lft BETWEEN parent.Lft AND parent.Rght
 				AND  node.Title=?
 				GROUP BY node.ID
@@ -120,16 +135,16 @@ abstract class BaseRBAC extends JModel
 			return null;
 			// TODO: make the below SQL work, so that 1024 limit is over
 
-		$QueryBase = ("SELECT n0.ID  \nFROM {$this->TablePrefix()}{$this->Type()} AS n0");
+		$QueryBase = ("SELECT n0.ID  \nFROM {$this->tablePrefix()}{$this->type()} AS n0");
 		$QueryCondition = "\nWHERE 	n0.Title=?";
 
 		for($i = 1; $i < count ( $Parts ); ++ $i)
 		{
 			$j = $i - 1;
-			$QueryBase .= "\nJOIN 		{$this->TablePrefix()}{$this->Type()} AS n{$i} ON (n{$j}.Lft BETWEEN n{$i}.Lft+1 AND n{$i}.Rght)";
+			$QueryBase .= "\nJOIN 		{$this->tablePrefix()}{$this->type()} AS n{$i} ON (n{$j}.Lft BETWEEN n{$i}.Lft+1 AND n{$i}.Rght)";
 			$QueryCondition .= "\nAND 	n{$i}.Title=?";
 			// Forcing middle elements
-			$QueryBase .= "\nLEFT JOIN 	{$this->TablePrefix()}{$this->Type()} AS nn{$i} ON (nn{$i}.Lft BETWEEN n{$i}.Lft+1 AND n{$j}.Lft-1)";
+			$QueryBase .= "\nLEFT JOIN 	{$this->tablePrefix()}{$this->type()} AS nn{$i} ON (nn{$i}.Lft BETWEEN n{$i}.Lft+1 AND n{$j}.Lft-1)";
 			$QueryCondition .= "\nAND 	nn{$i}.Lft IS NULL";
 		}
 		$Query = $QueryBase . $QueryCondition;
@@ -151,7 +166,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function TitleID($Title)
 	{
-		return $this->{$this->Type ()}->GetID ( "Title=?", $Title );
+		return $this->{$this->type ()}->GetID ( "Title=?", $Title );
 	}
 	/**
 	 * Return the whole record of a single entry (including Rght and Lft fields)
@@ -161,7 +176,7 @@ abstract class BaseRBAC extends JModel
 	protected function GetRecord($ID)
 	{
 		$args = func_get_args ();
-		return call_user_func_array ( array ($this->{$this->Type ()}, "GetRecord" ), $args );
+		return call_user_func_array ( array ($this->{$this->type ()}, "GetRecord" ), $args );
 	}
 	/**
 	 * Returns title of entity
@@ -246,11 +261,17 @@ abstract class BaseRBAC extends JModel
 	function Edit($ID, $NewTitle = null, $NewDescription = null)
 	{
 		$Data = array ();
+
 		if ($NewTitle !== null)
 			$Data ['Title'] = $NewTitle;
+
 		if ($NewDescription !== null)
 			$Data ['Description'] = $NewDescription;
-		return $this->{$this->Type ()}->EditData ( $Data, "ID=?", $ID ) == 1;
+
+		if (!empty($Data))
+            return $this->{$this->type ()}->EditData ( $Data, "ID=?", $ID ) == 1;
+
+		return false;
 	}
 
 	/**
@@ -261,7 +282,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Children($ID)
 	{
-		return $this->{$this->Type ()}->ChildrenConditional ( "ID=?", $ID );
+		return $this->{$this->type ()}->ChildrenConditional ( "ID=?", $ID );
 	}
 
 	/**
@@ -273,7 +294,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Descendants($ID)
 	{
-		$res = $this->{$this->Type ()}->DescendantsConditional(/* absolute depths*/false, "ID=?", $ID );
+		$res = $this->{$this->type ()}->DescendantsConditional(/* absolute depths*/false, "ID=?", $ID );
 		$out = array ();
 		if (is_array ( $res ))
 			foreach ( $res as $v )
@@ -288,7 +309,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Depth($ID)
 	{
-		return $this->{$this->Type ()}->DepthConditional ( "ID=?", $ID );
+		return $this->{$this->type ()}->DepthConditional ( "ID=?", $ID );
 	}
 
 	/**
@@ -299,7 +320,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Path($ID)
 	{
-		$res = $this->{$this->Type ()}->PathConditional ( "ID=?", $ID );
+		$res = $this->{$this->type ()}->PathConditional ( "ID=?", $ID );
 		$out = null;
 		if (is_array ( $res ))
 			foreach ( $res as $r )
@@ -322,7 +343,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function ParentNode($ID)
 	{
-		return $this->{$this->Type ()}->ParentNodeConditional ( "ID=?", $ID );
+		return $this->{$this->type ()}->ParentNodeConditional ( "ID=?", $ID );
 	}
 
 	/**
@@ -342,15 +363,15 @@ abstract class BaseRBAC extends JModel
 			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
-		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}{$this->Type()}" );
-		$Adapter = get_class(jf::$DB);
-		if ($this->IsMySql())
-			jf::SQL ( "ALTER TABLE {$this->TablePrefix()}{$this->Type()} AUTO_INCREMENT=1 " );
-		elseif ($this->IsSQLite())
-			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->TablePrefix () . "{$this->Type()}" );
+		$res = jf::SQL ( "DELETE FROM {$this->tablePrefix()}{$this->type()}" );
+		$Adapter = get_class(jf::$Db);
+		if ($this->isMySql())
+			jf::SQL ( "ALTER TABLE {$this->tablePrefix()}{$this->type()} AUTO_INCREMENT=1 " );
+		elseif ($this->isSQLite())
+			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "{$this->type()}" );
 		else
 			throw new \Exception ( "RBAC can not reset table on this type of database: {$Adapter}" );
-		$iid = jf::SQL ( "INSERT INTO {$this->TablePrefix()}{$this->Type()} (Title,Description,Lft,Rght) VALUES (?,?,?,?)", "root", "root",0,1 );
+		$iid = jf::SQL ( "INSERT INTO {$this->tablePrefix()}{$this->type()} (Title,Description,Lft,Rght) VALUES (?,?,?,?)", "root", "root",0,1 );
 		return (int)$res;
 	}
 
@@ -367,7 +388,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Assign($Role, $Permission)
 	{
-		return jf::SQL ( "INSERT INTO {$this->TablePrefix()}rolepermissions
+		return jf::SQL ( "INSERT INTO {$this->tablePrefix()}rolepermissions
 		(RoleID,PermissionID,AssignmentDate)
 		VALUES (?,?,?)", $Role, $Permission, jf::time () ) >= 1;
 	}
@@ -380,7 +401,7 @@ abstract class BaseRBAC extends JModel
 	 */
 	function Unassign($Role, $Permission)
 	{
-		return jf::SQL ( "DELETE FROM {$this->TablePrefix()}rolepermissions WHERE
+		return jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
 	RoleID=? AND PermissionID=?", $Role, $Permission ) == 1;
 	}
 
@@ -399,16 +420,16 @@ abstract class BaseRBAC extends JModel
 			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
-		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}rolepermissions" );
+		$res = jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions" );
 
-		$Adapter = get_class(jf::$DB);
-		if ($this->IsMySql())
-			jf::SQL ( "ALTER TABLE {$this->TablePrefix()}rolepermissions AUTO_INCREMENT =1 " );
-		elseif ($this->IsSQLite())
-			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->TablePrefix () . "_rolepermissions" );
+		$Adapter = get_class(jf::$Db);
+		if ($this->isMySql())
+			jf::SQL ( "ALTER TABLE {$this->tablePrefix()}rolepermissions AUTO_INCREMENT =1 " );
+		elseif ($this->isSQLite())
+			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_rolepermissions" );
 		else
 			throw new \Exception ( "RBAC can not reset table on this type of database: {$Adapter}" );
-		$this->Assign ( $this->RootID(), $this->RootID());
+		$this->Assign ( $this->rootId(), $this->rootId());
 		return $res;
 	}
 }
@@ -429,13 +450,13 @@ class PermissionManager extends BaseRBAC
 	 * @var FullNestedSet
 	 */
 	protected $permissions;
-	protected function Type()
+	protected function type()
 	{
 		return "permissions";
 	}
 	function __construct()
 	{
-		$this->permissions = new FullNestedSet ( $this->TablePrefix () . "permissions", "ID", "Lft", "Rght" );
+		$this->permissions = new FullNestedSet ( $this->tablePrefix () . "permissions", "ID", "Lft", "Rght" );
 	}
 	/**
 	 * Remove a permission from system
@@ -463,7 +484,7 @@ class PermissionManager extends BaseRBAC
 	 */
 	function UnassignRoles($ID)
 	{
-		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}rolepermissions WHERE
+		$res = jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
 			PermissionID=?", $ID );
 		return (int)$res;
 	}
@@ -484,7 +505,7 @@ class PermissionManager extends BaseRBAC
 		if ($OnlyIDs)
 		{
 			$Res = jf::SQL ( "SELECT RoleID AS `ID` FROM
-				{$this->TablePrefix()}rolepermissions WHERE PermissionID=? ORDER BY RoleID", $Permission );
+				{$this->tablePrefix()}rolepermissions WHERE PermissionID=? ORDER BY RoleID", $Permission );
 			if (is_array ( $Res ))
 			{
 				$out = array ();
@@ -496,8 +517,8 @@ class PermissionManager extends BaseRBAC
 				return null;
 		}
 		else
-			return jf::SQL ( "SELECT `TP`.* FROM {$this->TablePrefix()}rolepermissions AS `TR`
-				RIGHT JOIN {$this->TablePrefix()}roles AS `TP` ON (`TR`.RoleID=`TP`.ID)
+			return jf::SQL ( "SELECT `TP`.* FROM {$this->tablePrefix()}rolepermissions AS `TR`
+				RIGHT JOIN {$this->tablePrefix()}roles AS `TP` ON (`TR`.RoleID=`TP`.ID)
 				WHERE PermissionID=? ORDER BY TP.RoleID", $Permission );
 	}
 }
@@ -518,14 +539,14 @@ class RoleManager extends BaseRBAC
 	 * @var FullNestedSet
 	 */
 	protected $roles = null;
-	protected function Type()
+	protected function type()
 	{
 		return "roles";
 	}
 	function __construct()
 	{
-		$this->Type = "roles";
-		$this->roles = new FullNestedSet ( $this->TablePrefix () . "roles", "ID", "Lft", "Rght" );
+		$this->type = "roles";
+		$this->roles = new FullNestedSet ( $this->tablePrefix () . "roles", "ID", "Lft", "Rght" );
 	}
 
 	/**
@@ -555,7 +576,7 @@ class RoleManager extends BaseRBAC
 	 */
 	function UnassignPermissions($ID)
 	{
-		$r = jf::SQL ( "DELETE FROM {$this->TablePrefix()}rolepermissions WHERE
+		$r = jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
 			RoleID=? ", $ID );
 		return $r;
 	}
@@ -568,7 +589,7 @@ class RoleManager extends BaseRBAC
 	 */
 	function UnassignUsers($ID)
 	{
-		return jf::SQL ( "DELETE FROM {$this->TablePrefix()}userroles WHERE
+		return jf::SQL ( "DELETE FROM {$this->tablePrefix()}userroles WHERE
 			RoleID=?", $ID );
 	}
 
@@ -587,18 +608,18 @@ class RoleManager extends BaseRBAC
 	{
 		$Res = jf::SQL ( "
 					SELECT COUNT(*) AS Result
-					FROM {$this->TablePrefix()}rolepermissions AS TRel
-					JOIN {$this->TablePrefix()}permissions AS TP ON ( TP.ID= TRel.PermissionID)
-					JOIN {$this->TablePrefix()}roles AS TR ON ( TR.ID = TRel.RoleID)
+					FROM {$this->tablePrefix()}rolepermissions AS TRel
+					JOIN {$this->tablePrefix()}permissions AS TP ON ( TP.ID= TRel.PermissionID)
+					JOIN {$this->tablePrefix()}roles AS TR ON ( TR.ID = TRel.RoleID)
 					WHERE TR.Lft BETWEEN
-					(SELECT Lft FROM {$this->TablePrefix()}roles WHERE ID=?)
+					(SELECT Lft FROM {$this->tablePrefix()}roles WHERE ID=?)
 					AND
-					(SELECT Rght FROM {$this->TablePrefix()}roles WHERE ID=?)
+					(SELECT Rght FROM {$this->tablePrefix()}roles WHERE ID=?)
 					/* the above section means any row that is a descendants of our role (if descendant roles have some permission, then our role has it two) */
 					AND TP.ID IN (
 					SELECT parent.ID
-					FROM {$this->TablePrefix()}permissions AS node,
-					{$this->TablePrefix()}permissions AS parent
+					FROM {$this->tablePrefix()}permissions AS node,
+					{$this->tablePrefix()}permissions AS parent
 					WHERE node.Lft BETWEEN parent.Lft AND parent.Rght
 					AND ( node.ID=? )
 					ORDER BY parent.Lft
@@ -624,7 +645,7 @@ class RoleManager extends BaseRBAC
 	{
 		if ($OnlyIDs)
 		{
-			$Res = jf::SQL ( "SELECT PermissionID AS `ID` FROM {$this->TablePrefix()}rolepermissions WHERE RoleID=? ORDER BY PermissionID", $Role );
+			$Res = jf::SQL ( "SELECT PermissionID AS `ID` FROM {$this->tablePrefix()}rolepermissions WHERE RoleID=? ORDER BY PermissionID", $Role );
 			if (is_array ( $Res ))
 			{
 				$out = array ();
@@ -636,8 +657,8 @@ class RoleManager extends BaseRBAC
 				return null;
 		}
 		else
-			return jf::SQL ( "SELECT `TP`.* FROM {$this->TablePrefix()}rolepermissions AS `TR`
-			RIGHT JOIN {$this->TablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
+			return jf::SQL ( "SELECT `TP`.* FROM {$this->tablePrefix()}rolepermissions AS `TR`
+			RIGHT JOIN {$this->tablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
 			WHERE RoleID=? ORDER BY TP.PermissionID", $Role );
 	}
 }
@@ -679,9 +700,9 @@ class RBACUserManager extends JModel
 				$RoleID = jf::$RBAC->Roles->TitleID ( $Role );
 		}
 
-		$R = jf::SQL ( "SELECT * FROM {$this->TablePrefix()}userroles AS TUR
-			JOIN {$this->TablePrefix()}roles AS TRdirect ON (TRdirect.ID=TUR.RoleID)
-			JOIN {$this->TablePrefix()}roles AS TR ON (TR.Lft BETWEEN TRdirect.Lft AND TRdirect.Rght)
+		$R = jf::SQL ( "SELECT * FROM {$this->tablePrefix()}userroles AS TUR
+			JOIN {$this->tablePrefix()}roles AS TRdirect ON (TRdirect.ID=TUR.RoleID)
+			JOIN {$this->tablePrefix()}roles AS TR ON (TR.Lft BETWEEN TRdirect.Lft AND TRdirect.Rght)
 
 			WHERE
 			TUR.UserID=? AND TR.ID=?", $UserID, $RoleID );
@@ -714,7 +735,7 @@ class RBACUserManager extends JModel
 			else
 				$RoleID = jf::$RBAC->Roles->TitleID ( $Role );
 		}
-		$res = jf::SQL ( "INSERT INTO {$this->TablePrefix()}userroles
+		$res = jf::SQL ( "INSERT INTO {$this->tablePrefix()}userroles
 				(UserID,RoleID,AssignmentDate)
 				VALUES (?,?,?)
 				", $UserID, $RoleID, jf::time () );
@@ -736,7 +757,7 @@ class RBACUserManager extends JModel
 	   if ($UserID === null)
 		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
-		return jf::SQL ( "DELETE FROM {$this->TablePrefix()}userroles
+		return jf::SQL ( "DELETE FROM {$this->tablePrefix()}userroles
 		WHERE UserID=? AND RoleID=?", $UserID, $Role ) >= 1;
 	}
 
@@ -757,8 +778,8 @@ class RBACUserManager extends JModel
 
 		return jf::SQL ( "SELECT TR.*
 			FROM
-			{$this->TablePrefix()}userroles AS `TRel`
-			JOIN {$this->TablePrefix()}roles AS `TR` ON
+			{$this->tablePrefix()}userroles AS `TRel`
+			JOIN {$this->tablePrefix()}roles AS `TR` ON
 			(`TRel`.RoleID=`TR`.ID)
 			WHERE TRel.UserID=?", $UserID );
 	}
@@ -775,7 +796,7 @@ class RBACUserManager extends JModel
 		if ($UserID === null)
 		    throw new \RBACUserNotProvidedException ("\$UserID is a required argument.");
 
-		$Res = jf::SQL ( "SELECT COUNT(*) AS Result FROM {$this->TablePrefix()}userroles WHERE UserID=?", $UserID );
+		$Res = jf::SQL ( "SELECT COUNT(*) AS Result FROM {$this->tablePrefix()}userroles WHERE UserID=?", $UserID );
 		return (int)$Res [0] ['Result'];
 	}
 
@@ -794,13 +815,13 @@ class RBACUserManager extends JModel
 			throw new \Exception ("You must pass true to this function, otherwise it won't work.");
 			return;
 		}
-		$res = jf::SQL ( "DELETE FROM {$this->TablePrefix()}userroles" );
+		$res = jf::SQL ( "DELETE FROM {$this->tablePrefix()}userroles" );
 
-		$Adapter = get_class(jf::$DB);
-		if ($this->IsMySql())
-			jf::SQL ( "ALTER TABLE {$this->TablePrefix()}userroles AUTO_INCREMENT =1 " );
-		elseif ($this->IsSQLite())
-			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->TablePrefix () . "_userroles" );
+		$Adapter = get_class(jf::$Db);
+		if ($this->isMySql())
+			jf::SQL ( "ALTER TABLE {$this->tablePrefix()}userroles AUTO_INCREMENT =1 " );
+		elseif ($this->isSQLite())
+			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_userroles" );
 		else
 			throw new \Exception ("RBAC can not reset table on this type of database: {$Adapter}");
 		$this->Assign ( "root", 1 /* root user */ );
@@ -924,7 +945,7 @@ class RBACManager extends JModel
 		if ($PermissionID === null)
 			throw new RBACPermissionNotFoundException ( "The permission '{$Permission}' not found." );
 
-		if ($this->IsSQLite())
+		if ($this->isSQLite())
 		{
 			$LastPart="AS Temp ON ( TR.ID = Temp.RoleID)
  							WHERE
@@ -942,14 +963,14 @@ class RBACManager extends JModel
 		}
 		$Res=jf::SQL ( "SELECT COUNT(*) AS Result
  							FROM
- 							{$this->TablePrefix()}userroles AS TUrel
+ 							{$this->tablePrefix()}userroles AS TUrel
 
- 							JOIN {$this->TablePrefix()}roles AS TRdirect ON (TRdirect.ID=TUrel.RoleID)
- 							JOIN {$this->TablePrefix()}roles AS TR ON ( TR.Lft BETWEEN TRdirect.Lft AND TRdirect.Rght)
+ 							JOIN {$this->tablePrefix()}roles AS TRdirect ON (TRdirect.ID=TUrel.RoleID)
+ 							JOIN {$this->tablePrefix()}roles AS TR ON ( TR.Lft BETWEEN TRdirect.Lft AND TRdirect.Rght)
  							JOIN
-	 							(	{$this->TablePrefix()}permissions AS TPdirect
-	 							JOIN {$this->TablePrefix()}permissions AS TP ON ( TPdirect.Lft BETWEEN TP.Lft AND TP.Rght)
-	 							JOIN {$this->TablePrefix()}rolepermissions AS TRel ON (TP.ID=TRel.PermissionID)
+	 							(	{$this->tablePrefix()}permissions AS TPdirect
+	 							JOIN {$this->tablePrefix()}permissions AS TP ON ( TPdirect.Lft BETWEEN TP.Lft AND TP.Rght)
+	 							JOIN {$this->tablePrefix()}rolepermissions AS TRel ON (TP.ID=TRel.PermissionID)
 						) $LastPart",
 				$UserID, $PermissionID );
 

@@ -18,23 +18,30 @@ class RbacSetup extends \Generic_Tests_DatabaseTestCase
     /*
      * Test Setup and Fixture
      */
-    
+
 	public static $rbac;
-	
+
     public static function setUpBeforeClass()
     {
     	self::$rbac = new Rbac('unit_test');
     }
-    
+
+    protected function tearDown()
+    {
+        if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
+            self::$rbac->reset(true);
+        }
+    }
+
     public function getDataSet()
     {
         return $this->createXMLDataSet(dirname(__FILE__) . '/datasets/database-seed.xml');
     }
-    
+
     /*
-     * Tests for proper object instantiation 
+     * Tests for proper object instantiation
      */
-    
+
     public function testRbacInstance() {
         $this->assertInstanceOf('PhpRbac\Rbac', self::$rbac);
     }

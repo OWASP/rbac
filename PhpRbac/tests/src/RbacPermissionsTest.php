@@ -18,7 +18,7 @@ class RbacPermissionsTest extends \RbacBase
         return self::$rbac->Permissions;
     }
     
-    protected function Type()
+    protected function type()
     {
         return "permissions";
     }
@@ -37,7 +37,7 @@ class RbacPermissionsTest extends \RbacBase
 
     public function testPermissionsRemoveSingle()
     {
-        $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         
         $this->Instance()->Remove($perm_id_1);
         
@@ -45,17 +45,17 @@ class RbacPermissionsTest extends \RbacBase
         
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            $this->Instance()->TablePrefix() . $this->Type(),
+            $this->Instance()->tablePrefix() . $this->type(),
         ));
         
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->Type() . '/expected_remove_single.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single.xml');
         
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 
     public function testPermissionsRemoveSingleRole()
     {
-        $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
         
         $this->Instance()->Assign($role_id_1, $perm_id_1);
@@ -66,27 +66,27 @@ class RbacPermissionsTest extends \RbacBase
         
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            $this->Instance()->TablePrefix() . $this->Type(),
-            $this->Instance()->TablePrefix() . 'rolepermissions',
-            $this->Instance()->TablePrefix() . 'roles',
+            $this->Instance()->tablePrefix() . $this->type(),
+            $this->Instance()->tablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'roles',
         ));
         
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
         
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->Type() . '/expected_remove_single_role.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single_role.xml');
         
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
     
     public function testPermissionsRemoveRecursive()
     {
-        $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
-        $perm_id_2 = $this->Instance()->Add($this->Type() . '_2', $this->Type() . ' Description 2', $perm_id_1);
-        $perm_id_3 = $this->Instance()->Add($this->Type() . '_3', $this->Type() . ' Description 3', $perm_id_1);
-        $perm_id_4 = $this->Instance()->Add($this->Type() . '_4', $this->Type() . ' Description 4');
+        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
+        $perm_id_2 = $this->Instance()->Add($this->type() . '_2', $this->type() . ' Description 2', $perm_id_1);
+        $perm_id_3 = $this->Instance()->Add($this->type() . '_3', $this->type() . ' Description 3', $perm_id_1);
+        $perm_id_4 = $this->Instance()->Add($this->type() . '_4', $this->type() . ' Description 4');
         
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
         
@@ -98,17 +98,17 @@ class RbacPermissionsTest extends \RbacBase
         
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            $this->Instance()->TablePrefix() . $this->Type(),
-            $this->Instance()->TablePrefix() . 'rolepermissions',
-            $this->Instance()->TablePrefix() . 'roles',
+            $this->Instance()->tablePrefix() . $this->type(),
+            $this->Instance()->tablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'roles',
         ));
         
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
         
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->Type() . '/expected_remove_recursive.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_recursive.xml');
         
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -126,7 +126,7 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsRolesOnlyID()
     {
-        $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
@@ -173,7 +173,7 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsUnassignRoles()
     {
-        $perm_id_1 = $this->Instance()->Add($this->Type() . '_1', $this->Type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
@@ -189,15 +189,15 @@ class RbacPermissionsTest extends \RbacBase
         
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
         ));
         
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
         
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->Type() . '/expected_unassign_roles.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_unassign_roles.xml');
         
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

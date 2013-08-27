@@ -18,18 +18,18 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	}
 	/**
 	 *
-	 * @return \jf\{$this->Type()}Manager
+	 * @return \jf\{$this->type()}Manager
 	 */
 	protected abstract function Instance();
 	
 	/**
 	 *
-	 * @return string {$this->Type()} or permission
+	 * @return string {$this->type()} or permission
 	 */
-	protected abstract function Type();
+	protected abstract function type();
 	function testAdd()
 	{
-		$ID = $this->Instance ()->Add ( "{$this->Type()}1", "description of the {$this->Type()}" );
+		$ID = $this->Instance ()->Add ( "{$this->type()}1", "description of the {$this->type()}" );
 		$this->assertGreaterThan ( 1, $ID );
 		$this->assertGreaterThanOrEqual ( $this->Instance ()->Count (), 2 );
 	}
@@ -38,10 +38,10 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	 */
 	function testRemove()
 	{
-		$ID = $this->Instance ()->Add ( "{$this->Type()}1", "description of the {$this->Type()}" );
-		$ID2 = $this->Instance ()->Add ( "{$this->Type()}2", "description of the {$this->Type()}", $ID );
-		$ID3 = $this->Instance ()->Add ( "{$this->Type()}3", "description of the {$this->Type()}", $ID2 );
-		$ID4 = $this->Instance ()->Add ( "{$this->Type()}4", "description of the {$this->Type()}", $ID2 );
+		$ID = $this->Instance ()->Add ( "{$this->type()}1", "description of the {$this->type()}" );
+		$ID2 = $this->Instance ()->Add ( "{$this->type()}2", "description of the {$this->type()}", $ID );
+		$ID3 = $this->Instance ()->Add ( "{$this->type()}3", "description of the {$this->type()}", $ID2 );
+		$ID4 = $this->Instance ()->Add ( "{$this->type()}4", "description of the {$this->type()}", $ID2 );
 		$this->assertTrue ( $this->Instance ()->Remove ( $ID ) );
 		$this->assertFalse ( $this->Instance ()->Remove ( $ID ) );
 		$this->assertTrue ( $this->Instance ()->Remove ( $ID2, true ) );
@@ -103,38 +103,38 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	}
 	function testEdit()
 	{
-		$ID = $this->Instance ()->Add ( "{$this->Type()}1", "description here" );
+		$ID = $this->Instance ()->Add ( "{$this->type()}1", "description here" );
 		
 		// Change title
-		$this->assertTrue ( $this->Instance ()->Edit ( $ID, "{$this->Type()}2" ) );
-		$this->assertEquals ( "{$this->Type()}2", $this->Instance ()->GetTitle ( $ID ) );
+		$this->assertTrue ( $this->Instance ()->Edit ( $ID, "{$this->type()}2" ) );
+		$this->assertEquals ( "{$this->type()}2", $this->Instance ()->GetTitle ( $ID ) );
 		$this->assertEquals ( "description here", $this->Instance ()->GetDescription ( $ID ) );
 		
 		// change description
 		$this->assertTrue ( $this->Instance ()->Edit ( $ID, null, "new description" ) );
-		$this->assertEquals ( "{$this->Type()}2", $this->Instance ()->GetTitle ( $ID ) );
+		$this->assertEquals ( "{$this->type()}2", $this->Instance ()->GetTitle ( $ID ) );
 		$this->assertEquals ( "new description", $this->Instance ()->GetDescription ( $ID ) );
 		
 		// changing both
-		$this->assertTrue ( $this->Instance ()->Edit ( $ID, "new {$this->Type()}", "another new description" ) );
-		$this->assertEquals ( "new {$this->Type()}", $this->Instance ()->GetTitle ( $ID ) );
+		$this->assertTrue ( $this->Instance ()->Edit ( $ID, "new {$this->type()}", "another new description" ) );
+		$this->assertEquals ( "new {$this->type()}", $this->Instance ()->GetTitle ( $ID ) );
 		$this->assertEquals ( "another new description", $this->Instance ()->GetDescription ( $ID ) );
 	}
 	function testChildren()
 	{
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
-		$Child2 = $this->Instance ()->Add ( "{$this->Type()}1-2", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
+		$Child2 = $this->Instance ()->Add ( "{$this->type()}1-2", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child12 = $this->Instance ()->Add ( "{$this->Type()}1-1-2", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 		$children = ($this->Instance ()->Children ( $Parent ));
 
-		$this->assertEquals ( $children [0] ['Title'], "{$this->Type()}1-1" );
-		$this->assertEquals ( $children [1] ['Title'], "{$this->Type()}1-2" );
+		$this->assertEquals ( $children [0] ['Title'], "{$this->type()}1-1" );
+		$this->assertEquals ( $children [1] ['Title'], "{$this->type()}1-2" );
 		$this->assertEquals ( count ( $children ), 2 );
 	}
 	/**
@@ -142,68 +142,68 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	 */
 	function testTitleID()
 	{
-		$ID = $this->Instance ()->Add ( "{$this->Type()}-1", "description of the {$this->Type()}" );
-		$ID2 = $this->Instance ()->Add ( "{$this->Type()}-2", "description of the {$this->Type()}" );
-		$this->assertEquals ( $this->Instance ()->TitleID ( "{$this->Type()}-1" ), $ID );
-		$this->assertNotEquals ( $this->Instance ()->TitleID ( "{$this->Type()}-2" ), $ID );
-		$this->assertNotEquals ( $this->Instance ()->TitleID ( "{$this->Type()}-3" ), $ID );
+		$ID = $this->Instance ()->Add ( "{$this->type()}-1", "description of the {$this->type()}" );
+		$ID2 = $this->Instance ()->Add ( "{$this->type()}-2", "description of the {$this->type()}" );
+		$this->assertEquals ( $this->Instance ()->TitleID ( "{$this->type()}-1" ), $ID );
+		$this->assertNotEquals ( $this->Instance ()->TitleID ( "{$this->type()}-2" ), $ID );
+		$this->assertNotEquals ( $this->Instance ()->TitleID ( "{$this->type()}-3" ), $ID );
 	}
 	function testDescendants()
 	{
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
-		$Child2 = $this->Instance ()->Add ( "{$this->Type()}1-2", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
+		$Child2 = $this->Instance ()->Add ( "{$this->type()}1-2", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child12 = $this->Instance ()->Add ( "{$this->Type()}1-1-2", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 		$descendants = ($this->Instance ()->Descendants ( $Parent ));
-		$this->assertEquals ( $descendants ["{$this->Type()}1-1"] ['Depth'], 1 );
-		$this->assertEquals ( $descendants ["{$this->Type()}1-1-3"] ['Depth'], 2 );
+		$this->assertEquals ( $descendants ["{$this->type()}1-1"] ['Depth'], 1 );
+		$this->assertEquals ( $descendants ["{$this->type()}1-1-3"] ['Depth'], 2 );
 		$this->assertEquals ( count ( $descendants ), 5 );
 	}
 	function testDepth()
 	{
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		$this->assertEquals ( 0, $this->Instance ()->Depth ( 1 ) );
 		$this->assertEquals ( 3, $this->Instance ()->Depth ( $Child13 ) );
 		$this->assertEquals ( 2, $this->Instance ()->Depth ( $Child1 ) );
 	}
 	function testPath()
 	{
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
-		$Child2 = $this->Instance ()->Add ( "{$this->Type()}1-2", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
+		$Child2 = $this->Instance ()->Add ( "{$this->type()}1-2", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child12 = $this->Instance ()->Add ( "{$this->Type()}1-1-2", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 
 		$this->assertEquals ( "/", $this->Instance ()->Path ( 1 ) );
 		$this->assertEquals ( null, $this->Instance ()->Path ( 100 ) );
-		$this->assertEquals ( "/{$this->Type()}1", $this->Instance ()->Path ( $Parent ) );
-		$this->assertEquals ( "/{$this->Type()}1/{$this->Type()}1-2", $this->Instance ()->Path ( $Child2 ) );
-		$this->assertEquals ( "/{$this->Type()}1/{$this->Type()}1-1/{$this->Type()}1-1-3", $this->Instance ()->Path ( $Child13 ) );
+		$this->assertEquals ( "/{$this->type()}1", $this->Instance ()->Path ( $Parent ) );
+		$this->assertEquals ( "/{$this->type()}1/{$this->type()}1-2", $this->Instance ()->Path ( $Child2 ) );
+		$this->assertEquals ( "/{$this->type()}1/{$this->type()}1-1/{$this->type()}1-1-3", $this->Instance ()->Path ( $Child13 ) );
 	}
 	function testParentNode()
 	{
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
-		$Child2 = $this->Instance ()->Add ( "{$this->Type()}1-2", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
+		$Child2 = $this->Instance ()->Add ( "{$this->type()}1-2", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child12 = $this->Instance ()->Add ( "{$this->Type()}1-1-2", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 		$t = $this->Instance ()->ParentNode ( 1 );
 		$this->assertEquals ( null, $t );
@@ -216,14 +216,14 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	}
 	function testReset()
 	{
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
-		$Child2 = $this->Instance ()->Add ( "{$this->Type()}1-2", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
+		$Child2 = $this->Instance ()->Add ( "{$this->type()}1-2", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child12 = $this->Instance ()->Add ( "{$this->Type()}1-1-2", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 		$this->Instance ()->Reset ( true );
 		$this->assertEquals ( 1, $this->Instance ()->TitleID ( "root" ) );
@@ -233,31 +233,31 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	}
 	function testRemoveAgain()
 	{
-		$ID = $this->Instance ()->Add ( "some_{$this->Type()}", "some description" );
-		$this->assertEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->Type()}" ) );
+		$ID = $this->Instance ()->Add ( "some_{$this->type()}", "some description" );
+		$this->assertEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
 		
 		$this->Instance ()->Remove ( $ID );
-		$this->assertNotEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->Type()}" ) );
-		$this->assertEquals ( null, $this->Instance ()->TitleID ( "some_{$this->Type()}" ) );
+		$this->assertNotEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
+		$this->assertEquals ( null, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
 		
 
 		// ow recursive
-		$Parent = $this->Instance ()->Add ( "{$this->Type()}1", "" );
+		$Parent = $this->Instance ()->Add ( "{$this->type()}1", "" );
 		
-		$Child1 = $this->Instance ()->Add ( "{$this->Type()}1-1", "", $Parent );
-		$Child2 = $this->Instance ()->Add ( "{$this->Type()}1-2", "", $Parent );
+		$Child1 = $this->Instance ()->Add ( "{$this->type()}1-1", "", $Parent );
+		$Child2 = $this->Instance ()->Add ( "{$this->type()}1-2", "", $Parent );
 		
-		$Child11 = $this->Instance ()->Add ( "{$this->Type()}1-1-1", "", $Child1 );
-		$Child12 = $this->Instance ()->Add ( "{$this->Type()}1-1-2", "", $Child1 );
-		$Child13 = $this->Instance ()->Add ( "{$this->Type()}1-1-3", "", $Child1 );
+		$Child11 = $this->Instance ()->Add ( "{$this->type()}1-1-1", "", $Child1 );
+		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
+		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 
 		$this->Instance ()->Remove ( $Child1, true );
 
 		$this->assertEquals ( 3, $this->Instance ()->Count () );
-		$this->assertEquals ( $Child2, $this->Instance ()->TitleID ( "{$this->Type()}1-2" ) );
-		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->Type()}1-1" ) );
-		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->Type()}1-1-1" ) );
+		$this->assertEquals ( $Child2, $this->Instance ()->TitleID ( "{$this->type()}1-2" ) );
+		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->type()}1-1" ) );
+		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->type()}1-1-1" ) );
 	}
 	/**
 	 * @depends testAdd

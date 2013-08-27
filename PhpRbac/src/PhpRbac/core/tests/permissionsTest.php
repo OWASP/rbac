@@ -11,7 +11,7 @@ class PHPRBACPermissionsTest extends PHPRBACBaseTest
 		return jf::$RBAC->Permissions;
 	}
 	
-	protected function Type()
+	protected function type()
 	{
 		return "permissions";
 	}

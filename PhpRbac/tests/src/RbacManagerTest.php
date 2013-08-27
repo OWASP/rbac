@@ -276,12 +276,12 @@ class RbacManagerTest extends \RbacSetup
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
 
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->TablePrefix() . 'rolepermissions',
+            self::$rbac->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
 
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->TablePrefix() . 'userroles',
+            self::$rbac->tablePrefix() . 'userroles',
             array('AssignmentDate')
         );
 

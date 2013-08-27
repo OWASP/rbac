@@ -11,7 +11,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 	{
 		return jf::$RBAC->Roles;
 	}
-	protected function Type()
+	protected function type()
 	{
 		return "role";
 	}

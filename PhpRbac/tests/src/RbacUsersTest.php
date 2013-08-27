@@ -35,11 +35,11 @@ class RbacUsersTest extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
         ));
 
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
             array('AssignmentDate')
         );
 
@@ -58,11 +58,11 @@ class RbacUsersTest extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
         ));
 
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
             array('AssignmentDate')
         );
 
@@ -282,11 +282,11 @@ class RbacUsersTest extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
         ));
 
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
             array('AssignmentDate')
         );
 
@@ -333,11 +333,11 @@ class RbacUsersTest extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
         ));
 
         $filterDataSet->setExcludeColumnsForTable(
-            self::$rbac->Users->TablePrefix() . 'userroles',
+            self::$rbac->Users->tablePrefix() . 'userroles',
             array('AssignmentDate')
         );
 

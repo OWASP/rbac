@@ -17,13 +17,13 @@ class RbacBase extends \RbacSetup
 {
     /*
      * Tests for $this->Instance()->Add()
-    */
+     */
 
     public function testAddNullTitle()
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $type_id = $this->Instance()->Add(null, $this->Type() . ' Description');
+        $type_id = $this->Instance()->Add(null, $this->type() . ' Description');
 
         $this->assertSame(0, $type_id);
     }
@@ -32,7 +32,7 @@ class RbacBase extends \RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $type_id = $this->Instance()->Add($this->Type() . '_title', null);
+        $type_id = $this->Instance()->Add($this->type() . '_title', null);
 
         $this->assertSame(0, $type_id);
     }
@@ -41,16 +41,16 @@ class RbacBase extends \RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $this->Instance()->Add($this->Type() . '_title_1', $this->Type() . ' Description 1');
-        $this->Instance()->Add($this->Type() . '_title_2', $this->Type() . ' Description 2');
-        $this->Instance()->Add($this->Type() . '_title_3', $this->Type() . ' Description 3');
+        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1');
+        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
+        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_' . $this->Type() . '_sequential.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_' . $this->type() . '_sequential.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -59,35 +59,35 @@ class RbacBase extends \RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $type_1 = $this->Instance()->Add('blog', 'Define ' . $this->Type() . ' for the Blog');
-        $this->Instance()->Add($this->Type() . '_title_1', $this->Type() . ' Description 1', $type_1);
-        $this->Instance()->Add($this->Type() . '_title_2', $this->Type() . ' Description 2', $type_1);
-        $this->Instance()->Add($this->Type() . '_title_3', $this->Type() . ' Description 3', $type_1);
+        $type_1 = $this->Instance()->Add('blog', 'Define ' . $this->type() . ' for the Blog');
+        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1', $type_1);
+        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2', $type_1);
+        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3', $type_1);
 
-        $type_2 = $this->Instance()->Add('forum', 'Define ' . $this->Type() . ' for the Forums');
-        $this->Instance()->Add($this->Type() . '_title_1', $this->Type() . ' Description 1', $type_2);
-        $this->Instance()->Add($this->Type() . '_title_2', $this->Type() . ' Description 2', $type_2);
-        $this->Instance()->Add($this->Type() . '_title_3', $this->Type() . ' Description 3', $type_2);
+        $type_2 = $this->Instance()->Add('forum', 'Define ' . $this->type() . ' for the Forums');
+        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1', $type_2);
+        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2', $type_2);
+        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3', $type_2);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_' . $this->Type() . '_hierarchy.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_' . $this->type() . '_hierarchy.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
     /*
      * Tests for $this->Instance()->Count()
-    */
+     */
 
     public function testCount()
     {
-        $this->Instance()->Add($this->Type() . '_title_1', $this->Type() . ' Description 1');
-        $this->Instance()->Add($this->Type() . '_title_2', $this->Type() . ' Description 2');
-        $this->Instance()->Add($this->Type() . '_title_3', $this->Type() . ' Description 3');
+        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1');
+        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
+        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
 
         $type_count = $this->Instance()->Count();
 
@@ -96,33 +96,33 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->TitleID()
-    */
+     */
 
     public function testGetTitleId()
     {
-        $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
-        $title_id = $this->Instance()->TitleID($this->Type() . '_title');
+        $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $title_id = $this->Instance()->TitleID($this->type() . '_title');
 
         $this->assertSame('2', $title_id);
     }
 
     public function testGetTitleIdNull()
     {
-        $title_id = $this->Instance()->TitleID($this->Type() . '_title');
+        $title_id = $this->Instance()->TitleID($this->type() . '_title');
 
         $this->assertNull($title_id);
     }
 
     /*
      * Tests for $this->Instance()->GetTitle()
-    */
+     */
 
     public function testGetTitle()
     {
-        $type_id = $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
+        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
         $type_title = $this->Instance()->GetTitle($type_id);
 
-        $this->assertSame($this->Type() . '_title', $type_title);
+        $this->assertSame($this->type() . '_title', $type_title);
     }
 
     public function testGetTitleNull()
@@ -134,7 +134,7 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->GetDescription()
-    */
+     */
 
     public function testGetDescription()
     {
@@ -152,64 +152,64 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->Edit()
-    */
+     */
 
     public function testEditTitle()
     {
-        $type_id = $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
-        $this->Instance()->Edit($type_id, $this->Type() . '_title_edited');
+        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $this->Instance()->Edit($type_id, $this->type() . '_title_edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type() . ' WHERE ID=2'
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->Type() . '_title.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->type() . '_title.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
     public function testEditDescription()
     {
-        $type_id = $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
-        $this->Instance()->Edit($type_id, null, $this->Type() . ' Description edited');
+        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $this->Instance()->Edit($type_id, null, $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type() . ' WHERE ID=2'
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->Type() . '_description.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->type() . '_description.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
     public function testEditAll()
     {
-        $type_id = $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
-        $this->Instance()->Edit($type_id, $this->Type() . '_title_edited', $this->Type() . ' Description edited');
+        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $this->Instance()->Edit($type_id, $this->type() . '_title_edited', $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type() . ' WHERE ID=2'
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->Type() . '_all.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->type() . '_all.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
     public function testEditNullId()
     {
-        $type_id = $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
-        $result = $this->Instance()->Edit(intval(3), $this->Type() . '_title', $this->Type() . ' Description');
+        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $result = $this->Instance()->Edit(intval(3), $this->type() . '_title', $this->type() . ' Description');
 
         $this->assertFalse($result);
     }
 
     public function testEditNullParameters()
     {
-        $type_id = $this->Instance()->Add($this->Type() . '_title', $this->Type() . ' Description');
+        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
         $result = $this->Instance()->Edit($type_id);
 
         $this->assertFalse($result);
@@ -217,18 +217,18 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->AddPath()
-    */
+     */
 
     public function testAddPathSingle()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->Type() . '_single.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_single.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -236,35 +236,35 @@ class RbacBase extends \RbacSetup
     public function testAddPathSingleDescription()
     {
         $descriptions = array(
-            $this->Type() . ' Description 1',
-            $this->Type() . ' Description 2',
-            $this->Type() . ' Description 3',
+            $this->type() . ' Description 1',
+            $this->type() . ' Description 2',
+            $this->type() . ' Description 3',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3', $descriptions);
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->Type() . '_single_description.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_single_description.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
     public function testAddPathSequential()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->Type() . '_sequential.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_sequential.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -272,32 +272,32 @@ class RbacBase extends \RbacSetup
     public function testAddPathSequentialDescription()
     {
         $descriptions_1 = array(
-            $this->Type() . ' Description 1',
+            $this->type() . ' Description 1',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/', $descriptions_1);
+        $this->Instance()->AddPath('/' . $this->type() . '_1/', $descriptions_1);
 
         $descriptions_2 = array(
             null,
-            $this->Type() . ' Description 2',
+            $this->type() . ' Description 2',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/', $descriptions_2);
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/', $descriptions_2);
 
         $descriptions_3 = array(
             null,
             null,
-            $this->Type() . ' Description 3',
+            $this->type() . ' Description 3',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3', $descriptions_3);
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_3);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->Type() . '_sequential_description.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_sequential_description.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -305,21 +305,21 @@ class RbacBase extends \RbacSetup
     public function testAddPathHierarchy()
     {
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_4');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_4');
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_12/' . $this->Type() . '_13/' . $this->Type() . '_14');
-        $this->Instance()->AddPath('/' . $this->Type() . '_12/' . $this->Type() . '_15/' . $this->Type() . '_11');
+        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_13/' . $this->type() . '_14');
+        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_15/' . $this->type() . '_11');
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_23/' . $this->Type() . '_24/' . $this->Type() . '_25');
-        $this->Instance()->AddPath('/' . $this->Type() . '_33/' . $this->Type() . '_34/' . $this->Type() . '_35');
+        $this->Instance()->AddPath('/' . $this->type() . '_23/' . $this->type() . '_24/' . $this->type() . '_25');
+        $this->Instance()->AddPath('/' . $this->type() . '_33/' . $this->type() . '_34/' . $this->type() . '_35');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->Type() . '_hierarchy.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_hierarchy.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -327,59 +327,59 @@ class RbacBase extends \RbacSetup
     public function testAddPathHierarchyDescription()
     {
         $descriptions_1 = array(
-            $this->Type() . ' Description 1',
-            $this->Type() . ' Description 2',
-            $this->Type() . ' Description 3',
+            $this->type() . ' Description 1',
+            $this->type() . ' Description 2',
+            $this->type() . ' Description 3',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3', $descriptions_1);
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_1);
 
         $descriptions_2 = array(
             null,
             null,
-            $this->Type() . ' Description 4',
+            $this->type() . ' Description 4',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_4', $descriptions_2);
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_4', $descriptions_2);
 
         $descriptions_3 = array(
-            $this->Type() . ' Description 12',
-            $this->Type() . ' Description 13',
-            $this->Type() . ' Description 14',
+            $this->type() . ' Description 12',
+            $this->type() . ' Description 13',
+            $this->type() . ' Description 14',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_12/' . $this->Type() . '_13/' . $this->Type() . '_14', $descriptions_3);
+        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_13/' . $this->type() . '_14', $descriptions_3);
 
         $descriptions_4 = array(
             null,
-            $this->Type() . ' Description 15',
-            $this->Type() . ' Description 11',
+            $this->type() . ' Description 15',
+            $this->type() . ' Description 11',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_12/' . $this->Type() . '_15/' . $this->Type() . '_11', $descriptions_4);
+        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_15/' . $this->type() . '_11', $descriptions_4);
 
         $descriptions_5 = array(
-            $this->Type() . ' Description 23',
-            $this->Type() . ' Description 24',
-            $this->Type() . ' Description 25',
+            $this->type() . ' Description 23',
+            $this->type() . ' Description 24',
+            $this->type() . ' Description 25',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_23/' . $this->Type() . '_24/' . $this->Type() . '_25', $descriptions_5);
+        $this->Instance()->AddPath('/' . $this->type() . '_23/' . $this->type() . '_24/' . $this->type() . '_25', $descriptions_5);
 
         $descriptions_6 = array(
-            $this->Type() . ' Description 33',
-            $this->Type() . ' Description 34',
-            $this->Type() . ' Description 35',
+            $this->type() . ' Description 33',
+            $this->type() . ' Description 34',
+            $this->type() . ' Description 35',
         );
 
-        $this->Instance()->AddPath('/' . $this->Type() . '_33/' . $this->Type() . '_34/' . $this->Type() . '_35', $descriptions_6);
+        $this->Instance()->AddPath('/' . $this->type() . '_33/' . $this->type() . '_34/' . $this->type() . '_35', $descriptions_6);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->TablePrefix() . $this->Type(), 'SELECT * FROM ' . $this->Instance()->TablePrefix() . $this->Type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->Type() . '_hierarchy_description.xml')
-        ->getTable($this->Instance()->TablePrefix() . $this->Type());
+        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_hierarchy_description.xml')
+        ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -395,46 +395,63 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->PathID()
-    */
+     */
 
     public function testPathID()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $path_id = $this->Instance()->PathID('/' . $this->Type() . '_1/' . $this->Type() . '_2');
+        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2');
 
         $this->assertSame('3', $path_id);
     }
 
     public function testPathIDNullBadPath()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $path_id = $this->Instance()->PathID($this->Type() . '_2');
+        $path_id = $this->Instance()->PathID($this->type() . '_2');
 
         $this->assertNull($path_id);
     }
 
+    /**
+     * @expectedException Exception
+     */
+
+    public function testPathIDGroupConcatExceedCharCount()
+    {
+        $id = null;
+        $path = "";
+        for($i = 0; $i < 100; ++ $i)
+        {
+            $id = $this->Instance()->Add("lgd depth{$i}", "description of depth{$i}", $id);
+            $path .= "/depth{$i}";
+        }
+
+        $this->Instance()->PathID($path);
+    }
+
     /*
      * Tests for $this->Instance()->Path()
-    */
+     */
 
     public function testPath()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $path_returned = $this->Instance()->Path(intval(3));
 
-        $this->assertSame('/' . $this->Type() . '_1/' . $this->Type() . '_2', $path_returned);
+        $this->assertSame('/' . $this->type() . '_1/' . $this->type() . '_2', $path_returned);
     }
 
     public function testPathNull()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $path_returned = $this->Instance()->Path(intval(5));
 
@@ -443,13 +460,13 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->Children()
-    */
+     */
 
     public function testChildren()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_4/' . $this->Type() . '_5');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_6/' . $this->Type() . '_7');
-        $path_id = $this->Instance()->PathID('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
+        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $children = $this->Instance()->Children($path_id);
 
@@ -458,14 +475,14 @@ class RbacBase extends \RbacSetup
             	   'ID' => '5',
             	   'Lft' => '4',
             	   'Rght' => '7',
-            	   'Title' => $this->Type() . '_4',
+            	   'Title' => $this->type() . '_4',
             	   'Description' => '',
             ),
             array(
             	   'ID' => '7',
             	   'Lft' => '8',
             	   'Rght' => '11',
-            	   'Title' => $this->Type() . '_6',
+            	   'Title' => $this->type() . '_6',
             	   'Description' => '',
             )
         );
@@ -482,46 +499,46 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->Descendants()
-    */
+     */
 
     public function testDescendants()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_4/' . $this->Type() . '_5');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_6/' . $this->Type() . '_7');
-        $path_id = $this->Instance()->PathID('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
+        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $descendants = $this->Instance()->Descendants($path_id);
 
         $expected = array(
-            $this->Type() . '_4' => array(
+            $this->type() . '_4' => array(
             	   'ID' => '5',
             	   'Lft' => '4',
             	   'Rght' => '7',
-            	   'Title' => $this->Type() . '_4',
+            	   'Title' => $this->type() . '_4',
             	   'Description' => '',
             	   'Depth' => '1',
             ),
-            $this->Type() . '_5' => array(
+            $this->type() . '_5' => array(
             	   'ID' => '6',
             	   'Lft' => '5',
             	   'Rght' => '6',
-            	   'Title' => $this->Type() . '_5',
+            	   'Title' => $this->type() . '_5',
             	   'Description' => '',
             	   'Depth' => '2',
             ),
-            $this->Type() . '_6' => array(
+            $this->type() . '_6' => array(
             	   'ID' => '7',
             	   'Lft' => '8',
             	   'Rght' => '11',
-            	   'Title' => $this->Type() . '_6',
+            	   'Title' => $this->type() . '_6',
             	   'Description' => '',
         	       'Depth' => '1',
             ),
-            $this->Type() . '_7' => array(
+            $this->type() . '_7' => array(
             	   'ID' => '8',
             	   'Lft' => '9',
             	   'Rght' => '10',
-            	   'Title' => $this->Type() . '_7',
+            	   'Title' => $this->type() . '_7',
             	   'Description' => '',
             	   'Depth' => '2',
             ),
@@ -539,12 +556,12 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->Depth()
-    */
+     */
 
     public function testDepth()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_4/' . $this->Type() . '_5');
-        $path_id = $this->Instance()->PathID('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $depth = $this->Instance()->Depth($path_id);
 
@@ -560,13 +577,13 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->ParentNode()
-    */
+     */
 
     public function testParentNode()
     {
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_4/' . $this->Type() . '_5');
-        $this->Instance()->AddPath('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3/' . $this->Type() . '_6/' . $this->Type() . '_7');
-        $path_id = $this->Instance()->PathID('/' . $this->Type() . '_1/' . $this->Type() . '_2/' . $this->Type() . '_3');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
+        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $parent_node = $this->Instance()->ParentNode($path_id);
 
@@ -574,7 +591,7 @@ class RbacBase extends \RbacSetup
             'ID' => '3',
             'Lft' => '2',
             'Rght' => '13',
-            'Title' => $this->Type() . '_2',
+            'Title' => $this->type() . '_2',
             'Description' => '',
         );
 
@@ -590,7 +607,7 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->Assign()
-    */
+     */
 
     public function testAssignWithId()
     {
@@ -602,21 +619,21 @@ class RbacBase extends \RbacSetup
         $dataSet = $this->getConnection()->createDataSet();
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
-        $filterDataSet->addExcludeTables(array($this->Instance()->TablePrefix() . 'userroles'));
+        $filterDataSet->addExcludeTables(array($this->Instance()->tablePrefix() . 'userroles'));
 
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->Type() . '_id.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '_id.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 
     /*
      * Tests for $this->Instance()->Unassign()
-    */
+     */
 
     public function testUnassign()
     {
@@ -630,22 +647,22 @@ class RbacBase extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            self::$rbac->Users->TablePrefix() . 'rolepermissions',
+            self::$rbac->Users->tablePrefix() . 'rolepermissions',
         ));
 
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->Type() . '.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 
     /*
      * Tests for $this->Instance()->ResetAssignments()
-    */
+     */
 
     public function testResetPermRoleAssignments()
     {
@@ -669,15 +686,15 @@ class RbacBase extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            self::$rbac->Users->TablePrefix() . 'rolepermissions',
+            self::$rbac->Users->tablePrefix() . 'rolepermissions',
         ));
 
         $filterDataSet->setExcludeColumnsForTable(
-            $this->Instance()->TablePrefix() . 'rolepermissions',
+            $this->Instance()->tablePrefix() . 'rolepermissions',
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_assignments_' . $this->Type() . '.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_assignments_' . $this->type() . '.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -693,13 +710,13 @@ class RbacBase extends \RbacSetup
 
     /*
      * Tests for $this->Instance()->Reset()
-    */
+     */
 
     public function testReset()
     {
-        $this->Instance()->Add($this->Type() . '_title_1', $this->Type() . ' Description 1');
-        $this->Instance()->Add($this->Type() . '_title_2', $this->Type() . ' Description 2');
-        $this->Instance()->Add($this->Type() . '_title_3', $this->Type() . ' Description 3');
+        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1');
+        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
+        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
 
         $this->Instance()->Reset(true);
 
@@ -707,10 +724,10 @@ class RbacBase extends \RbacSetup
 
         $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
         $filterDataSet->addIncludeTables(array(
-            $this->Instance()->TablePrefix() . $this->Type(),
+            $this->Instance()->tablePrefix() . $this->type(),
         ));
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_' . $this->Type() . '.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_' . $this->type() . '.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

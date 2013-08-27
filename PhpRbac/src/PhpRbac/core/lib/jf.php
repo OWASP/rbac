@@ -8,7 +8,7 @@ class jf
 	 */
 	public static $RBAC;
 
-	public static $DB = null;
+	public static $Db = null;
 
 	public static $TABLE_PREFIX;
 
@@ -17,7 +17,7 @@ class jf
 	    self::$TABLE_PREFIX = $table_prefix;
 	}
 
-	static function TablePrefix()
+	static function tablePrefix()
 	{
 	    return self::$TABLE_PREFIX;
 	}
@@ -41,10 +41,10 @@ class jf
 	static function SQL($Query)
 	{
 		$args = func_get_args ();
-		if (get_class ( self::$DB ) == "PDO")
+		if (get_class ( self::$Db ) == "PDO")
 			return call_user_func_array ( "self::SQL_pdo", $args );
 		else
-			if (get_class ( self::$DB ) == "mysqli")
+			if (get_class ( self::$Db ) == "mysqli")
 				return call_user_func_array ( "self::SQL_mysqli", $args );
 			else
 				throw new Exception ( "Unknown database interface type." );
@@ -55,7 +55,7 @@ class jf
 		$args = func_get_args ();
 		if (count ( $args ) == 1)
 		{
-			$result = self::$DB->query ( $Query );
+			$result = self::$Db->query ( $Query );
 			if ($result===false)
 				return null;
 			$res=$result->fetchAll ( PDO::FETCH_ASSOC );
@@ -65,9 +65,9 @@ class jf
 		}
 		else
 		{
-			if (! $stmt = self::$DB->prepare ( $Query ))
+			if (! $stmt = self::$Db->prepare ( $Query ))
 			{
-				$Error = self::$DB->errorInfo ();
+				$Error = self::$Db->errorInfo ();
 				trigger_error ( "Unable to prepare statement: {$Query}, reason: {$Error[2]}" );
 			}
 			array_shift ( $args ); // remove $Query from args
@@ -82,7 +82,7 @@ class jf
 			{
 				if (!$success)
 					return null;
-				$res = self::$DB->lastInsertId ();
+				$res = self::$Db->lastInsertId ();
 				if ($res == 0)
 					return $stmt->rowCount ();
 				return $res;
@@ -105,7 +105,7 @@ class jf
 		$args = func_get_args ();
 		if (count ( $args ) == 1)
 		{
-			$result = self::$DB->query ( $Query );
+			$result = self::$Db->query ( $Query );
 			if ($result===true)
 				return true;
 			if ($result && $result->num_rows)
@@ -119,8 +119,8 @@ class jf
 		}
 		else
 		{
-			if (! $preparedStatement = self::$DB->prepare ( $Query ))
-				trigger_error ( "Unable to prepare statement: {$Query}, reason: ".self::$DB->error );
+			if (! $preparedStatement = self::$Db->prepare ( $Query ))
+				trigger_error ( "Unable to prepare statement: {$Query}, reason: ".self::$Db->error );
 			array_shift ( $args ); // remove $Query from args
 			$a = array ();
 			foreach ( $args as $k => &$v )
@@ -136,13 +136,13 @@ class jf
 			$type = substr ( trim ( strtoupper ( $Query ) ), 0, 6 );
 			if ($type == "INSERT")
 			{
-				$res = self::$DB->insert_id;
+				$res = self::$Db->insert_id;
 				if ($res == 0)
-					return self::$DB->affected_rows;
+					return self::$Db->affected_rows;
 				return $res;
 			}
 			elseif ($type == "DELETE" or $type == "UPDATE" or $type == "REPLAC")
-				return self::$DB->affected_rows;
+				return self::$Db->affected_rows;
 			elseif ($type == "SELECT")
 			{
 				// fetching all results in a 2D array
