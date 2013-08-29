@@ -77,22 +77,22 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 
 		$UID = 2;
-		$this->assertEquals ( 0, jf::$RBAC->Users->RoleCount ( $UID ) );
+		$this->assertEquals ( 0, jf::$RBAC->Users->roleCount ( $UID ) );
 		
 		jf::$RBAC->Users->assign ( $ID21, $UID );
-		$this->assertEquals ( 1, jf::$RBAC->Users->RoleCount ( $UID ) );
+		$this->assertEquals ( 1, jf::$RBAC->Users->roleCount ( $UID ) );
 		
 		#same
 		jf::$RBAC->Users->assign ( $ID21, $UID );
-		$this->assertEquals ( 1, jf::$RBAC->Users->RoleCount ( $UID ) );
+		$this->assertEquals ( 1, jf::$RBAC->Users->roleCount ( $UID ) );
 		
 		#new
 		jf::$RBAC->Users->assign ( $ID211, $UID );
-		$this->assertEquals ( 2, jf::$RBAC->Users->RoleCount ( $UID ) );
+		$this->assertEquals ( 2, jf::$RBAC->Users->roleCount ( $UID ) );
 		
 		#to another user
 		jf::$RBAC->Users->assign ( $ID211, 1 );
-		$this->assertEquals ( 2, jf::$RBAC->Users->RoleCount ( $UID ) );
+		$this->assertEquals ( 2, jf::$RBAC->Users->roleCount ( $UID ) );
 	}
 	
 	/**

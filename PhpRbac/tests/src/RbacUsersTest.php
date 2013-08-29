@@ -228,7 +228,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Users->RoleCount()
+     * Tests for self::$rbac->Users->roleCount()
      */
 
     public function testUsersRoleCount()
@@ -241,14 +241,14 @@ class RbacUsersTest extends \RbacSetup
         self::$rbac->Users->assign($role_id_2, 5);
         self::$rbac->Users->assign($role_id_3, 5);
 
-        $result = self::$rbac->Users->RoleCount(5);
+        $result = self::$rbac->Users->roleCount(5);
 
         $this->assertSame(3, $result);
     }
 
     public function testUsersRoleCountNoRoles()
     {
-        $result = self::$rbac->Users->RoleCount(10);
+        $result = self::$rbac->Users->roleCount(10);
 
         $this->assertSame(0, $result);
     }
@@ -259,7 +259,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersRoleCountNoRolesEmpty()
     {
-        $result = self::$rbac->Users->RoleCount();
+        $result = self::$rbac->Users->roleCount();
     }
 
     /*
