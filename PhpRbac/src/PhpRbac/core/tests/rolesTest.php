@@ -99,9 +99,9 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$ID121 = jf::$RBAC->Roles->Add ( "role1-2-1", "description of role", $ID12 );
 		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID1, $UID ) );
 		
-		$this->assertTrue ( jf::$RBAC->Users->HasRole ( $ID1, $UID ) );
+		$this->assertTrue ( jf::$RBAC->Users->hasRole ( $ID1, $UID ) );
 		jf::$RBAC->Roles->unassignUsers ( $ID1 );
-		$this->assertFalse ( jf::$RBAC->Users->HasRole ( $ID1, $UID ) );
+		$this->assertFalse ( jf::$RBAC->Users->hasRole ( $ID1, $UID ) );
 	}
 	function testPermissions()
 	{

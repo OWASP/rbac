@@ -899,7 +899,7 @@ class RBACUserManager extends JModel
 	 * @throws RbacUserNotProvidedException
 	 * @return boolean success
 	 */
-	function HasRole($Role, $UserID = null)
+	function hasRole($Role, $UserID = null)
 	{
 	    if ($UserID === null)
 		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");

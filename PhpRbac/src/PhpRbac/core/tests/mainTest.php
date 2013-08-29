@@ -89,7 +89,7 @@ class PHPRBACMainTest extends PHPRBAC_Test
 
 		// now checking
 		
-		$this->assertTrue ( jf::$RBAC->Users->HasRole ( "/CEO/Financial", 2 ) );
+		$this->assertTrue ( jf::$RBAC->Users->hasRole ( "/CEO/Financial", 2 ) );
 		$this->assertTrue ( jf::$RBAC->Check ( "/Signature/financial", 2 ) );
 		$this->assertTrue ( jf::$RBAC->Check ( "/reports/general", 2 ) );
 		$this->assertTrue ( jf::$RBAC->Check ( "/reports/IT/security", 2 ) );

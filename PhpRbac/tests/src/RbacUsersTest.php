@@ -92,7 +92,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Users->HasRole()
+     * Tests for self::$rbac->Users->hasRole()
      */
 
     public function testUsersHasRoleId()
@@ -101,7 +101,7 @@ class RbacUsersTest extends \RbacSetup
 
         self::$rbac->Users->assign($role_id, 5);
 
-        $result = self::$rbac->Users->HasRole($role_id, 5);
+        $result = self::$rbac->Users->hasRole($role_id, 5);
 
         $this->assertTrue($result);
     }
@@ -112,7 +112,7 @@ class RbacUsersTest extends \RbacSetup
 
         self::$rbac->Users->assign($role_id, 5);
 
-        $result = self::$rbac->Users->HasRole('roles_1', 5);
+        $result = self::$rbac->Users->hasRole('roles_1', 5);
 
         $this->assertTrue($result);
     }
@@ -123,7 +123,7 @@ class RbacUsersTest extends \RbacSetup
 
         self::$rbac->Users->assign($role_id, 5);
 
-        $result = self::$rbac->Users->HasRole('/roles_1/roles_2/roles_3', 5);
+        $result = self::$rbac->Users->hasRole('/roles_1/roles_2/roles_3', 5);
 
         $this->assertTrue($result);
     }
@@ -134,7 +134,7 @@ class RbacUsersTest extends \RbacSetup
 
         self::$rbac->Users->assign($role_id, 5);
 
-        $result = self::$rbac->Users->HasRole(1, 5);
+        $result = self::$rbac->Users->hasRole(1, 5);
 
         $this->assertFalse($result);
     }
@@ -145,7 +145,7 @@ class RbacUsersTest extends \RbacSetup
 
         self::$rbac->Users->assign($role_id, 5);
 
-        $result = self::$rbac->Users->HasRole(null, 5);
+        $result = self::$rbac->Users->hasRole(null, 5);
 
         $this->assertFalse($result);
     }
@@ -156,7 +156,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersHasRoleNoUserId()
     {
-        $result = self::$rbac->Users->HasRole(5);
+        $result = self::$rbac->Users->hasRole(5);
     }
 
     /**
@@ -165,7 +165,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersHasRolePassNothing()
     {
-        $result = self::$rbac->Users->HasRole();
+        $result = self::$rbac->Users->hasRole();
     }
 
     /*
