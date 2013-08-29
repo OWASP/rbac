@@ -40,7 +40,7 @@ class Rbac
 
     public function enforce($permission, $user_id)
     {
-        return jf::$RBAC->Enforce($permission, $user_id);
+        return jf::$RBAC->enforce($permission, $user_id);
     }
 
     public function reset($ensure = false)

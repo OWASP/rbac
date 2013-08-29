@@ -594,7 +594,7 @@ class RBACManager extends JModel
             *
             * @throws RbacUserNotProvidedException
 	 */
-	function Enforce($Permission, $UserID = null)
+	function enforce($Permission, $UserID = null)
 	{
 	if ($UserID === null)
                 throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
