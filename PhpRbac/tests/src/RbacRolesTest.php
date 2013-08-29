@@ -179,14 +179,14 @@ class RbacRolesTest extends \RbacBase
     }
     
     /*
-     * Tests for self::$rbac->Roles->Remove()
+     * Tests for self::$rbac->Roles->remove()
      */
     
     public function testRolesRemoveSingle()
     {
         $role_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
     
-        $this->Instance()->Remove($role_id_1);
+        $this->Instance()->remove($role_id_1);
     
         $dataSet = $this->getConnection()->createDataSet();
     
@@ -216,7 +216,7 @@ class RbacRolesTest extends \RbacBase
     
         self::$rbac->Users->assign($role_id_1, 5);
     
-        $this->Instance()->Remove($role_id_1);
+        $this->Instance()->remove($role_id_1);
     
         $dataSet = $this->getConnection()->createDataSet();
     
@@ -253,7 +253,7 @@ class RbacRolesTest extends \RbacBase
     
         self::$rbac->Users->assign($role_id_1, 5);
         
-        $result = $this->Instance()->Remove($role_id_1, true);
+        $result = $this->Instance()->remove($role_id_1, true);
     
         $dataSet = $this->getConnection()->createDataSet();
     
@@ -281,7 +281,7 @@ class RbacRolesTest extends \RbacBase
     
     public function testRolesRemoveFalse()
     {
-        $result = $this->Instance()->Remove(5);
+        $result = $this->Instance()->remove(5);
     
         $this->assertFalse($result);
     }

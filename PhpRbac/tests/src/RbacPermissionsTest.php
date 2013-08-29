@@ -32,14 +32,14 @@ class RbacPermissionsTest extends \RbacBase
     }
     
     /*
-     * Tests for $this->Instance()->Remove()
+     * Tests for $this->Instance()->remove()
      */
 
     public function testPermissionsRemoveSingle()
     {
         $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         
-        $this->Instance()->Remove($perm_id_1);
+        $this->Instance()->remove($perm_id_1);
         
         $dataSet = $this->getConnection()->createDataSet();
         
@@ -60,7 +60,7 @@ class RbacPermissionsTest extends \RbacBase
         
         $this->Instance()->assign($role_id_1, $perm_id_1);
         
-        $this->Instance()->Remove($perm_id_1);
+        $this->Instance()->remove($perm_id_1);
         
         $dataSet = $this->getConnection()->createDataSet();
         
@@ -92,7 +92,7 @@ class RbacPermissionsTest extends \RbacBase
         
         $this->Instance()->assign($role_id_1, $perm_id_2);
         
-        $result = $this->Instance()->Remove($perm_id_1, true);
+        $result = $this->Instance()->remove($perm_id_1, true);
         
         $dataSet = $this->getConnection()->createDataSet();
         
@@ -115,7 +115,7 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsRemoveFalse()
     {
-        $result = $this->Instance()->Remove(5);
+        $result = $this->Instance()->remove(5);
         
         $this->assertFalse($result);
     }

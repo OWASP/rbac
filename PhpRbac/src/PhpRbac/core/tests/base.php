@@ -42,12 +42,12 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$ID2 = $this->Instance ()->Add ( "{$this->type()}2", "description of the {$this->type()}", $ID );
 		$ID3 = $this->Instance ()->Add ( "{$this->type()}3", "description of the {$this->type()}", $ID2 );
 		$ID4 = $this->Instance ()->Add ( "{$this->type()}4", "description of the {$this->type()}", $ID2 );
-		$this->assertTrue ( $this->Instance ()->Remove ( $ID ) );
-		$this->assertFalse ( $this->Instance ()->Remove ( $ID ) );
-		$this->assertTrue ( $this->Instance ()->Remove ( $ID2, true ) );
-		$this->assertFalse ( $this->Instance ()->Remove ( $ID2 ) );
-		$this->assertFalse ( $this->Instance ()->Remove ( $ID3 ) );
-		$this->assertFalse ( $this->Instance ()->Remove ( $ID4 ) );
+		$this->assertTrue ( $this->Instance ()->remove ( $ID ) );
+		$this->assertFalse ( $this->Instance ()->remove ( $ID ) );
+		$this->assertTrue ( $this->Instance ()->remove ( $ID2, true ) );
+		$this->assertFalse ( $this->Instance ()->remove ( $ID2 ) );
+		$this->assertFalse ( $this->Instance ()->remove ( $ID3 ) );
+		$this->assertFalse ( $this->Instance ()->remove ( $ID4 ) );
 	}
 	function testGetInfo()
 	{
@@ -236,7 +236,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$ID = $this->Instance ()->Add ( "some_{$this->type()}", "some description" );
 		$this->assertEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
 		
-		$this->Instance ()->Remove ( $ID );
+		$this->Instance ()->remove ( $ID );
 		$this->assertNotEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
 		$this->assertEquals ( null, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
 		
@@ -252,7 +252,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 
-		$this->Instance ()->Remove ( $Child1, true );
+		$this->Instance ()->remove ( $Child1, true );
 
 		$this->assertEquals ( 3, $this->Instance ()->Count () );
 		$this->assertEquals ( $Child2, $this->Instance ()->TitleID ( "{$this->type()}1-2" ) );

@@ -670,7 +670,7 @@ class PermissionManager extends BaseRbac
 	 *        	delete all descendants
 	 *
 	 */
-	function Remove($ID, $Recursive = false)
+	function remove($ID, $Recursive = false)
 	{
 		$this->unassignRoles ( $ID );
 		if (! $Recursive)
@@ -767,7 +767,7 @@ class RoleManager extends BaseRbac
 	 *        	delete all descendants
 	 *
 	 */
-	function Remove($ID, $Recursive = false)
+	function remove($ID, $Recursive = false)
 	{
 		$this->unassignPermissions ( $ID );
 		$this->unassignUsers ( $ID );
