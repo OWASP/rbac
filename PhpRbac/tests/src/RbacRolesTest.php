@@ -32,7 +32,7 @@ class RbacRolesTest extends \RbacBase
     }
 
     /*
-     * Tests for self::$rbac->Roles->Permissions()
+     * Tests for self::$rbac->Roles->permissions()
     */
     
     public function testRolesPermissionsIdOnly()
@@ -47,7 +47,7 @@ class RbacRolesTest extends \RbacBase
         $this->Instance()->assign($role_id_1, $perm_id_2);
         $this->Instance()->assign($role_id_1, $perm_id_3);
         
-        $result = $this->Instance()->Permissions($perm_id_1);
+        $result = $this->Instance()->permissions($perm_id_1);
         
         $expected = array('2', '3', '4');
         
@@ -68,7 +68,7 @@ class RbacRolesTest extends \RbacBase
     
     public function testRolesPermissionsPassNothing()
     {
-        $result = $this->Instance()->Permissions();
+        $result = $this->Instance()->permissions();
     }
     
     /*

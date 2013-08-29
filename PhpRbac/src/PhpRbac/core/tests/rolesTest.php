@@ -116,10 +116,10 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 		
 		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
-		$this->assertEquals(jf::$RBAC->Roles->Permissions($ID121,true),array($PID2));		
+		$this->assertEquals(jf::$RBAC->Roles->permissions($ID121,true),array($PID2));		
 		jf::$RBAC->Roles->assign ( $ID121, $PID1 );
-		$this->assertEquals(jf::$RBAC->Roles->Permissions($ID121,true),array($PID1,$PID2));		
-		$this->assertEquals(2,count(jf::$RBAC->Roles->Permissions($ID121)));		
+		$this->assertEquals(jf::$RBAC->Roles->permissions($ID121,true),array($PID1,$PID2));		
+		$this->assertEquals(2,count(jf::$RBAC->Roles->permissions($ID121)));		
 	
 	}
 }

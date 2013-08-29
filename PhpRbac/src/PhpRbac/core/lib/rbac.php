@@ -850,7 +850,7 @@ class RoleManager extends BaseRbac
 	 * @return Array 2D or 1D or null
 	 *         the two dimensional array would have ID,Title and Description of permissions
 	 */
-	function Permissions($Role, $OnlyIDs = true)
+	function permissions($Role, $OnlyIDs = true)
 	{
 		if ($OnlyIDs)
 		{
