@@ -45,7 +45,7 @@ class Rbac
 
     public function reset($ensure = false)
     {
-        return jf::$RBAC->Reset($ensure);
+        return jf::$RBAC->reset($ensure);
     }
 
     public function tablePrefix()

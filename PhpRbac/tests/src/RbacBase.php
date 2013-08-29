@@ -661,7 +661,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->ResetAssignments()
+     * Tests for $this->Instance()->resetAssignments()
      */
 
     public function testResetPermRoleAssignments()
@@ -678,7 +678,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->assign($role_id_2, $perm_id_2);
         $this->Instance()->assign($role_id_3, $perm_id_3);
 
-        $this->Instance()->ResetAssignments(true);
+        $this->Instance()->resetAssignments(true);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -705,11 +705,11 @@ class RbacBase extends \RbacSetup
 
     public function testResetPermRoleAssignmentsException()
     {
-        $this->Instance()->ResetAssignments();
+        $this->Instance()->resetAssignments();
     }
 
     /*
-     * Tests for $this->Instance()->Reset()
+     * Tests for $this->Instance()->reset()
      */
 
     public function testReset()
@@ -718,7 +718,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
         $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
 
-        $this->Instance()->Reset(true);
+        $this->Instance()->reset(true);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -738,7 +738,7 @@ class RbacBase extends \RbacSetup
 
     public function testResetException()
     {
-        $this->Instance()->Reset();
+        $this->Instance()->reset();
     }
 }
 

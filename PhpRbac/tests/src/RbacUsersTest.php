@@ -314,7 +314,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Users->ResetAssignments()
+     * Tests for self::$rbac->Users->resetAssignments()
      */
 
     public function testUsersResetAssignments()
@@ -327,7 +327,7 @@ class RbacUsersTest extends \RbacSetup
         self::$rbac->Users->assign($role_id_2, 5);
         self::$rbac->Users->assign($role_id_3, 5);
 
-        self::$rbac->Users->ResetAssignments(true);
+        self::$rbac->Users->resetAssignments(true);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -352,7 +352,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersResetAssignmentsException()
     {
-        self::$rbac->Users->ResetAssignments();
+        self::$rbac->Users->resetAssignments();
     }
 }
 

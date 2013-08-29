@@ -353,7 +353,7 @@ abstract class BaseRbac extends JModel
 	 * @return integer number of deleted entries
 	 *
 	 */
-	function Reset($Ensure = false)
+	function reset($Ensure = false)
 	{
 		if ($Ensure !== true)
 		{
@@ -410,7 +410,7 @@ abstract class BaseRbac extends JModel
 	 *        	must set or throws error
 	 * @return number of deleted relations
 	 */
-	function ResetAssignments($Ensure = false)
+	function resetAssignments($Ensure = false)
 	{
 		if ($Ensure !== true)
 		{
@@ -615,7 +615,7 @@ class RBACManager extends JModel
 	 *        	must set or throws error
 	 * @return boolean
     */
-function Reset($Ensure = false)
+function reset($Ensure = false)
 {
 if ($Ensure !== true)
 {
@@ -623,10 +623,10 @@ throw new \Exception ("You must pass true to this function, otherwise it won't w
 return;
 }
 $res = true;
-$res = $res and $this->Roles->ResetAssignments ( true );
-$res = $res and $this->Roles->Reset ( true );
-		$res = $res and $this->Permissions->Reset ( true );
-		$res = $res and $this->Users->ResetAssignments ( true );
+$res = $res and $this->Roles->resetAssignments ( true );
+$res = $res and $this->Roles->reset ( true );
+		$res = $res and $this->Permissions->reset ( true );
+		$res = $res and $this->Users->resetAssignments ( true );
 		return $res;
 	}
 }
@@ -1024,7 +1024,7 @@ class RBACUserManager extends JModel
 	 *        	must set or throws error
 	 * @return number of deleted relations
 	 */
-	function ResetAssignments($Ensure = false)
+	function resetAssignments($Ensure = false)
 	{
 		if ($Ensure !== true)
 		{

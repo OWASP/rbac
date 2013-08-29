@@ -5,7 +5,7 @@ abstract class PHPRBAC_Test extends PHPUnit_Framework_TestCase
 {
 	function setUp()
 	{
-		jf::$RBAC->Reset(true);
+		jf::$RBAC->reset(true);
 	}
 	
 
@@ -225,11 +225,11 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$Child12 = $this->Instance ()->Add ( "{$this->type()}1-1-2", "", $Child1 );
 		$Child13 = $this->Instance ()->Add ( "{$this->type()}1-1-3", "", $Child1 );
 		
-		$this->Instance ()->Reset ( true );
+		$this->Instance ()->reset ( true );
 		$this->assertEquals ( 1, $this->Instance ()->TitleID ( "root" ) );
 		$this->assertEmpty ( $this->Instance ()->Children ( 1 ) );
 		$this->setExpectedException ( "Exception" );
-		$this->Instance ()->Reset ();
+		$this->Instance ()->reset ();
 	}
 	function testRemoveAgain()
 	{
@@ -318,13 +318,13 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$this->Instance()->assign($ID1, $PID1);		
 		$this->Instance()->assign($ID12, $PID21);
 
-		$this->Instance()->ResetAssignments(true);
+		$this->Instance()->resetAssignments(true);
 		
 		$this->assertFalse($this->Instance()->unassign($ID121,$PID2));
 		$this->assertFalse($this->Instance()->unassign($ID1,$PID1));
 		
 		$this->setExpectedException("\Exception");
-		$this->Instance()->ResetAssignments(false);
+		$this->Instance()->resetAssignments(false);
 		
 	}
 }

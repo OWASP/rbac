@@ -137,7 +137,7 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		$UID = 2;
 		jf::$RBAC->Users->assign ( $ID21, $UID );
 		
-		jf::$RBAC->Users->ResetAssignments(true);
+		jf::$RBAC->Users->resetAssignments(true);
 		$this->assertEquals(1,count(jf::$RBAC->Users->allRoles(1)));
 		$this->assertEquals(0,count(jf::$RBAC->Users->allRoles($UID)));
 	}
