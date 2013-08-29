@@ -8,7 +8,7 @@ use PhpRbac\Rbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_base Unit Tests for BaseRbac Functionality
- * @ingroup phprbac_unit_tests
+ * @ingroup phprbac
  * @{
  * Documentation for all Unit Tests regarding BaseRbac functionality.
  */
@@ -632,7 +632,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Unassign()
+     * Tests for $this->Instance()->unassign()
      */
 
     public function testUnassign()
@@ -641,7 +641,7 @@ class RbacBase extends \RbacSetup
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
         $this->Instance()->assign($role_id, $perm_id);
-        $this->Instance()->Unassign($role_id, $perm_id);
+        $this->Instance()->unassign($role_id, $perm_id);
 
         $dataSet = $this->getConnection()->createDataSet();
 

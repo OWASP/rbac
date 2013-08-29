@@ -34,8 +34,8 @@ class LibRbacUsersTest extends PHPRBAC_Test
 
 		$UID = 2;
 		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID21, $UID ) );
-		$this->assertTrue ( jf::$RBAC->Users->Unassign ( $ID21, $UID ) );
-		$this->assertFalse ( jf::$RBAC->Users->Unassign ( $ID21, $UID ) );
+		$this->assertTrue ( jf::$RBAC->Users->unassign ( $ID21, $UID ) );
+		$this->assertFalse ( jf::$RBAC->Users->unassign ( $ID21, $UID ) );
 		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID21, $UID ) );
 	}
 	function testAllRoles()
@@ -118,7 +118,7 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		$this->assertFalse ( jf::$RBAC->Users->HasRole ( $ID2, $UID ) );
 		$this->assertFalse ( jf::$RBAC->Users->HasRole ( $ID111, $UID ) );
 		
-		jf::$RBAC->Users->Unassign ( $ID21, $UID );
+		jf::$RBAC->Users->unassign ( $ID21, $UID );
 		$this->assertFalse ( jf::$RBAC->Users->HasRole ( $ID21, $UID ) );
 	}
 	

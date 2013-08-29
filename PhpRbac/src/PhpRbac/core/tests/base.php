@@ -295,9 +295,9 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		
 		$this->Instance()->assign($ID121, $PID2);
 		
-		$this->assertFalse($this->Instance()->Unassign($ID121,$PID1));
-		$this->assertTrue($this->Instance()->Unassign($ID121,$PID2));
-		$this->assertFalse($this->Instance()->Unassign($ID121,$PID2)); //already removed
+		$this->assertFalse($this->Instance()->unassign($ID121,$PID1));
+		$this->assertTrue($this->Instance()->unassign($ID121,$PID2));
+		$this->assertFalse($this->Instance()->unassign($ID121,$PID2)); //already removed
 		
 		
 	}
@@ -320,8 +320,8 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 
 		$this->Instance()->ResetAssignments(true);
 		
-		$this->assertFalse($this->Instance()->Unassign($ID121,$PID2));
-		$this->assertFalse($this->Instance()->Unassign($ID1,$PID1));
+		$this->assertFalse($this->Instance()->unassign($ID121,$PID2));
+		$this->assertFalse($this->Instance()->unassign($ID1,$PID1));
 		
 		$this->setExpectedException("\Exception");
 		$this->Instance()->ResetAssignments(false);

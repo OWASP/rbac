@@ -6,7 +6,7 @@ namespace PhpRbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_permission_manager Unit Tests for PermissionManager Functionality
- * @ingroup phprbac_unit_tests
+ * @ingroup phprbac
  * @{
  * Documentation for all Unit Tests regarding PermissionManager functionality.
  */
@@ -168,7 +168,7 @@ class RbacPermissionsTest extends \RbacBase
     }
     
     /*
-     * Tests for $this->Instance()->UnassignRoles()
+     * Tests for $this->Instance()->unassignRoles()
      */
     
     public function testPermissionsUnassignRoles()
@@ -183,7 +183,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->Instance()->assign($role_id_2, $perm_id_1);
         $this->Instance()->assign($role_id_3, $perm_id_1);
         
-        $result = $this->Instance()->UnassignRoles($perm_id_1);
+        $result = $this->Instance()->unassignRoles($perm_id_1);
         
         $dataSet = $this->getConnection()->createDataSet();
         
@@ -204,7 +204,7 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsUnassignRolesBadID()
     {
-        $result = $this->Instance()->UnassignRoles(20);
+        $result = $this->Instance()->unassignRoles(20);
     
         $this->assertSame(0, $result);
     }

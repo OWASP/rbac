@@ -6,7 +6,7 @@ namespace PhpRbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_user_manager Unit Tests for RBACUserManager Functionality
- * @ingroup phprbac_unit_tests
+ * @ingroup phprbac
  * @{
  * Documentation for all Unit Tests regarding RBACUserManager functionality.
  */
@@ -263,7 +263,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Users->Unassign()
+     * Tests for self::$rbac->Users->unassign()
      */
 
     public function testUsersUnassign()
@@ -276,7 +276,7 @@ class RbacUsersTest extends \RbacSetup
         self::$rbac->Users->assign($role_id_2, 5);
         self::$rbac->Users->assign($role_id_3, 5);
 
-        self::$rbac->Users->Unassign($role_id_2, 5);
+        self::$rbac->Users->unassign($role_id_2, 5);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -301,7 +301,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersUnassignNoUserIdException()
     {
-        $result = self::$rbac->Users->Unassign(5);
+        $result = self::$rbac->Users->unassign(5);
     }
 
     /**
@@ -310,7 +310,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersUnassignNoRolesException()
     {
-        $result = self::$rbac->Users->Unassign();
+        $result = self::$rbac->Users->unassign();
     }
 
     /*

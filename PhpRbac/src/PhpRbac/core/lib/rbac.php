@@ -396,7 +396,7 @@ abstract class BaseRbac extends JModel
 	 * @param integer $Permission
 	 * @return boolean
 	 */
-	function Unassign($Role, $Permission)
+	function unassign($Role, $Permission)
 	{
 		return jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
 	RoleID=? AND PermissionID=?", $Role, $Permission ) == 1;
@@ -672,7 +672,7 @@ class PermissionManager extends BaseRbac
 	 */
 	function Remove($ID, $Recursive = false)
 	{
-		$this->UnassignRoles ( $ID );
+		$this->unassignRoles ( $ID );
 		if (! $Recursive)
 			return $this->permissions->DeleteConditional ( "ID=?", $ID );
 		else
@@ -685,7 +685,7 @@ class PermissionManager extends BaseRbac
 	 * @param integer $ID
 	 * @return integer
 	 */
-	function UnassignRoles($ID)
+	function unassignRoles($ID)
 	{
 		$res = jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
 			PermissionID=?", $ID );
@@ -769,8 +769,8 @@ class RoleManager extends BaseRbac
 	 */
 	function Remove($ID, $Recursive = false)
 	{
-		$this->UnassignPermissions ( $ID );
-		$this->UnassignUsers ( $ID );
+		$this->unassignPermissions ( $ID );
+		$this->unassignUsers ( $ID );
 		if (! $Recursive)
 			return $this->roles->DeleteConditional ( "ID=?", $ID );
 		else
@@ -783,7 +783,7 @@ class RoleManager extends BaseRbac
 	 *        	role ID
 	 * @return integer number of assignments deleted
 	 */
-	function UnassignPermissions($ID)
+	function unassignPermissions($ID)
 	{
 		$r = jf::SQL ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
 			RoleID=? ", $ID );
@@ -796,7 +796,7 @@ class RoleManager extends BaseRbac
 	 *        	role ID
 	 * @return integer number of deleted assignments
 	 */
-	function UnassignUsers($ID)
+	function unassignUsers($ID)
 	{
 		return jf::SQL ( "DELETE FROM {$this->tablePrefix()}userroles WHERE
 			RoleID=?", $ID );
@@ -968,7 +968,7 @@ class RBACUserManager extends JModel
 	 * @throws RbacUserNotProvidedException
 	 * @return boolean success
 	 */
-	function Unassign($Role, $UserID = null)
+	function unassign($Role, $UserID = null)
 	{
 	   if ($UserID === null)
 		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");

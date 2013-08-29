@@ -6,7 +6,7 @@ namespace PhpRbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_role_manager Unit Tests for Base RBAC Functionality
- * @ingroup phprbac_unit_tests
+ * @ingroup phprbac
  * @{
  * Documentation for all Unit Tests regarding RoleManager functionality.
  */
@@ -97,7 +97,7 @@ class RbacRolesTest extends \RbacBase
     }
     
     /*
-     * Tests for self::$rbac->Roles->UnassignPermissions()
+     * Tests for self::$rbac->Roles->unassignPermissions()
      */
     
     public function testRolesUnassignPermissions()
@@ -112,7 +112,7 @@ class RbacRolesTest extends \RbacBase
         $this->Instance()->assign($role_id_1, $perm_id_2);
         $this->Instance()->assign($role_id_1, $perm_id_3);
     
-        $result = $this->Instance()->UnassignPermissions($role_id_1);
+        $result = $this->Instance()->unassignPermissions($role_id_1);
     
         $dataSet = $this->getConnection()->createDataSet();
     
@@ -133,13 +133,13 @@ class RbacRolesTest extends \RbacBase
     
     public function testRolesUnassignPermissionsBadID()
     {
-        $result = $this->Instance()->UnassignPermissions(20);
+        $result = $this->Instance()->unassignPermissions(20);
     
         $this->assertSame(0, $result);
     }
 
     /*
-     * Tests for self::$rbac->Roles->UnassignUsers()
+     * Tests for self::$rbac->Roles->unassignUsers()
      */
     
     public function testRolesUnassignUsers()
@@ -152,7 +152,7 @@ class RbacRolesTest extends \RbacBase
         self::$rbac->Users->assign($role_id_2, 5);
         self::$rbac->Users->assign($role_id_3, 5);
     
-        $result = $this->Instance()->UnassignUsers($role_id_2);
+        $result = $this->Instance()->unassignUsers($role_id_2);
     
         $dataSet = $this->getConnection()->createDataSet();
     
@@ -173,7 +173,7 @@ class RbacRolesTest extends \RbacBase
     
     public function testRolesUnassignUsersBadID()
     {
-        $result = $this->Instance()->UnassignUsers(20);
+        $result = $this->Instance()->unassignUsers(20);
     
         $this->assertSame(0, $result);
     }

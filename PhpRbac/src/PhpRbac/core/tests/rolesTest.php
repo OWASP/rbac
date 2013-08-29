@@ -79,7 +79,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		
 
-		jf::$RBAC->Roles->UnassignPermissions ( $ID121 );
+		jf::$RBAC->Roles->unassignPermissions ( $ID121 );
 		
 		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID1, $PID21 ) );
 		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID12, $PID2 ) );
@@ -100,7 +100,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID1, $UID ) );
 		
 		$this->assertTrue ( jf::$RBAC->Users->HasRole ( $ID1, $UID ) );
-		jf::$RBAC->Roles->UnassignUsers ( $ID1 );
+		jf::$RBAC->Roles->unassignUsers ( $ID1 );
 		$this->assertFalse ( jf::$RBAC->Users->HasRole ( $ID1, $UID ) );
 	}
 	function testPermissions()
