@@ -1,11 +1,17 @@
 <?php
+/**
+ * @defgroup phprbac_unit_tests RBAC Unit Test Functionality
+ * @{
+ * Documentation for all PhpRbac Unit Test related functionality.
+ * @}
+ */
 
 /**
  * @file
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_generic Unit Tests for Generic_Tests_DatabaseTestCase Functionality
- * @ingroup phprbac
+ * @ingroup phprbac_unit_tests
  * @{
  * Documentation for all Unit Tests regarding Generic_Tests_DatabaseTestCase functionality.
  */

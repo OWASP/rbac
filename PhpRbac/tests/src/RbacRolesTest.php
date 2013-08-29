@@ -6,7 +6,7 @@ namespace PhpRbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_role_manager Unit Tests for Base RBAC Functionality
- * @ingroup phprbac
+ * @ingroup phprbac_unit_tests
  * @{
  * Documentation for all Unit Tests regarding RoleManager functionality.
  */

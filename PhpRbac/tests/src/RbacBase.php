@@ -8,7 +8,7 @@ use PhpRbac\Rbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_base Unit Tests for BaseRbac Functionality
- * @ingroup phprbac
+ * @ingroup phprbac_unit_tests
  * @{
  * Documentation for all Unit Tests regarding BaseRbac functionality.
  */
