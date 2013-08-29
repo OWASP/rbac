@@ -121,7 +121,7 @@ class RbacPermissionsTest extends \RbacBase
     }
     
     /*
-     * Tests for $this->Instance()->Roles()
+     * Tests for $this->Instance()->roles()
      */
     
     public function testPermissionsRolesOnlyID()
@@ -136,7 +136,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->Instance()->assign($role_id_2, $perm_id_1);
         $this->Instance()->assign($role_id_3, $perm_id_1);
         
-        $result = $this->Instance()->Roles($perm_id_1);
+        $result = $this->Instance()->roles($perm_id_1);
         
         $expected = array('2', '3', '4');
         
@@ -145,7 +145,7 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsRolesBadIDNull()
     {
-        $result = $this->Instance()->Roles(20);
+        $result = $this->Instance()->roles(20);
         
         $this->assertNull($result);
     }
@@ -164,7 +164,7 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsRolesPassNothing()
     {
-        $result = $this->Instance()->Roles();
+        $result = $this->Instance()->roles();
     }
     
     /*

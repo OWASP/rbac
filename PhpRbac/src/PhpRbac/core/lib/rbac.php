@@ -701,7 +701,7 @@ class PermissionManager extends BaseRbac
 	 *        	if true, result would be a 1D array of IDs
 	 * @return Array 2D or 1D or null
 	 */
-	function Roles($Permission, $OnlyIDs = true)
+	function roles($Permission, $OnlyIDs = true)
 	{
 		if (! is_numeric ( $Permission ))
 			$Permission = $this->Permission_ID ( $Permission );
