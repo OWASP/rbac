@@ -58,7 +58,7 @@ class RbacPermissionsTest extends \RbacBase
         $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
         
         $this->Instance()->Remove($perm_id_1);
         
@@ -90,7 +90,7 @@ class RbacPermissionsTest extends \RbacBase
         
         $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_2);
+        $this->Instance()->assign($role_id_1, $perm_id_2);
         
         $result = $this->Instance()->Remove($perm_id_1, true);
         
@@ -132,9 +132,9 @@ class RbacPermissionsTest extends \RbacBase
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
-        $this->Instance()->Assign($role_id_2, $perm_id_1);
-        $this->Instance()->Assign($role_id_3, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_2, $perm_id_1);
+        $this->Instance()->assign($role_id_3, $perm_id_1);
         
         $result = $this->Instance()->Roles($perm_id_1);
         
@@ -179,9 +179,9 @@ class RbacPermissionsTest extends \RbacBase
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
-        $this->Instance()->Assign($role_id_2, $perm_id_1);
-        $this->Instance()->Assign($role_id_3, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_2, $perm_id_1);
+        $this->Instance()->assign($role_id_3, $perm_id_1);
         
         $result = $this->Instance()->UnassignRoles($perm_id_1);
         

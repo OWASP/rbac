@@ -22,14 +22,14 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Users->Assign()
+     * Tests for self::$rbac->Users->assign()
      */
 
     public function testUsersAssignWithId()
     {
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        self::$rbac->Users->Assign($role_id, 5);
+        self::$rbac->Users->assign($role_id, 5);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -52,7 +52,7 @@ class RbacUsersTest extends \RbacSetup
     {
         $role_id = self::$rbac->Roles->AddPath('/roles_1/roles_2/roles_3');
 
-        self::$rbac->Users->Assign('/roles_1/roles_2', 5);
+        self::$rbac->Users->assign('/roles_1/roles_2', 5);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -77,7 +77,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersAssignNoUserID()
     {
-        $result = self::$rbac->Users->Assign(5);
+        $result = self::$rbac->Users->assign(5);
 
         $this->assertFalse($result);
     }
@@ -88,7 +88,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersAssignPassNothing()
     {
-        $result = self::$rbac->Users->Assign();
+        $result = self::$rbac->Users->assign();
     }
 
     /*
@@ -99,7 +99,7 @@ class RbacUsersTest extends \RbacSetup
     {
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        self::$rbac->Users->Assign($role_id, 5);
+        self::$rbac->Users->assign($role_id, 5);
 
         $result = self::$rbac->Users->HasRole($role_id, 5);
 
@@ -110,7 +110,7 @@ class RbacUsersTest extends \RbacSetup
     {
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        self::$rbac->Users->Assign($role_id, 5);
+        self::$rbac->Users->assign($role_id, 5);
 
         $result = self::$rbac->Users->HasRole('roles_1', 5);
 
@@ -121,7 +121,7 @@ class RbacUsersTest extends \RbacSetup
     {
         $role_id = self::$rbac->Roles->AddPath('/roles_1/roles_2/roles_3');
 
-        self::$rbac->Users->Assign($role_id, 5);
+        self::$rbac->Users->assign($role_id, 5);
 
         $result = self::$rbac->Users->HasRole('/roles_1/roles_2/roles_3', 5);
 
@@ -132,7 +132,7 @@ class RbacUsersTest extends \RbacSetup
     {
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        self::$rbac->Users->Assign($role_id, 5);
+        self::$rbac->Users->assign($role_id, 5);
 
         $result = self::$rbac->Users->HasRole(1, 5);
 
@@ -143,7 +143,7 @@ class RbacUsersTest extends \RbacSetup
     {
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        self::$rbac->Users->Assign($role_id, 5);
+        self::$rbac->Users->assign($role_id, 5);
 
         $result = self::$rbac->Users->HasRole(null, 5);
 
@@ -178,9 +178,9 @@ class RbacUsersTest extends \RbacSetup
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
 
-        self::$rbac->Users->Assign($role_id_1, 5);
-        self::$rbac->Users->Assign($role_id_2, 5);
-        self::$rbac->Users->Assign($role_id_3, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_2, 5);
+        self::$rbac->Users->assign($role_id_3, 5);
 
         $result = self::$rbac->Users->AllRoles(5);
 
@@ -237,9 +237,9 @@ class RbacUsersTest extends \RbacSetup
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
 
-        self::$rbac->Users->Assign($role_id_1, 5);
-        self::$rbac->Users->Assign($role_id_2, 5);
-        self::$rbac->Users->Assign($role_id_3, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_2, 5);
+        self::$rbac->Users->assign($role_id_3, 5);
 
         $result = self::$rbac->Users->RoleCount(5);
 
@@ -272,9 +272,9 @@ class RbacUsersTest extends \RbacSetup
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
 
-        self::$rbac->Users->Assign($role_id_1, 5);
-        self::$rbac->Users->Assign($role_id_2, 5);
-        self::$rbac->Users->Assign($role_id_3, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_2, 5);
+        self::$rbac->Users->assign($role_id_3, 5);
 
         self::$rbac->Users->Unassign($role_id_2, 5);
 
@@ -323,9 +323,9 @@ class RbacUsersTest extends \RbacSetup
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
 
-        self::$rbac->Users->Assign($role_id_1, 5);
-        self::$rbac->Users->Assign($role_id_2, 5);
-        self::$rbac->Users->Assign($role_id_3, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_2, 5);
+        self::$rbac->Users->assign($role_id_3, 5);
 
         self::$rbac->Users->ResetAssignments(true);
 

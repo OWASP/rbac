@@ -606,7 +606,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Assign()
+     * Tests for $this->Instance()->assign()
      */
 
     public function testAssignWithId()
@@ -614,7 +614,7 @@ class RbacBase extends \RbacSetup
         $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        $this->Instance()->Assign($role_id, $perm_id);
+        $this->Instance()->assign($role_id, $perm_id);
 
         $dataSet = $this->getConnection()->createDataSet();
 
@@ -640,7 +640,7 @@ class RbacBase extends \RbacSetup
         $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
         $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
 
-        $this->Instance()->Assign($role_id, $perm_id);
+        $this->Instance()->assign($role_id, $perm_id);
         $this->Instance()->Unassign($role_id, $perm_id);
 
         $dataSet = $this->getConnection()->createDataSet();
@@ -674,9 +674,9 @@ class RbacBase extends \RbacSetup
         $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
         $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
 
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
-        $this->Instance()->Assign($role_id_2, $perm_id_2);
-        $this->Instance()->Assign($role_id_3, $perm_id_3);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_2, $perm_id_2);
+        $this->Instance()->assign($role_id_3, $perm_id_3);
 
         $this->Instance()->ResetAssignments(true);
 

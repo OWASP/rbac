@@ -37,7 +37,7 @@ class BaseNestedSet implements NestedSetInterface
 {
     function __construct($Table,$IDField="ID",$LeftField="Left",$RightField="Right")
     {
-        $this->Assign($Table,$IDField,$LeftField,$RightField);
+        $this->assign($Table,$IDField,$LeftField,$RightField);
     }
     private $Table;
     private $Left,$Right;
@@ -66,7 +66,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param String $Left
      * @param String $Right
      */
-    protected function Assign($Table,$ID,$Left,$Right)
+    protected function assign($Table,$ID,$Left,$Right)
     {
         $this->Table=$Table;
         $this->ID=$ID;

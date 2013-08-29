@@ -383,7 +383,7 @@ abstract class BaseRbac extends JModel
 	 * @todo: Check for valid permissions/roles
 	 * @todo: Implement custom error handler
 	 */
-	function Assign($Role, $Permission)
+	function assign($Role, $Permission)
 	{
 		return jf::SQL ( "INSERT INTO {$this->tablePrefix()}rolepermissions
 		(RoleID,PermissionID,AssignmentDate)
@@ -426,7 +426,7 @@ abstract class BaseRbac extends JModel
 			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_rolepermissions" );
 		else
 			throw new \Exception ( "RBAC can not reset table on this type of database: {$Adapter}" );
-		$this->Assign ( $this->rootId(), $this->rootId());
+		$this->assign ( $this->rootId(), $this->rootId());
 		return $res;
 	}
 }
@@ -716,7 +716,7 @@ class RBACUserManager extends JModel
 	 * @throws RbacUserNotProvidedException
 	 * @return inserted or existing
 	 */
-	function Assign($Role, $UserID = null)
+	function assign($Role, $UserID = null)
 	{
 	   if ($UserID === null)
 		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
@@ -821,7 +821,7 @@ class RBACUserManager extends JModel
 			jf::SQL ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_userroles" );
 		else
 			throw new \Exception ("RBAC can not reset table on this type of database: {$Adapter}");
-		$this->Assign ( "root", 1 /* root user */ );
+		$this->assign ( "root", 1 /* root user */ );
 		return $res;
 	}
 }
@@ -870,7 +870,7 @@ class RBACManager extends JModel
 	 *        	path or string title or integer id
 	 * @return boolean
 	 */
-	function Assign($Role, $Permission)
+	function assign($Role, $Permission)
 	{
 		if (is_int ( $Permission ))
 		{
@@ -895,7 +895,7 @@ class RBACManager extends JModel
 				$RoleID = $this->Roles->TitleID ( $Role );
 		}
 
-		return $this->Roles->Assign ( $RoleID, $PermissionID );
+		return $this->Roles->assign ( $RoleID, $PermissionID );
 	}
 
 	/**

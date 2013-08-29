@@ -274,8 +274,8 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$PID2=jf::$RBAC->Permissions->Add("permission2", "description");
 		$PID21=jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
 		
-		$this->assertTrue($this->Instance()->Assign($ID121, $PID2));
-		$this->assertFalse($this->Instance()->Assign($ID121, $PID2));
+		$this->assertTrue($this->Instance()->assign($ID121, $PID2));
+		$this->assertFalse($this->Instance()->assign($ID121, $PID2));
 		
 	}
 	/**
@@ -293,7 +293,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$PID2=jf::$RBAC->Permissions->Add("permission2", "description");
 		$PID21=jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
 		
-		$this->Instance()->Assign($ID121, $PID2);
+		$this->Instance()->assign($ID121, $PID2);
 		
 		$this->assertFalse($this->Instance()->Unassign($ID121,$PID1));
 		$this->assertTrue($this->Instance()->Unassign($ID121,$PID2));
@@ -314,9 +314,9 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$PID2=jf::$RBAC->Permissions->Add("permission2", "description");
 		$PID21=jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
 		
-		$this->Instance()->Assign($ID121, $PID2);		
-		$this->Instance()->Assign($ID1, $PID1);		
-		$this->Instance()->Assign($ID12, $PID21);
+		$this->Instance()->assign($ID121, $PID2);		
+		$this->Instance()->assign($ID1, $PID1);		
+		$this->Instance()->assign($ID12, $PID21);
 
 		$this->Instance()->ResetAssignments(true);
 		

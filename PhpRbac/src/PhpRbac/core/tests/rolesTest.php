@@ -28,7 +28,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$PID2 = jf::$RBAC->Permissions->Add ( "permission2", "description" );
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 		
-		jf::$RBAC->Roles->Assign ( $ID121, $PID2 );
+		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		
 		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID121, $PID2 ) );
 		
@@ -53,7 +53,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$PID2 = jf::$RBAC->Permissions->Add ( "permission2", "description" );
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 		
-		jf::$RBAC->Roles->Assign ( $ID121, $PID2 );
+		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		
 		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID1, $PID21 ) );
 		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID12, $PID2 ) );
@@ -76,7 +76,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$PID2 = jf::$RBAC->Permissions->Add ( "permission2", "description" );
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 		
-		jf::$RBAC->Roles->Assign ( $ID121, $PID2 );
+		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		
 
 		jf::$RBAC->Roles->UnassignPermissions ( $ID121 );
@@ -97,7 +97,7 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$ID11 = jf::$RBAC->Roles->Add ( "role1-1", "description of role", $ID1 );
 		$ID12 = jf::$RBAC->Roles->Add ( "role1-2", "description of role", $ID1 );
 		$ID121 = jf::$RBAC->Roles->Add ( "role1-2-1", "description of role", $ID12 );
-		$this->assertTrue ( jf::$RBAC->Users->Assign ( $ID1, $UID ) );
+		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID1, $UID ) );
 		
 		$this->assertTrue ( jf::$RBAC->Users->HasRole ( $ID1, $UID ) );
 		jf::$RBAC->Roles->UnassignUsers ( $ID1 );
@@ -115,9 +115,9 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		$PID2 = jf::$RBAC->Permissions->Add ( "permission2", "description" );
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 		
-		jf::$RBAC->Roles->Assign ( $ID121, $PID2 );
+		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		$this->assertEquals(jf::$RBAC->Roles->Permissions($ID121,true),array($PID2));		
-		jf::$RBAC->Roles->Assign ( $ID121, $PID1 );
+		jf::$RBAC->Roles->assign ( $ID121, $PID1 );
 		$this->assertEquals(jf::$RBAC->Roles->Permissions($ID121,true),array($PID1,$PID2));		
 		$this->assertEquals(2,count(jf::$RBAC->Roles->Permissions($ID121)));		
 	

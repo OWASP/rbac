@@ -28,7 +28,7 @@ class PHPRBACPermissionsTest extends PHPRBACBaseTest
 		$PID2 = jf::$RBAC->Permissions->Add ( "permission2", "description" );
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 
-		$this->Instance()->Assign($ID121,$PID2);
+		$this->Instance()->assign($ID121,$PID2);
 		$this->assertTrue(jf::$RBAC->Roles->HasPermission($ID121, $PID2));
 		$this->Instance()->UnassignRoles($PID2);
 		$this->assertFalse(jf::$RBAC->Roles->HasPermission($ID121, $PID2));
@@ -46,9 +46,9 @@ class PHPRBACPermissionsTest extends PHPRBACBaseTest
 		$PID2 = jf::$RBAC->Permissions->Add ( "permission2", "description" );
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 
-		jf::$RBAC->Permissions->Assign ( $ID121, $PID2 );
+		jf::$RBAC->Permissions->assign ( $ID121, $PID2 );
 		$this->assertEquals(jf::$RBAC->Permissions->Roles($PID2,true),array($ID121));
-		jf::$RBAC->Permissions->Assign ( $ID2, $PID2 );
+		jf::$RBAC->Permissions->assign ( $ID2, $PID2 );
 		$this->assertEquals(jf::$RBAC->Permissions->Roles($PID2,true),array($ID2,$ID121));
 		$this->assertEquals(2,count(jf::$RBAC->Permissions->Roles($PID2)));
 		

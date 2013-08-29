@@ -43,9 +43,9 @@ class RbacRolesTest extends \RbacBase
         
         $role_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
-        $this->Instance()->Assign($role_id_1, $perm_id_2);
-        $this->Instance()->Assign($role_id_1, $perm_id_3);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_2);
+        $this->Instance()->assign($role_id_1, $perm_id_3);
         
         $result = $this->Instance()->Permissions($perm_id_1);
         
@@ -80,7 +80,7 @@ class RbacRolesTest extends \RbacBase
         $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
         $role_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
         
         $result = self::$rbac->Roles->HasPermission($role_id_1, $perm_id_1);
         
@@ -108,9 +108,9 @@ class RbacRolesTest extends \RbacBase
         $perm_id_2 = self::$rbac->Permissions->Add('permissions_2', 'permissions Description 2');
         $perm_id_3 = self::$rbac->Permissions->Add('permissions_3', 'permissions Description 3');
     
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
-        $this->Instance()->Assign($role_id_1, $perm_id_2);
-        $this->Instance()->Assign($role_id_1, $perm_id_3);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_2);
+        $this->Instance()->assign($role_id_1, $perm_id_3);
     
         $result = $this->Instance()->UnassignPermissions($role_id_1);
     
@@ -148,9 +148,9 @@ class RbacRolesTest extends \RbacBase
         $role_id_2 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
         $role_id_3 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
     
-        self::$rbac->Users->Assign($role_id_1, 5);
-        self::$rbac->Users->Assign($role_id_2, 5);
-        self::$rbac->Users->Assign($role_id_3, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_2, 5);
+        self::$rbac->Users->assign($role_id_3, 5);
     
         $result = $this->Instance()->UnassignUsers($role_id_2);
     
@@ -210,11 +210,11 @@ class RbacRolesTest extends \RbacBase
         $role_id_2 = $this->Instance()->Add($this->type() . '_2', $this->type() . ' Description 2');
         $role_id_3 = $this->Instance()->Add($this->type() . '_3', $this->type() . ' Description 3');
         
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
-        $this->Instance()->Assign($role_id_1, $perm_id_2);
-        $this->Instance()->Assign($role_id_1, $perm_id_3);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_2);
+        $this->Instance()->assign($role_id_1, $perm_id_3);
     
-        self::$rbac->Users->Assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
     
         $this->Instance()->Remove($role_id_1);
     
@@ -249,9 +249,9 @@ class RbacRolesTest extends \RbacBase
     
         $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
     
-        $this->Instance()->Assign($role_id_1, $perm_id_1);
+        $this->Instance()->assign($role_id_1, $perm_id_1);
     
-        self::$rbac->Users->Assign($role_id_1, 5);
+        self::$rbac->Users->assign($role_id_1, 5);
         
         $result = $this->Instance()->Remove($role_id_1, true);
     

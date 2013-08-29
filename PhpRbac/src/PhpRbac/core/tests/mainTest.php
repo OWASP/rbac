@@ -14,15 +14,15 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		jf::$RBAC->Permissions->AddPath ( "/Users/remove" );
 		$PID = jf::$RBAC->Permissions->AddPath ( "/Users/changepass" );
 		
-		$this->assertTrue ( jf::$RBAC->Assign ( $RID, $PID ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( $RID, "/Users/edit" ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( $RID, "add" ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( "/CEO/CIO", "/Users/remove" ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( "CEO", "Users" ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( "CEO", $PID ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( "/CEO/CIO", $PID ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( "/CEO", "/Users/add" ) );
-		$this->assertTrue ( jf::$RBAC->Assign ( "/CEO/CIO/Admin", "remove" ) );
+		$this->assertTrue ( jf::$RBAC->assign ( $RID, $PID ) );
+		$this->assertTrue ( jf::$RBAC->assign ( $RID, "/Users/edit" ) );
+		$this->assertTrue ( jf::$RBAC->assign ( $RID, "add" ) );
+		$this->assertTrue ( jf::$RBAC->assign ( "/CEO/CIO", "/Users/remove" ) );
+		$this->assertTrue ( jf::$RBAC->assign ( "CEO", "Users" ) );
+		$this->assertTrue ( jf::$RBAC->assign ( "CEO", $PID ) );
+		$this->assertTrue ( jf::$RBAC->assign ( "/CEO/CIO", $PID ) );
+		$this->assertTrue ( jf::$RBAC->assign ( "/CEO", "/Users/add" ) );
+		$this->assertTrue ( jf::$RBAC->assign ( "/CEO/CIO/Admin", "remove" ) );
 	}
 	function testCheck()
 	{
@@ -35,14 +35,14 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		jf::$RBAC->Roles->AddPath ( "/CEO/Secretary" );
 		
 		// assingning roles to users
-		$res = jf::$RBAC->Users->Assign ( "/CEO", 2 );
-		$res = $res and jf::$RBAC->Users->Assign ( "/CEO/Financial", 2 );
+		$res = jf::$RBAC->Users->assign ( "/CEO", 2 );
+		$res = $res and jf::$RBAC->Users->assign ( "/CEO/Financial", 2 );
 		
-		$res = $res and jf::$RBAC->Users->Assign ( "/CEO/CIO/Admin", 3 );
-		$res = $res and jf::$RBAC->Users->Assign ( "/CEO/CIO/Networking", 3 );
-		$res = $res and jf::$RBAC->Users->Assign ( "/CEO/CIO/CISO", 3 );
+		$res = $res and jf::$RBAC->Users->assign ( "/CEO/CIO/Admin", 3 );
+		$res = $res and jf::$RBAC->Users->assign ( "/CEO/CIO/Networking", 3 );
+		$res = $res and jf::$RBAC->Users->assign ( "/CEO/CIO/CISO", 3 );
 		
-		$res = $res and jf::$RBAC->Users->Assign ( "/CEO/Secretary", 4 );
+		$res = $res and jf::$RBAC->Users->assign ( "/CEO/Secretary", 4 );
 		$this->assertTrue ( $res );
 		
 		// adding permissions
@@ -60,30 +60,30 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		jf::$RBAC->Permissions->AddPath ( "/reports/general" );
 		
 		// assigning permissions to roles
-		$res = jf::$RBAC->Assign ( "CEO", "Users" );
-		$res = $res and jf::$RBAC->Assign ( "CEO", "Signature" );
-		$res = $res and jf::$RBAC->Assign ( "CEO", "/reports" );
+		$res = jf::$RBAC->assign ( "CEO", "Users" );
+		$res = $res and jf::$RBAC->assign ( "CEO", "Signature" );
+		$res = $res and jf::$RBAC->assign ( "CEO", "/reports" );
 		$this->assertTrue ( $res );
 		
-		$res = $res and jf::$RBAC->Assign ( "CIO", "/reports/IT" );
-		$res = $res and jf::$RBAC->Assign ( "CIO", "/Users" );
+		$res = $res and jf::$RBAC->assign ( "CIO", "/reports/IT" );
+		$res = $res and jf::$RBAC->assign ( "CIO", "/Users" );
 		
-		$res = $res and jf::$RBAC->Assign ( "Admin", "/Users" );
-		$res = $res and jf::$RBAC->Assign ( "Admin", "/reports/IT" );
+		$res = $res and jf::$RBAC->assign ( "Admin", "/Users" );
+		$res = $res and jf::$RBAC->assign ( "Admin", "/reports/IT" );
 		
-		$res = $res and jf::$RBAC->Assign ( "Networking", "/reports/network" );
-		$res = $res and jf::$RBAC->Assign ( "Networking", "/Signature/network" );
+		$res = $res and jf::$RBAC->assign ( "Networking", "/reports/network" );
+		$res = $res and jf::$RBAC->assign ( "Networking", "/Signature/network" );
 		
-		$res = $res and jf::$RBAC->Assign ( "CISO", "/reports/security" );
-		$res = $res and jf::$RBAC->Assign ( "CISO", "/Users/changepass" );
+		$res = $res and jf::$RBAC->assign ( "CISO", "/reports/security" );
+		$res = $res and jf::$RBAC->assign ( "CISO", "/Users/changepass" );
 		$this->assertTrue ( $res );
 		
-		$res = $res and jf::$RBAC->Assign ( "Financial", "/Signature/order" );
-		$res = $res and jf::$RBAC->Assign ( "Financial", "/Signature/financial" );
-		$res = $res and jf::$RBAC->Assign ( "Financial", "/reports/financial" );
+		$res = $res and jf::$RBAC->assign ( "Financial", "/Signature/order" );
+		$res = $res and jf::$RBAC->assign ( "Financial", "/Signature/financial" );
+		$res = $res and jf::$RBAC->assign ( "Financial", "/reports/financial" );
 		
-		$res = $res and jf::$RBAC->Assign ( "Secretary", "/reports/financial" );
-		$res = $res and jf::$RBAC->Assign ( "Secretary", "/Signature/office" );
+		$res = $res and jf::$RBAC->assign ( "Secretary", "/reports/financial" );
+		$res = $res and jf::$RBAC->assign ( "Secretary", "/Signature/office" );
 		$this->assertTrue ( $res );
 		
 

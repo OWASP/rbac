@@ -14,8 +14,8 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 
 		$UID = 3;
-		$this->assertTrue ( jf::$RBAC->Users->Assign ( $ID21, $UID ) );
-		$this->assertFalse ( jf::$RBAC->Users->Assign ( $ID21, $UID ) );
+		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID21, $UID ) );
+		$this->assertFalse ( jf::$RBAC->Users->assign ( $ID21, $UID ) );
 	}
 	
 	/**
@@ -33,10 +33,10 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 
 		$UID = 2;
-		$this->assertTrue ( jf::$RBAC->Users->Assign ( $ID21, $UID ) );
+		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID21, $UID ) );
 		$this->assertTrue ( jf::$RBAC->Users->Unassign ( $ID21, $UID ) );
 		$this->assertFalse ( jf::$RBAC->Users->Unassign ( $ID21, $UID ) );
-		$this->assertTrue ( jf::$RBAC->Users->Assign ( $ID21, $UID ) );
+		$this->assertTrue ( jf::$RBAC->Users->assign ( $ID21, $UID ) );
 	}
 	function testAllRoles()
 	{
@@ -53,7 +53,7 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 		$this->assertEquals ( null, jf::$RBAC->Users->AllRoles($UID) );
 		
-		jf::$RBAC->Users->Assign ( $ID21, $UID );
+		jf::$RBAC->Users->assign ( $ID21, $UID );
 		$res=jf::$RBAC->Users->AllRoles( $UID );
 		$this->assertArrayHasKey("Title", $res[0]);
 		$this->assertArrayHasKey("ID", $res[0]);
@@ -61,7 +61,7 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 		
 		#new
-		jf::$RBAC->Users->Assign ( $ID211, $UID );
+		jf::$RBAC->Users->assign ( $ID211, $UID );
 		$this->assertEquals ( 2, count(jf::$RBAC->Users->AllRoles ( $UID ) ));
 		
 	}
@@ -79,19 +79,19 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		$UID = 2;
 		$this->assertEquals ( 0, jf::$RBAC->Users->RoleCount ( $UID ) );
 		
-		jf::$RBAC->Users->Assign ( $ID21, $UID );
+		jf::$RBAC->Users->assign ( $ID21, $UID );
 		$this->assertEquals ( 1, jf::$RBAC->Users->RoleCount ( $UID ) );
 		
 		#same
-		jf::$RBAC->Users->Assign ( $ID21, $UID );
+		jf::$RBAC->Users->assign ( $ID21, $UID );
 		$this->assertEquals ( 1, jf::$RBAC->Users->RoleCount ( $UID ) );
 		
 		#new
-		jf::$RBAC->Users->Assign ( $ID211, $UID );
+		jf::$RBAC->Users->assign ( $ID211, $UID );
 		$this->assertEquals ( 2, jf::$RBAC->Users->RoleCount ( $UID ) );
 		
 		#to another user
-		jf::$RBAC->Users->Assign ( $ID211, 1 );
+		jf::$RBAC->Users->assign ( $ID211, 1 );
 		$this->assertEquals ( 2, jf::$RBAC->Users->RoleCount ( $UID ) );
 	}
 	
@@ -110,7 +110,7 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 
 		$UID = 2;
-		jf::$RBAC->Users->Assign ( $ID21, $UID );
+		jf::$RBAC->Users->assign ( $ID21, $UID );
 		
 		$this->assertTrue ( jf::$RBAC->Users->HasRole ( $ID21, $UID ) );
 		$this->assertTrue ( jf::$RBAC->Users->HasRole ( $ID211, $UID ) );
@@ -135,7 +135,7 @@ class LibRbacUsersTest extends PHPRBAC_Test
 		
 		
 		$UID = 2;
-		jf::$RBAC->Users->Assign ( $ID21, $UID );
+		jf::$RBAC->Users->assign ( $ID21, $UID );
 		
 		jf::$RBAC->Users->ResetAssignments(true);
 		$this->assertEquals(1,count(jf::$RBAC->Users->AllRoles(1)));

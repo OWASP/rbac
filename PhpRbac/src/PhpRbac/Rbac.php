@@ -30,7 +30,7 @@ class Rbac
 
     public function assign($role, $permission)
     {
-        return jf::$RBAC->Assign($role, $permission);
+        return jf::$RBAC->assign($role, $permission);
     }
 
     public function check($permission, $user_id)
