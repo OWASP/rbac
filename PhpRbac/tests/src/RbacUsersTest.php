@@ -169,7 +169,7 @@ class RbacUsersTest extends \RbacSetup
     }
 
     /*
-     * Tests for self::$rbac->Users->AllRoles()
+     * Tests for self::$rbac->Users->allRoles()
      */
 
     public function testUsersAllRoles()
@@ -182,7 +182,7 @@ class RbacUsersTest extends \RbacSetup
         self::$rbac->Users->assign($role_id_2, 5);
         self::$rbac->Users->assign($role_id_3, 5);
 
-        $result = self::$rbac->Users->AllRoles(5);
+        $result = self::$rbac->Users->allRoles(5);
 
         $expected = array(
         	array(
@@ -213,7 +213,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersAllRolesBadRoleNull()
     {
-        $result = self::$rbac->Users->AllRoles(10);
+        $result = self::$rbac->Users->allRoles(10);
 
         $this->assertNull($result);
     }
@@ -224,7 +224,7 @@ class RbacUsersTest extends \RbacSetup
 
     public function testUsersAllRolesNoRolesEmpty()
     {
-        $result = self::$rbac->Users->AllRoles();
+        $result = self::$rbac->Users->allRoles();
     }
 
     /*
