@@ -35,7 +35,7 @@ class Rbac
 
     public function check($permission, $user_id)
     {
-        return jf::$RBAC->Check($permission, $user_id);
+        return jf::$RBAC->check($permission, $user_id);
     }
 
     public function enforce($permission, $user_id)

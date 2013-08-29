@@ -90,23 +90,23 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		// now checking
 		
 		$this->assertTrue ( jf::$RBAC->Users->hasRole ( "/CEO/Financial", 2 ) );
-		$this->assertTrue ( jf::$RBAC->Check ( "/Signature/financial", 2 ) );
-		$this->assertTrue ( jf::$RBAC->Check ( "/reports/general", 2 ) );
-		$this->assertTrue ( jf::$RBAC->Check ( "/reports/IT/security", 2 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/Signature/financial", 2 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/reports/general", 2 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/reports/IT/security", 2 ) );
 		
-		$this->assertTrue ( jf::$RBAC->Check ( "/reports/IT/security", 3 ) );
-		$this->assertTrue ( jf::$RBAC->Check ( "/reports/IT/network", 3 ) );
-		$this->assertTrue ( jf::$RBAC->Check ( "/Users", 3 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/reports/IT/security", 3 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/reports/IT/network", 3 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/Users", 3 ) );
 		
-		$this->assertTrue ( jf::$RBAC->Check ( "/Signature/office", 4 ) );
-		$this->assertFalse ( jf::$RBAC->Check ( "/Signature/order", 4 ) );
-		$this->assertTrue ( jf::$RBAC->Check ( "/reports/financial", 4 ) );
-		$this->assertFalse ( jf::$RBAC->Check ( "/reports/general", 4 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/Signature/office", 4 ) );
+		$this->assertFalse ( jf::$RBAC->check ( "/Signature/order", 4 ) );
+		$this->assertTrue ( jf::$RBAC->check ( "/reports/financial", 4 ) );
+		$this->assertFalse ( jf::$RBAC->check ( "/reports/general", 4 ) );
 		
 		
 		try
 		{
-			$this->assertFalse ( jf::$RBAC->Check ( "/reports/generalz", 4 ) );
+			$this->assertFalse ( jf::$RBAC->check ( "/reports/generalz", 4 ) );
 			$this->fail ( "No error on unknown permission" );
 		} catch ( RbacPermissionNotFoundException $e )
 		{
@@ -117,7 +117,7 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		
 		try
 		{
-			$this->assertFalse ( jf::$RBAC->Check ( "/reports/generalz", "root" ) );
+			$this->assertFalse ( jf::$RBAC->check ( "/reports/generalz", "root" ) );
 			$this->fail ( "No error on unknown permission" );
 		} catch ( RbacPermissionNotFoundException $e )
 		{
