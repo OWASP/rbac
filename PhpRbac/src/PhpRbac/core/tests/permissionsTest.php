@@ -29,9 +29,9 @@ class PHPRBACPermissionsTest extends PHPRBACBaseTest
 		$PID21 = jf::$RBAC->Permissions->Add ( "permission2-1", "description", $PID2 );
 
 		$this->Instance()->assign($ID121,$PID2);
-		$this->assertTrue(jf::$RBAC->Roles->HasPermission($ID121, $PID2));
+		$this->assertTrue(jf::$RBAC->Roles->hasPermission($ID121, $PID2));
 		$this->Instance()->unassignRoles($PID2);
-		$this->assertFalse(jf::$RBAC->Roles->HasPermission($ID121, $PID2));
+		$this->assertFalse(jf::$RBAC->Roles->hasPermission($ID121, $PID2));
 	}
 	
 	function testRoles()

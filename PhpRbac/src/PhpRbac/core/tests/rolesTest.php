@@ -30,16 +30,16 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		
 		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID121, $PID2 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID121, $PID2 ) );
 		
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID1, $PID21 ) );
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID12, $PID2 ) );
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID121, $PID21 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID1, $PID21 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID12, $PID2 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID121, $PID21 ) );
 		
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID11, $PID21 ) );
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID2, $PID1 ) );
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID2, $PID2 ) );
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID2, $PID21 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID11, $PID21 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID2, $PID1 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID2, $PID2 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID2, $PID21 ) );
 	}
 	function testHasPermission()
 	{
@@ -55,9 +55,9 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 		
 		jf::$RBAC->Roles->assign ( $ID121, $PID2 );
 		
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID1, $PID21 ) );
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID12, $PID2 ) );
-		$this->assertTrue ( jf::$RBAC->Roles->HasPermission ( $ID121, $PID21 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID1, $PID21 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID12, $PID2 ) );
+		$this->assertTrue ( jf::$RBAC->Roles->hasPermission ( $ID121, $PID21 ) );
 	}
 	// @depends LibRbacBaseTest::testAssign # how can i depend on another class'
 	// test?
@@ -81,9 +81,9 @@ class PHPRBACRolesTest extends PHPRBACBaseTest
 
 		jf::$RBAC->Roles->unassignPermissions ( $ID121 );
 		
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID1, $PID21 ) );
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID12, $PID2 ) );
-		$this->assertFalse ( jf::$RBAC->Roles->HasPermission ( $ID121, $PID21 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID1, $PID21 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID12, $PID2 ) );
+		$this->assertFalse ( jf::$RBAC->Roles->hasPermission ( $ID121, $PID21 ) );
 	}
 	
 	/**

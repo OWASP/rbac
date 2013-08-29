@@ -813,7 +813,7 @@ class RoleManager extends BaseRbac
 	 *
 	 * @todo: If we pass a Role that doesn't exist the method just returns false. We may want to check for a valid Role.
 	 */
-	function HasPermission($Role, $Permission)
+	function hasPermission($Role, $Permission)
 	{
 		$Res = jf::SQL ( "
 					SELECT COUNT(*) AS Result

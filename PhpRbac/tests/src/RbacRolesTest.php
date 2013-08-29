@@ -72,7 +72,7 @@ class RbacRolesTest extends \RbacBase
     }
     
     /*
-     * Tests for self::$rbac->Roles->HasPermission()
+     * Tests for self::$rbac->Roles->hasPermission()
      */
     
     public function testRolesHasPermission()
@@ -82,7 +82,7 @@ class RbacRolesTest extends \RbacBase
         
         $this->Instance()->assign($role_id_1, $perm_id_1);
         
-        $result = self::$rbac->Roles->HasPermission($role_id_1, $perm_id_1);
+        $result = self::$rbac->Roles->hasPermission($role_id_1, $perm_id_1);
         
         $this->assertTrue($result);
     }
@@ -91,7 +91,7 @@ class RbacRolesTest extends \RbacBase
     {
         $role_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
     
-        $result = self::$rbac->Roles->HasPermission($role_id_1, 4);
+        $result = self::$rbac->Roles->hasPermission($role_id_1, 4);
     
         $this->assertFalse($result);
     }
