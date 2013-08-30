@@ -315,9 +315,9 @@ abstract class BaseRbac extends JModel
 	 * @param integer $ID
 	 * @return string path
 	 */
-	function Path($ID)
+	function path($ID)
 	{
-		$res = $this->{$this->type ()}->PathConditional ( "ID=?", $ID );
+		$res = $this->{$this->type ()}->pathConditional ( "ID=?", $ID );
 		$out = null;
 		if (is_array ( $res ))
 			foreach ( $res as $r )

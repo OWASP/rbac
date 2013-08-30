@@ -14,7 +14,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 	function ChildrenConditional($ConditionString);
 	function DescendantsConditional($AbsoluteDepths=false,$ConditionString);
 	function LeavesConditional($ConditionString=null);
-	function PathConditional($ConditionString);
+	function pathConditional($ConditionString);
 
 	function DepthConditional($ConditionString);
 	function ParentNodeConditional($ConditionString);
@@ -96,23 +96,23 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     }
     /**
      * Returns the depth of a node in the tree
-     * Note: this uses Path
+     * Note: this uses path
      * @param String $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Integer Depth from zero upwards
-     * @seealso Path
+     * @seealso path
      */
     function DepthConditional($ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
-        $Path=call_user_func_array(array($this,"PathConditional"),$Arguments);
+        $Path=call_user_func_array(array($this,"pathConditional"),$Arguments);
 
         return count($Path)-1;
     }
     /**
      * Returns a sibling of the current node
      * Note: You can't find siblings of roots
-     * Note: this is a heavy function on nested sets, uses both Children (which is quite heavy) and Path
+     * Note: this is a heavy function on nested sets, uses both Children (which is quite heavy) and path
      * @param Integer $SiblingDistance from current node (negative or positive)
      * @param string $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
@@ -136,16 +136,16 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     }
     /**
      * Returns the parent of a node
-     * Note: this uses Path
+     * Note: this uses path
      * @param string $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Array ParentNode (null on failure)
-     * @seealso Path
+     * @seealso path
      */
     function ParentNodeConditional($ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
-        $Path=call_user_func_array(array($this,"PathConditional"),$Arguments);
+        $Path=call_user_func_array(array($this,"pathConditional"),$Arguments);
         if (count($Path)<2) return null;
         else return $Path[count($Path)-2];
     }
@@ -305,7 +305,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Rowset nodes in path
      */
-    function PathConditional($ConditionString,$Rest=null)
+    function pathConditional($ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
         array_shift($Arguments);

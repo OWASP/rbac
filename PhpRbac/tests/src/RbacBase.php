@@ -437,14 +437,14 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Path()
+     * Tests for $this->Instance()->path()
      */
 
     public function testPath()
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $path_returned = $this->Instance()->Path(intval(3));
+        $path_returned = $this->Instance()->path(intval(3));
 
         $this->assertSame('/' . $this->type() . '_1/' . $this->type() . '_2', $path_returned);
     }
@@ -453,7 +453,7 @@ class RbacBase extends \RbacSetup
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $path_returned = $this->Instance()->Path(intval(5));
+        $path_returned = $this->Instance()->path(intval(5));
 
         $this->assertNull($path_returned);
     }

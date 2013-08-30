@@ -188,11 +188,11 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$Child13 = $this->Instance ()->add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 
-		$this->assertEquals ( "/", $this->Instance ()->Path ( 1 ) );
-		$this->assertEquals ( null, $this->Instance ()->Path ( 100 ) );
-		$this->assertEquals ( "/{$this->type()}1", $this->Instance ()->Path ( $Parent ) );
-		$this->assertEquals ( "/{$this->type()}1/{$this->type()}1-2", $this->Instance ()->Path ( $Child2 ) );
-		$this->assertEquals ( "/{$this->type()}1/{$this->type()}1-1/{$this->type()}1-1-3", $this->Instance ()->Path ( $Child13 ) );
+		$this->assertEquals ( "/", $this->Instance ()->path ( 1 ) );
+		$this->assertEquals ( null, $this->Instance ()->path ( 100 ) );
+		$this->assertEquals ( "/{$this->type()}1", $this->Instance ()->path ( $Parent ) );
+		$this->assertEquals ( "/{$this->type()}1/{$this->type()}1-2", $this->Instance ()->path ( $Child2 ) );
+		$this->assertEquals ( "/{$this->type()}1/{$this->type()}1-1/{$this->type()}1-1-3", $this->Instance ()->path ( $Child13 ) );
 	}
 	function testParentNode()
 	{
