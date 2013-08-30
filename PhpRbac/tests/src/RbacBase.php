@@ -498,7 +498,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Descendants()
+     * Tests for $this->Instance()->descendants()
      */
 
     public function testDescendants()
@@ -507,7 +507,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
         $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $descendants = $this->Instance()->Descendants($path_id);
+        $descendants = $this->Instance()->descendants($path_id);
 
         $expected = array(
             $this->type() . '_4' => array(
@@ -549,7 +549,7 @@ class RbacBase extends \RbacSetup
 
     public function testDescendantsEmptyBadID()
     {
-        $descendants = $this->Instance()->Descendants(20);
+        $descendants = $this->Instance()->descendants(20);
 
         $this->assertEmpty($descendants);
     }

@@ -12,7 +12,7 @@ interface NestedSetInterface
     
     function FullTree();
     function children($ID);
-    function Descendants($ID,$AbsoluteDepths=false);
+    function descendants($ID,$AbsoluteDepths=false);
     function Leaves($PID=null);
     function path($ID);
     
@@ -189,7 +189,7 @@ class BaseNestedSet implements NestedSetInterface
 	 * @return Rowset including Depth field
 	 * @seealso children
      */
-    function Descendants($ID,$AbsoluteDepths=false)
+    function descendants($ID,$AbsoluteDepths=false)
     {
            if (!$AbsoluteDepths)
                $DepthConcat="- (sub_tree.depth )";
@@ -217,10 +217,10 @@ class BaseNestedSet implements NestedSetInterface
     }
     /**
      * Returns immediate children of a node
-     * Note: this function performs the same as Descendants but only returns results with Depth=1
+     * Note: this function performs the same as descendants but only returns results with Depth=1
      * @param Integer $ID
      * @return Rowset not including Depth
-     * @seealso Descendants
+     * @seealso descendants
      */
     function children($ID)
     {
