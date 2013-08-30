@@ -11,7 +11,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 	function DeleteConditional($ConditionString);
 
 
-	function ChildrenConditional($ConditionString);
+	function childrenConditional($ConditionString);
 	function DescendantsConditional($AbsoluteDepths=false,$ConditionString);
 	function LeavesConditional($ConditionString=null);
 	function pathConditional($ConditionString);
@@ -112,7 +112,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     /**
      * Returns a sibling of the current node
      * Note: You can't find siblings of roots
-     * Note: this is a heavy function on nested sets, uses both Children (which is quite heavy) and path
+     * Note: this is a heavy function on nested sets, uses both children (which is quite heavy) and path
      * @param Integer $SiblingDistance from current node (negative or positive)
      * @param string $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
@@ -124,7 +124,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $ConditionString=$ConditionString; //prevent warning
         array_shift($Arguments); //Rid $SiblingDistance
         $Parent=call_user_func_array(array($this,"ParentNodeConditional"),$Arguments);
-        $Siblings=$this->Children($Parent[$this->ID()]);
+        $Siblings=$this->children($Parent[$this->ID()]);
         if (!$Siblings) return null;
         $ID=call_user_func_array(array($this,"GetID"),$Arguments);
         foreach ($Siblings as &$Sibling)
@@ -222,7 +222,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Condition
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
 	 * @return Rowset including Depth field
-	 * @seealso Children
+	 * @seealso children
      */
     function DescendantsConditional($AbsoluteDepths=false,$ConditionString,$Rest=null)
     {
@@ -266,7 +266,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @return Rowset not including Depth
      * @seealso Descendants
      */
-    function ChildrenConditional($ConditionString,$Rest=null)
+    function childrenConditional($ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
         array_shift($Arguments);

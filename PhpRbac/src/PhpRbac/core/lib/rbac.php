@@ -277,9 +277,9 @@ abstract class BaseRbac extends JModel
 	 * @return array
 	 *
 	 */
-	function Children($ID)
+	function children($ID)
 	{
-		return $this->{$this->type ()}->ChildrenConditional ( "ID=?", $ID );
+		return $this->{$this->type ()}->childrenConditional ( "ID=?", $ID );
 	}
 
 	/**

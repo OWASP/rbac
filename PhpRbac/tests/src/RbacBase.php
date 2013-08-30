@@ -459,7 +459,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Children()
+     * Tests for $this->Instance()->children()
      */
 
     public function testChildren()
@@ -468,7 +468,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
         $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $children = $this->Instance()->Children($path_id);
+        $children = $this->Instance()->children($path_id);
 
         $expected = array(
             array(
@@ -492,7 +492,7 @@ class RbacBase extends \RbacSetup
 
     public function testChildrenNullBadID()
     {
-        $children = $this->Instance()->Children(20);
+        $children = $this->Instance()->children(20);
 
         $this->assertNull($children);
     }

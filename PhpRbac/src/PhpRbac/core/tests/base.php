@@ -131,7 +131,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$Child12 = $this->Instance ()->add ( "{$this->type()}1-1-2", "", $Child1 );
 		$Child13 = $this->Instance ()->add ( "{$this->type()}1-1-3", "", $Child1 );
 		
-		$children = ($this->Instance ()->Children ( $Parent ));
+		$children = ($this->Instance ()->children ( $Parent ));
 
 		$this->assertEquals ( $children [0] ['Title'], "{$this->type()}1-1" );
 		$this->assertEquals ( $children [1] ['Title'], "{$this->type()}1-2" );
@@ -227,7 +227,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		
 		$this->Instance ()->reset ( true );
 		$this->assertEquals ( 1, $this->Instance ()->titleId ( "root" ) );
-		$this->assertEmpty ( $this->Instance ()->Children ( 1 ) );
+		$this->assertEmpty ( $this->Instance ()->children ( 1 ) );
 		$this->setExpectedException ( "Exception" );
 		$this->Instance ()->reset ();
 	}

@@ -11,7 +11,7 @@ interface NestedSetInterface
     //function Copy($ID,$NewPID);
     
     function FullTree();
-    function Children($ID);
+    function children($ID);
     function Descendants($ID,$AbsoluteDepths=false);
     function Leaves($PID=null);
     function path($ID);
@@ -101,7 +101,7 @@ class BaseNestedSet implements NestedSetInterface
     /**
      * Returns a sibling of the current node
      * Note: You can't find siblings of roots 
-     * Note: this is a heavy function on nested sets, uses both Children (which is quite heavy) and path
+     * Note: this is a heavy function on nested sets, uses both children (which is quite heavy) and path
      * @param Integer $ID
      * @param Integer $SiblingDistance from current node (negative or positive)
      * @return Array Node on success, null on failure 
@@ -109,7 +109,7 @@ class BaseNestedSet implements NestedSetInterface
     function Sibling($ID,$SiblingDistance=1)
     {
         $Parent=$this->ParentNode($ID);
-        $Siblings=$this->Children($Parent[$this->ID()]);
+        $Siblings=$this->children($Parent[$this->ID()]);
         if (!$Siblings) return null;
         foreach ($Siblings as &$Sibling)
         {
@@ -187,7 +187,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param Integer $ID
      * @param Boolean $AbsoluteDepths to return Depth of sub-tree from zero or absolutely from the whole tree  
 	 * @return Rowset including Depth field
-	 * @seealso Children
+	 * @seealso children
      */
     function Descendants($ID,$AbsoluteDepths=false)
     {
@@ -222,7 +222,7 @@ class BaseNestedSet implements NestedSetInterface
      * @return Rowset not including Depth
      * @seealso Descendants
      */
-    function Children($ID)
+    function children($ID)
     {
         $Res=Jf::sql("
             SELECT node.*, (COUNT(parent.{$this->ID()})-1 - (sub_tree.depth )) AS Depth
