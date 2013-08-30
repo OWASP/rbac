@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__DIR__) . '/sql/database/database.config';
-require_once __DIR__."/../lib/jf.php";
+require_once __DIR__."/../lib/Jf.php";
 abstract class PHPRBAC_Test extends PHPUnit_Framework_TestCase
 {
 	function setUp()
 	{
-		jf::$RBAC->reset(true);
+		Jf::$RBAC->reset(true);
 	}
 	
 
@@ -18,7 +18,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	}
 	/**
 	 *
-	 * @return \jf\{$this->type()}Manager
+	 * @return \Jf\{$this->type()}Manager
 	 */
 	protected abstract function Instance();
 	
@@ -264,15 +264,15 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	 */
 	function testAssign()
 	{
-		$ID1=jf::$RBAC->Roles->Add("role1", "description of role1");
-		$ID2=jf::$RBAC->Roles->Add("role2", "description of role2");
-		$ID11=jf::$RBAC->Roles->Add("role1-1", "description of role",$ID1);
-		$ID12=jf::$RBAC->Roles->Add("role1-2", "description of role",$ID1);
-		$ID121=jf::$RBAC->Roles->Add("role1-2-1", "description of role",$ID12);
+		$ID1=Jf::$RBAC->Roles->Add("role1", "description of role1");
+		$ID2=Jf::$RBAC->Roles->Add("role2", "description of role2");
+		$ID11=Jf::$RBAC->Roles->Add("role1-1", "description of role",$ID1);
+		$ID12=Jf::$RBAC->Roles->Add("role1-2", "description of role",$ID1);
+		$ID121=Jf::$RBAC->Roles->Add("role1-2-1", "description of role",$ID12);
 		
-		$PID1=jf::$RBAC->Permissions->Add("permission1", "description");
-		$PID2=jf::$RBAC->Permissions->Add("permission2", "description");
-		$PID21=jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
+		$PID1=Jf::$RBAC->Permissions->Add("permission1", "description");
+		$PID2=Jf::$RBAC->Permissions->Add("permission2", "description");
+		$PID21=Jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
 		
 		$this->assertTrue($this->Instance()->assign($ID121, $PID2));
 		$this->assertFalse($this->Instance()->assign($ID121, $PID2));
@@ -283,15 +283,15 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	 */
 	function testUnassign()
 	{
-		$ID1=jf::$RBAC->Roles->Add("role1", "description of role1");
-		$ID2=jf::$RBAC->Roles->Add("role2", "description of role2");
-		$ID11=jf::$RBAC->Roles->Add("role1-1", "description of role",$ID1);
-		$ID12=jf::$RBAC->Roles->Add("role1-2", "description of role",$ID1);
-		$ID121=jf::$RBAC->Roles->Add("role1-2-1", "description of role",$ID12);
+		$ID1=Jf::$RBAC->Roles->Add("role1", "description of role1");
+		$ID2=Jf::$RBAC->Roles->Add("role2", "description of role2");
+		$ID11=Jf::$RBAC->Roles->Add("role1-1", "description of role",$ID1);
+		$ID12=Jf::$RBAC->Roles->Add("role1-2", "description of role",$ID1);
+		$ID121=Jf::$RBAC->Roles->Add("role1-2-1", "description of role",$ID12);
 		
-		$PID1=jf::$RBAC->Permissions->Add("permission1", "description");
-		$PID2=jf::$RBAC->Permissions->Add("permission2", "description");
-		$PID21=jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
+		$PID1=Jf::$RBAC->Permissions->Add("permission1", "description");
+		$PID2=Jf::$RBAC->Permissions->Add("permission2", "description");
+		$PID21=Jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
 		
 		$this->Instance()->assign($ID121, $PID2);
 		
@@ -304,15 +304,15 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	
 	function testResetAssignments()
 	{
-		$ID1=jf::$RBAC->Roles->Add("role1", "description of role1");
-		$ID2=jf::$RBAC->Roles->Add("role2", "description of role2");
-		$ID11=jf::$RBAC->Roles->Add("role1-1", "description of role",$ID1);
-		$ID12=jf::$RBAC->Roles->Add("role1-2", "description of role",$ID1);
-		$ID121=jf::$RBAC->Roles->Add("role1-2-1", "description of role",$ID12);
+		$ID1=Jf::$RBAC->Roles->Add("role1", "description of role1");
+		$ID2=Jf::$RBAC->Roles->Add("role2", "description of role2");
+		$ID11=Jf::$RBAC->Roles->Add("role1-1", "description of role",$ID1);
+		$ID12=Jf::$RBAC->Roles->Add("role1-2", "description of role",$ID1);
+		$ID121=Jf::$RBAC->Roles->Add("role1-2-1", "description of role",$ID12);
 		
-		$PID1=jf::$RBAC->Permissions->Add("permission1", "description");
-		$PID2=jf::$RBAC->Permissions->Add("permission2", "description");
-		$PID21=jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
+		$PID1=Jf::$RBAC->Permissions->Add("permission1", "description");
+		$PID2=Jf::$RBAC->Permissions->Add("permission2", "description");
+		$PID21=Jf::$RBAC->Permissions->Add("permission2-1", "description",$PID2);
 		
 		$this->Instance()->assign($ID121, $PID2);		
 		$this->Instance()->assign($ID1, $PID1);		

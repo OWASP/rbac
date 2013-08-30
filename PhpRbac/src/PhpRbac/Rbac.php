@@ -1,7 +1,7 @@
 <?php
 namespace PhpRbac;
 
-use \jf;
+use \Jf;
 
 /**
  * @file
@@ -21,36 +21,36 @@ class Rbac
             require_once dirname(dirname(__DIR__)) . '/database/database.config';
         }
 
-        require_once 'core/lib/jf.php';
+        require_once 'core/lib/Jf.php';
 
-        $this->Permissions = jf::$RBAC->Permissions;
-        $this->Roles = jf::$RBAC->Roles;
-        $this->Users = jf::$RBAC->Users;
+        $this->Permissions = Jf::$RBAC->Permissions;
+        $this->Roles = Jf::$RBAC->Roles;
+        $this->Users = Jf::$RBAC->Users;
     }
 
     public function assign($role, $permission)
     {
-        return jf::$RBAC->assign($role, $permission);
+        return Jf::$RBAC->assign($role, $permission);
     }
 
     public function check($permission, $user_id)
     {
-        return jf::$RBAC->check($permission, $user_id);
+        return Jf::$RBAC->check($permission, $user_id);
     }
 
     public function enforce($permission, $user_id)
     {
-        return jf::$RBAC->enforce($permission, $user_id);
+        return Jf::$RBAC->enforce($permission, $user_id);
     }
 
     public function reset($ensure = false)
     {
-        return jf::$RBAC->reset($ensure);
+        return Jf::$RBAC->reset($ensure);
     }
 
     public function tablePrefix()
     {
-        return jf::$RBAC->tablePrefix();
+        return Jf::$RBAC->tablePrefix();
     }
 }
 
