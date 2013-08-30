@@ -53,7 +53,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	{
 		$ID = $this->Instance ()->add ( "this is the title", "and this is description" );
 		$this->assertEquals ( "this is the title", $this->Instance ()->getTitle ( $ID ) );
-		$this->assertEquals ( "and this is description", $this->Instance ()->GetDescription ( $ID ) );
+		$this->assertEquals ( "and this is description", $this->Instance ()->getDescription ( $ID ) );
 	}
 	function testPathID()
 	{
@@ -108,17 +108,17 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		// Change title
 		$this->assertTrue ( $this->Instance ()->edit ( $ID, "{$this->type()}2" ) );
 		$this->assertEquals ( "{$this->type()}2", $this->Instance ()->getTitle ( $ID ) );
-		$this->assertEquals ( "description here", $this->Instance ()->GetDescription ( $ID ) );
+		$this->assertEquals ( "description here", $this->Instance ()->getDescription ( $ID ) );
 		
 		// change description
 		$this->assertTrue ( $this->Instance ()->edit ( $ID, null, "new description" ) );
 		$this->assertEquals ( "{$this->type()}2", $this->Instance ()->getTitle ( $ID ) );
-		$this->assertEquals ( "new description", $this->Instance ()->GetDescription ( $ID ) );
+		$this->assertEquals ( "new description", $this->Instance ()->getDescription ( $ID ) );
 		
 		// changing both
 		$this->assertTrue ( $this->Instance ()->edit ( $ID, "new {$this->type()}", "another new description" ) );
 		$this->assertEquals ( "new {$this->type()}", $this->Instance ()->getTitle ( $ID ) );
-		$this->assertEquals ( "another new description", $this->Instance ()->GetDescription ( $ID ) );
+		$this->assertEquals ( "another new description", $this->Instance ()->getDescription ( $ID ) );
 	}
 	function testChildren()
 	{

@@ -133,19 +133,19 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->GetDescription()
+     * Tests for $this->Instance()->getDescription()
      */
 
     public function testGetDescription()
     {
-        $type_description = $this->Instance()->GetDescription(intval(1));
+        $type_description = $this->Instance()->getDescription(intval(1));
 
         $this->assertSame('root', $type_description);
     }
 
     public function testGetDescriptionNull()
     {
-        $type_description = $this->Instance()->GetDescription(intval(2));
+        $type_description = $this->Instance()->getDescription(intval(2));
 
         $this->assertNull($type_description);
     }
