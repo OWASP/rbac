@@ -445,11 +445,11 @@ abstract class BaseRbac extends JModel
  * @author abiusx
  * @version 1.0
  */
-class RBACManager extends JModel
+class RbacManager extends JModel
 {
     function __construct()
     {
-        $this->Users = new RBACUserManager ();
+        $this->Users = new RbacUserManager ();
         $this->Roles = new RoleManager ();
         $this->Permissions = new PermissionManager ();
     }
@@ -465,7 +465,7 @@ class RBACManager extends JModel
     public $Roles;
     /**
      *
-     * @var \Jf\RBACUserManager
+     * @var \Jf\RbacUserManager
      */
     public $Users;
 
@@ -886,7 +886,7 @@ class RoleManager extends BaseRbac
  * @author abiusx
  * @version 1.0
  */
-class RBACUserManager extends JModel
+class RbacUserManager extends JModel
 {
 	/**
 	 * Checks to see whether a user has a role or not

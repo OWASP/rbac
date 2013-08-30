@@ -4,7 +4,7 @@ require_once __DIR__."/rbac.php";
 class Jf
 {
 	/**
-	 * @var RBACManager
+	 * @var RbacManager
 	 */
 	public static $RBAC;
 
@@ -176,5 +176,5 @@ class Jf
 }
 
 Jf::setTablePrefix($table_prefix);
-Jf::$RBAC=new RBACManager();
+Jf::$RBAC=new RbacManager();
 require_once __DIR__."/../setup.php";

@@ -5,10 +5,10 @@ namespace PhpRbac;
  * @file
  * Unit Tests for PhpRbac PSR Wrapper
  *
- * @defgroup phprbac_unit_test_wrapper_user_manager Unit Tests for RBACUserManager Functionality
+ * @defgroup phprbac_unit_test_wrapper_user_manager Unit Tests for RbacUserManager Functionality
  * @ingroup phprbac
  * @{
- * Documentation for all Unit Tests regarding RBACUserManager functionality.
+ * Documentation for all Unit Tests regarding RbacUserManager functionality.
  */
 
 class RbacUsersTest extends \RbacSetup
@@ -18,7 +18,7 @@ class RbacUsersTest extends \RbacSetup
      */
 
     public function testUsersInstance() {
-        $this->assertInstanceOf('RBACUserManager', self::$rbac->Users);
+        $this->assertInstanceOf('RbacUserManager', self::$rbac->Users);
     }
 
     /*
