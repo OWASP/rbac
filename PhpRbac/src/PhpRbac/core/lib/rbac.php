@@ -166,7 +166,7 @@ abstract class BaseRbac extends JModel
 	 */
 	function titleId($Title)
 	{
-		return $this->{$this->type ()}->GetID ( "Title=?", $Title );
+		return $this->{$this->type ()}->getID ( "Title=?", $Title );
 	}
 	/**
 	 * Return the whole record of a single entry (including Rght and Lft fields)

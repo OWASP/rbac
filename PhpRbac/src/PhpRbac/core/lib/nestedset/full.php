@@ -2,7 +2,7 @@
 interface ExtendedNestedSet extends NestedSetInterface
 {
 	//All functions with ConditionString, accept other parameters in variable numbers
-	function GetID($ConditionString);
+	function getID($ConditionString);
 
 	function insertChildData($FieldValueArray=array(),$ConditionString=null);
 	function insertSiblingData($FieldValueArray=array(),$ConditionString=null);
@@ -63,7 +63,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Integer ID
      */
-    function GetID($ConditionString,$Rest=null)
+    function getID($ConditionString,$Rest=null)
     {
         $args=func_get_args();
         array_shift($args);
@@ -126,7 +126,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Parent=call_user_func_array(array($this,"parentNodeConditional"),$Arguments);
         $Siblings=$this->children($Parent[$this->id()]);
         if (!$Siblings) return null;
-        $ID=call_user_func_array(array($this,"GetID"),$Arguments);
+        $ID=call_user_func_array(array($this,"getID"),$Arguments);
         foreach ($Siblings as &$Sibling)
         {
             if ($Sibling[$this->id()]==$ID) break;
