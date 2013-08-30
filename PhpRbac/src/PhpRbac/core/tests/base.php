@@ -31,7 +31,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	{
 		$ID = $this->Instance ()->add ( "{$this->type()}1", "description of the {$this->type()}" );
 		$this->assertGreaterThan ( 1, $ID );
-		$this->assertGreaterThanOrEqual ( $this->Instance ()->Count (), 2 );
+		$this->assertGreaterThanOrEqual ( $this->Instance ()->count (), 2 );
 	}
 	/**
 	 * @depends testAdd
@@ -254,7 +254,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 
 		$this->Instance ()->remove ( $Child1, true );
 
-		$this->assertEquals ( 3, $this->Instance ()->Count () );
+		$this->assertEquals ( 3, $this->Instance ()->count () );
 		$this->assertEquals ( $Child2, $this->Instance ()->TitleID ( "{$this->type()}1-2" ) );
 		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->type()}1-1" ) );
 		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->type()}1-1-1" ) );

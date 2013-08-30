@@ -80,7 +80,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Count()
+     * Tests for $this->Instance()->count()
      */
 
     public function testCount()
@@ -89,7 +89,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->add($this->type() . '_title_2', $this->type() . ' Description 2');
         $this->Instance()->add($this->type() . '_title_3', $this->type() . ' Description 3');
 
-        $type_count = $this->Instance()->Count();
+        $type_count = $this->Instance()->count();
 
         $this->assertSame(4, $type_count);
     }

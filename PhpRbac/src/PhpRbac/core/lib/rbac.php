@@ -78,7 +78,7 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @return integer
 	 */
-	function Count()
+	function count()
 	{
 		$Res = Jf::sql ( "SELECT COUNT(*) FROM {$this->tablePrefix()}{$this->type()}" );
 		return (int)$Res [0] ['COUNT(*)'];
