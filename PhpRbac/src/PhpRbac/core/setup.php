@@ -44,7 +44,7 @@ function installPdoMysql($host,$user,$pass,$dbname)
 		foreach ($sqls as $query)
 		$db->query($query);
 	Jf::$Db=new PDO("mysql:host={$host};dbname={$dbname}",$user,$pass);
-	Jf::$RBAC->reset(true);
+	Jf::$Rbac->reset(true);
 }
 function installPdoSqlite($host,$user,$pass,$dbname)
 {
@@ -53,7 +53,7 @@ function installPdoSqlite($host,$user,$pass,$dbname)
 	if (is_array($sqls))
 		foreach ($sqls as $query)
 		Jf::$Db->query($query);
-	Jf::$RBAC->reset(true);
+	Jf::$Rbac->reset(true);
 }
 function installMysqli($host,$user,$pass,$dbname)
 {
@@ -65,5 +65,5 @@ function installMysqli($host,$user,$pass,$dbname)
 		foreach ($sqls as $query)
 		$db->query($query);
 	Jf::$Db=new mysqli($host,$user,$pass,$dbname);
-	Jf::$RBAC->reset(true);
+	Jf::$Rbac->reset(true);
 }

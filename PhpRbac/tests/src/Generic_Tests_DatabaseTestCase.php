@@ -1,6 +1,6 @@
 <?php
 /**
- * @defgroup phprbac_unit_tests RBAC Unit Test Functionality
+ * @defgroup phprbac_unit_tests Rbac Unit Test Functionality
  * @{
  * Documentation for all PhpRbac Unit Test related functionality.
  * @}

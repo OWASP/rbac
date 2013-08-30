@@ -34,7 +34,7 @@ class JModel
 	}
 }
 /**
- * RBAC base class, it contains operations that are essentially the same for
+ * Rbac base class, it contains operations that are essentially the same for
  * permissions and roles
  * and is inherited by both
  *
@@ -367,7 +367,7 @@ abstract class BaseRbac extends JModel
 		elseif ($this->isSQLite())
 			Jf::sql ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "{$this->type()}" );
 		else
-			throw new \Exception ( "RBAC can not reset table on this type of database: {$Adapter}" );
+			throw new \Exception ( "Rbac can not reset table on this type of database: {$Adapter}" );
 		$iid = Jf::sql ( "INSERT INTO {$this->tablePrefix()}{$this->type()} (Title,Description,Lft,Rght) VALUES (?,?,?,?)", "root", "root",0,1 );
 		return (int)$res;
 	}
@@ -425,7 +425,7 @@ abstract class BaseRbac extends JModel
 		elseif ($this->isSQLite())
 			Jf::sql ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_rolepermissions" );
 		else
-			throw new \Exception ( "RBAC can not reset table on this type of database: {$Adapter}" );
+			throw new \Exception ( "Rbac can not reset table on this type of database: {$Adapter}" );
 		$this->assign ( $this->rootId(), $this->rootId());
 		return $res;
 	}
@@ -911,9 +911,9 @@ class RbacUserManager extends JModel
 		else
 		{
 			if (substr ( $Role, 0, 1 ) == "/")
-				$RoleID = Jf::$RBAC->Roles->pathId ( $Role );
+				$RoleID = Jf::$Rbac->Roles->pathId ( $Role );
 			else
-				$RoleID = Jf::$RBAC->Roles->titleId ( $Role );
+				$RoleID = Jf::$Rbac->Roles->titleId ( $Role );
 		}
 
 		$R = Jf::sql ( "SELECT * FROM {$this->tablePrefix()}userroles AS TUR
@@ -947,9 +947,9 @@ class RbacUserManager extends JModel
 		else
 		{
 			if (substr ( $Role, 0, 1 ) == "/")
-				$RoleID = Jf::$RBAC->Roles->pathId ( $Role );
+				$RoleID = Jf::$Rbac->Roles->pathId ( $Role );
 			else
-				$RoleID = Jf::$RBAC->Roles->titleId ( $Role );
+				$RoleID = Jf::$Rbac->Roles->titleId ( $Role );
 		}
 		$res = Jf::sql ( "INSERT INTO {$this->tablePrefix()}userroles
 				(UserID,RoleID,AssignmentDate)
@@ -1039,7 +1039,7 @@ class RbacUserManager extends JModel
 		elseif ($this->isSQLite())
 			Jf::sql ( "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_userroles" );
 		else
-			throw new \Exception ("RBAC can not reset table on this type of database: {$Adapter}");
+			throw new \Exception ("Rbac can not reset table on this type of database: {$Adapter}");
 		$this->assign ( "root", 1 /* root user */ );
 		return $res;
 	}
