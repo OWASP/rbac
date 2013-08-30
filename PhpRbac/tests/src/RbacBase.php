@@ -16,14 +16,14 @@ use PhpRbac\Rbac;
 class RbacBase extends \RbacSetup
 {
     /*
-     * Tests for $this->Instance()->Add()
+     * Tests for $this->Instance()->add()
      */
 
     public function testAddNullTitle()
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $type_id = $this->Instance()->Add(null, $this->type() . ' Description');
+        $type_id = $this->Instance()->add(null, $this->type() . ' Description');
 
         $this->assertSame(0, $type_id);
     }
@@ -32,7 +32,7 @@ class RbacBase extends \RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $type_id = $this->Instance()->Add($this->type() . '_title', null);
+        $type_id = $this->Instance()->add($this->type() . '_title', null);
 
         $this->assertSame(0, $type_id);
     }
@@ -41,9 +41,9 @@ class RbacBase extends \RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1');
-        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
-        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
+        $this->Instance()->add($this->type() . '_title_1', $this->type() . ' Description 1');
+        $this->Instance()->add($this->type() . '_title_2', $this->type() . ' Description 2');
+        $this->Instance()->add($this->type() . '_title_3', $this->type() . ' Description 3');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -59,15 +59,15 @@ class RbacBase extends \RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
-        $type_1 = $this->Instance()->Add('blog', 'Define ' . $this->type() . ' for the Blog');
-        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1', $type_1);
-        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2', $type_1);
-        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3', $type_1);
+        $type_1 = $this->Instance()->add('blog', 'Define ' . $this->type() . ' for the Blog');
+        $this->Instance()->add($this->type() . '_title_1', $this->type() . ' Description 1', $type_1);
+        $this->Instance()->add($this->type() . '_title_2', $this->type() . ' Description 2', $type_1);
+        $this->Instance()->add($this->type() . '_title_3', $this->type() . ' Description 3', $type_1);
 
-        $type_2 = $this->Instance()->Add('forum', 'Define ' . $this->type() . ' for the Forums');
-        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1', $type_2);
-        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2', $type_2);
-        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3', $type_2);
+        $type_2 = $this->Instance()->add('forum', 'Define ' . $this->type() . ' for the Forums');
+        $this->Instance()->add($this->type() . '_title_1', $this->type() . ' Description 1', $type_2);
+        $this->Instance()->add($this->type() . '_title_2', $this->type() . ' Description 2', $type_2);
+        $this->Instance()->add($this->type() . '_title_3', $this->type() . ' Description 3', $type_2);
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -85,9 +85,9 @@ class RbacBase extends \RbacSetup
 
     public function testCount()
     {
-        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1');
-        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
-        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
+        $this->Instance()->add($this->type() . '_title_1', $this->type() . ' Description 1');
+        $this->Instance()->add($this->type() . '_title_2', $this->type() . ' Description 2');
+        $this->Instance()->add($this->type() . '_title_3', $this->type() . ' Description 3');
 
         $type_count = $this->Instance()->Count();
 
@@ -100,7 +100,7 @@ class RbacBase extends \RbacSetup
 
     public function testGetTitleId()
     {
-        $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $title_id = $this->Instance()->TitleID($this->type() . '_title');
 
         $this->assertSame('2', $title_id);
@@ -119,7 +119,7 @@ class RbacBase extends \RbacSetup
 
     public function testGetTitle()
     {
-        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $type_title = $this->Instance()->GetTitle($type_id);
 
         $this->assertSame($this->type() . '_title', $type_title);
@@ -156,7 +156,7 @@ class RbacBase extends \RbacSetup
 
     public function testEditTitle()
     {
-        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $this->Instance()->Edit($type_id, $this->type() . '_title_edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
@@ -171,7 +171,7 @@ class RbacBase extends \RbacSetup
 
     public function testEditDescription()
     {
-        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $this->Instance()->Edit($type_id, null, $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
@@ -186,7 +186,7 @@ class RbacBase extends \RbacSetup
 
     public function testEditAll()
     {
-        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $this->Instance()->Edit($type_id, $this->type() . '_title_edited', $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
@@ -201,7 +201,7 @@ class RbacBase extends \RbacSetup
 
     public function testEditNullId()
     {
-        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $result = $this->Instance()->Edit(intval(3), $this->type() . '_title', $this->type() . ' Description');
 
         $this->assertFalse($result);
@@ -209,19 +209,19 @@ class RbacBase extends \RbacSetup
 
     public function testEditNullParameters()
     {
-        $type_id = $this->Instance()->Add($this->type() . '_title', $this->type() . ' Description');
+        $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $result = $this->Instance()->Edit($type_id);
 
         $this->assertFalse($result);
     }
 
     /*
-     * Tests for $this->Instance()->AddPath()
+     * Tests for $this->Instance()->addPath()
      */
 
     public function testAddPathSingle()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -241,7 +241,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 3',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions);
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions);
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -255,9 +255,9 @@ class RbacBase extends \RbacSetup
 
     public function testAddPathSequential()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -275,14 +275,14 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 1',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/', $descriptions_1);
+        $this->Instance()->addPath('/' . $this->type() . '_1/', $descriptions_1);
 
         $descriptions_2 = array(
             null,
             $this->type() . ' Description 2',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/', $descriptions_2);
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/', $descriptions_2);
 
         $descriptions_3 = array(
             null,
@@ -290,7 +290,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 3',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_3);
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_3);
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -305,14 +305,14 @@ class RbacBase extends \RbacSetup
     public function testAddPathHierarchy()
     {
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_4');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_4');
 
-        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_13/' . $this->type() . '_14');
-        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_15/' . $this->type() . '_11');
+        $this->Instance()->addPath('/' . $this->type() . '_12/' . $this->type() . '_13/' . $this->type() . '_14');
+        $this->Instance()->addPath('/' . $this->type() . '_12/' . $this->type() . '_15/' . $this->type() . '_11');
 
-        $this->Instance()->AddPath('/' . $this->type() . '_23/' . $this->type() . '_24/' . $this->type() . '_25');
-        $this->Instance()->AddPath('/' . $this->type() . '_33/' . $this->type() . '_34/' . $this->type() . '_35');
+        $this->Instance()->addPath('/' . $this->type() . '_23/' . $this->type() . '_24/' . $this->type() . '_25');
+        $this->Instance()->addPath('/' . $this->type() . '_33/' . $this->type() . '_34/' . $this->type() . '_35');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -332,7 +332,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 3',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_1);
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_1);
 
         $descriptions_2 = array(
             null,
@@ -340,7 +340,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 4',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_4', $descriptions_2);
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_4', $descriptions_2);
 
         $descriptions_3 = array(
             $this->type() . ' Description 12',
@@ -348,7 +348,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 14',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_13/' . $this->type() . '_14', $descriptions_3);
+        $this->Instance()->addPath('/' . $this->type() . '_12/' . $this->type() . '_13/' . $this->type() . '_14', $descriptions_3);
 
         $descriptions_4 = array(
             null,
@@ -356,7 +356,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 11',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_12/' . $this->type() . '_15/' . $this->type() . '_11', $descriptions_4);
+        $this->Instance()->addPath('/' . $this->type() . '_12/' . $this->type() . '_15/' . $this->type() . '_11', $descriptions_4);
 
         $descriptions_5 = array(
             $this->type() . ' Description 23',
@@ -364,7 +364,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 25',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_23/' . $this->type() . '_24/' . $this->type() . '_25', $descriptions_5);
+        $this->Instance()->addPath('/' . $this->type() . '_23/' . $this->type() . '_24/' . $this->type() . '_25', $descriptions_5);
 
         $descriptions_6 = array(
             $this->type() . ' Description 33',
@@ -372,7 +372,7 @@ class RbacBase extends \RbacSetup
             $this->type() . ' Description 35',
         );
 
-        $this->Instance()->AddPath('/' . $this->type() . '_33/' . $this->type() . '_34/' . $this->type() . '_35', $descriptions_6);
+        $this->Instance()->addPath('/' . $this->type() . '_33/' . $this->type() . '_34/' . $this->type() . '_35', $descriptions_6);
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
@@ -390,7 +390,7 @@ class RbacBase extends \RbacSetup
 
     public function testAddPathBadPath()
     {
-        $this->Instance()->AddPath('permissions_1/permissions_2//permissions_3');
+        $this->Instance()->addPath('permissions_1/permissions_2//permissions_3');
     }
 
     /*
@@ -399,9 +399,9 @@ class RbacBase extends \RbacSetup
 
     public function testPathID()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2');
 
@@ -410,9 +410,9 @@ class RbacBase extends \RbacSetup
 
     public function testPathIDNullBadPath()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $path_id = $this->Instance()->PathID($this->type() . '_2');
 
@@ -429,7 +429,7 @@ class RbacBase extends \RbacSetup
         $path = "";
         for($i = 0; $i < 100; ++ $i)
         {
-            $id = $this->Instance()->Add("lgd depth{$i}", "description of depth{$i}", $id);
+            $id = $this->Instance()->add("lgd depth{$i}", "description of depth{$i}", $id);
             $path .= "/depth{$i}";
         }
 
@@ -442,7 +442,7 @@ class RbacBase extends \RbacSetup
 
     public function testPath()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $path_returned = $this->Instance()->Path(intval(3));
 
@@ -451,7 +451,7 @@ class RbacBase extends \RbacSetup
 
     public function testPathNull()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $path_returned = $this->Instance()->Path(intval(5));
 
@@ -464,8 +464,8 @@ class RbacBase extends \RbacSetup
 
     public function testChildren()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
         $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $children = $this->Instance()->Children($path_id);
@@ -503,8 +503,8 @@ class RbacBase extends \RbacSetup
 
     public function testDescendants()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
         $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $descendants = $this->Instance()->Descendants($path_id);
@@ -560,7 +560,7 @@ class RbacBase extends \RbacSetup
 
     public function testDepth()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
         $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $depth = $this->Instance()->Depth($path_id);
@@ -581,8 +581,8 @@ class RbacBase extends \RbacSetup
 
     public function testParentNode()
     {
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
-        $this->Instance()->AddPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
         $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $parent_node = $this->Instance()->ParentNode($path_id);
@@ -611,8 +611,8 @@ class RbacBase extends \RbacSetup
 
     public function testAssignWithId()
     {
-        $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
-        $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        $role_id = self::$rbac->Roles->add('roles_1', 'roles Description 1');
 
         $this->Instance()->assign($role_id, $perm_id);
 
@@ -637,8 +637,8 @@ class RbacBase extends \RbacSetup
 
     public function testUnassign()
     {
-        $perm_id = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
-        $role_id = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        $role_id = self::$rbac->Roles->add('roles_1', 'roles Description 1');
 
         $this->Instance()->assign($role_id, $perm_id);
         $this->Instance()->unassign($role_id, $perm_id);
@@ -666,13 +666,13 @@ class RbacBase extends \RbacSetup
 
     public function testResetPermRoleAssignments()
     {
-        $perm_id_1 = self::$rbac->Permissions->Add('permissions_1', 'permissions Description 1');
-        $perm_id_2 = self::$rbac->Permissions->Add('permissions_2', 'permissions Description 2');
-        $perm_id_3 = self::$rbac->Permissions->Add('permissions_3', 'permissions Description 3');
+        $perm_id_1 = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        $perm_id_2 = self::$rbac->Permissions->add('permissions_2', 'permissions Description 2');
+        $perm_id_3 = self::$rbac->Permissions->add('permissions_3', 'permissions Description 3');
 
-        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
-        $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
-        $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
+        $role_id_1 = self::$rbac->Roles->add('roles_1', 'roles Description 1');
+        $role_id_2 = self::$rbac->Roles->add('roles_2', 'roles Description 2');
+        $role_id_3 = self::$rbac->Roles->add('roles_3', 'roles Description 3');
 
         $this->Instance()->assign($role_id_1, $perm_id_1);
         $this->Instance()->assign($role_id_2, $perm_id_2);
@@ -714,9 +714,9 @@ class RbacBase extends \RbacSetup
 
     public function testReset()
     {
-        $this->Instance()->Add($this->type() . '_title_1', $this->type() . ' Description 1');
-        $this->Instance()->Add($this->type() . '_title_2', $this->type() . ' Description 2');
-        $this->Instance()->Add($this->type() . '_title_3', $this->type() . ' Description 3');
+        $this->Instance()->add($this->type() . '_title_1', $this->type() . ' Description 1');
+        $this->Instance()->add($this->type() . '_title_2', $this->type() . ' Description 2');
+        $this->Instance()->add($this->type() . '_title_3', $this->type() . ' Description 3');
 
         $this->Instance()->reset(true);
 

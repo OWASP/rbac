@@ -37,7 +37,7 @@ class RbacPermissionsTest extends \RbacBase
 
     public function testPermissionsRemoveSingle()
     {
-        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->add($this->type() . '_1', $this->type() . ' Description 1');
         
         $this->Instance()->remove($perm_id_1);
         
@@ -55,8 +55,8 @@ class RbacPermissionsTest extends \RbacBase
 
     public function testPermissionsRemoveSingleRole()
     {
-        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
-        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $perm_id_1 = $this->Instance()->add($this->type() . '_1', $this->type() . ' Description 1');
+        $role_id_1 = self::$rbac->Roles->add('roles_1', 'roles Description 1');
         
         $this->Instance()->assign($role_id_1, $perm_id_1);
         
@@ -83,12 +83,12 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsRemoveRecursive()
     {
-        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
-        $perm_id_2 = $this->Instance()->Add($this->type() . '_2', $this->type() . ' Description 2', $perm_id_1);
-        $perm_id_3 = $this->Instance()->Add($this->type() . '_3', $this->type() . ' Description 3', $perm_id_1);
-        $perm_id_4 = $this->Instance()->Add($this->type() . '_4', $this->type() . ' Description 4');
+        $perm_id_1 = $this->Instance()->add($this->type() . '_1', $this->type() . ' Description 1');
+        $perm_id_2 = $this->Instance()->add($this->type() . '_2', $this->type() . ' Description 2', $perm_id_1);
+        $perm_id_3 = $this->Instance()->add($this->type() . '_3', $this->type() . ' Description 3', $perm_id_1);
+        $perm_id_4 = $this->Instance()->add($this->type() . '_4', $this->type() . ' Description 4');
         
-        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
+        $role_id_1 = self::$rbac->Roles->add('roles_1', 'roles Description 1');
         
         $this->Instance()->assign($role_id_1, $perm_id_2);
         
@@ -126,11 +126,11 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsRolesOnlyID()
     {
-        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->add($this->type() . '_1', $this->type() . ' Description 1');
         
-        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
-        $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
-        $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
+        $role_id_1 = self::$rbac->Roles->add('roles_1', 'roles Description 1');
+        $role_id_2 = self::$rbac->Roles->add('roles_2', 'roles Description 2');
+        $role_id_3 = self::$rbac->Roles->add('roles_3', 'roles Description 3');
         
         $this->Instance()->assign($role_id_1, $perm_id_1);
         $this->Instance()->assign($role_id_2, $perm_id_1);
@@ -173,11 +173,11 @@ class RbacPermissionsTest extends \RbacBase
     
     public function testPermissionsUnassignRoles()
     {
-        $perm_id_1 = $this->Instance()->Add($this->type() . '_1', $this->type() . ' Description 1');
+        $perm_id_1 = $this->Instance()->add($this->type() . '_1', $this->type() . ' Description 1');
         
-        $role_id_1 = self::$rbac->Roles->Add('roles_1', 'roles Description 1');
-        $role_id_2 = self::$rbac->Roles->Add('roles_2', 'roles Description 2');
-        $role_id_3 = self::$rbac->Roles->Add('roles_3', 'roles Description 3');
+        $role_id_1 = self::$rbac->Roles->add('roles_1', 'roles Description 1');
+        $role_id_2 = self::$rbac->Roles->add('roles_2', 'roles Description 2');
+        $role_id_3 = self::$rbac->Roles->add('roles_3', 'roles Description 3');
         
         $this->Instance()->assign($role_id_1, $perm_id_1);
         $this->Instance()->assign($role_id_2, $perm_id_1);

@@ -8,11 +8,11 @@ class PHPRBACMainTest extends PHPRBAC_Test
 	}
 	function testAssign()
 	{
-		$RID = Jf::$RBAC->Roles->AddPath ( "/CEO/CIO/Admin" );
-		Jf::$RBAC->Permissions->AddPath ( "/Users/add" );
-		Jf::$RBAC->Permissions->AddPath ( "/Users/edit" );
-		Jf::$RBAC->Permissions->AddPath ( "/Users/remove" );
-		$PID = Jf::$RBAC->Permissions->AddPath ( "/Users/changepass" );
+		$RID = Jf::$RBAC->Roles->addPath ( "/CEO/CIO/Admin" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/add" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/edit" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/remove" );
+		$PID = Jf::$RBAC->Permissions->addPath ( "/Users/changepass" );
 		
 		$this->assertTrue ( Jf::$RBAC->assign ( $RID, $PID ) );
 		$this->assertTrue ( Jf::$RBAC->assign ( $RID, "/Users/edit" ) );
@@ -28,11 +28,11 @@ class PHPRBACMainTest extends PHPRBAC_Test
 	{
 		
 		// adding roles
-		Jf::$RBAC->Roles->AddPath ( "/CEO/CIO/Admin" );
-		Jf::$RBAC->Roles->AddPath ( "/CEO/CIO/Networking" );
-		Jf::$RBAC->Roles->AddPath ( "/CEO/CIO/CISO" );
-		Jf::$RBAC->Roles->AddPath ( "/CEO/Financial" );
-		Jf::$RBAC->Roles->AddPath ( "/CEO/Secretary" );
+		Jf::$RBAC->Roles->addPath ( "/CEO/CIO/Admin" );
+		Jf::$RBAC->Roles->addPath ( "/CEO/CIO/Networking" );
+		Jf::$RBAC->Roles->addPath ( "/CEO/CIO/CISO" );
+		Jf::$RBAC->Roles->addPath ( "/CEO/Financial" );
+		Jf::$RBAC->Roles->addPath ( "/CEO/Secretary" );
 		
 		// assingning roles to users
 		$res = Jf::$RBAC->Users->assign ( "/CEO", 2 );
@@ -46,18 +46,18 @@ class PHPRBACMainTest extends PHPRBAC_Test
 		$this->assertTrue ( $res );
 		
 		// adding permissions
-		Jf::$RBAC->Permissions->AddPath ( "/Users/add" );
-		Jf::$RBAC->Permissions->AddPath ( "/Users/edit" );
-		Jf::$RBAC->Permissions->AddPath ( "/Users/remove" );
-		Jf::$RBAC->Permissions->AddPath ( "/Users/changepass" );
-		Jf::$RBAC->Permissions->AddPath ( "/Signature/financial" );
-		Jf::$RBAC->Permissions->AddPath ( "/Signature/office" );
-		Jf::$RBAC->Permissions->AddPath ( "/Signature/order" );
-		Jf::$RBAC->Permissions->AddPath ( "/Signature/network" );
-		Jf::$RBAC->Permissions->AddPath ( "/reports/IT/network" );
-		Jf::$RBAC->Permissions->AddPath ( "/reports/IT/security" );
-		Jf::$RBAC->Permissions->AddPath ( "/reports/financial" );
-		Jf::$RBAC->Permissions->AddPath ( "/reports/general" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/add" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/edit" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/remove" );
+		Jf::$RBAC->Permissions->addPath ( "/Users/changepass" );
+		Jf::$RBAC->Permissions->addPath ( "/Signature/financial" );
+		Jf::$RBAC->Permissions->addPath ( "/Signature/office" );
+		Jf::$RBAC->Permissions->addPath ( "/Signature/order" );
+		Jf::$RBAC->Permissions->addPath ( "/Signature/network" );
+		Jf::$RBAC->Permissions->addPath ( "/reports/IT/network" );
+		Jf::$RBAC->Permissions->addPath ( "/reports/IT/security" );
+		Jf::$RBAC->Permissions->addPath ( "/reports/financial" );
+		Jf::$RBAC->Permissions->addPath ( "/reports/general" );
 		
 		// assigning permissions to roles
 		$res = Jf::$RBAC->assign ( "CEO", "Users" );

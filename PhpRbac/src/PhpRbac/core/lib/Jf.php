@@ -12,9 +12,9 @@ class Jf
 
 	public static $TABLE_PREFIX;
 
-	static function setTablePrefix($table_prefix)
+	static function setTablePrefix($tablePrefix)
 	{
-	    self::$TABLE_PREFIX = $table_prefix;
+	    self::$TABLE_PREFIX = $tablePrefix;
 	}
 
 	static function tablePrefix()

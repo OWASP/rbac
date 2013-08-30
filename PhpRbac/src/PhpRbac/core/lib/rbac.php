@@ -67,7 +67,7 @@ abstract class BaseRbac extends JModel
 	 *        	optional ID of the parent node in the hierarchy
 	 * @return integer ID of the new entry
 	 */
-	function Add($Title, $Description, $ParentID = null)
+	function add($Title, $Description, $ParentID = null)
 	{
 		if ($ParentID === null)
 			$ParentID = $this->rootId ();
@@ -217,7 +217,7 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @return integer NULL components ID
 	 */
-	function AddPath($Path, array $Descriptions = null)
+	function addPath($Path, array $Descriptions = null)
 	{
 		if ($Path[0] !== "/")
 	        throw new \Exception ("The path supplied is not valid.");
@@ -237,7 +237,7 @@ abstract class BaseRbac extends JModel
 			$t = $this->PathID ( $CurrentPath );
 			if (! $t)
 			{
-				$IID = $this->Add ( $p, $Description, $Parent );
+				$IID = $this->add ( $p, $Description, $Parent );
 				$Parent = $IID;
 			}
 			else

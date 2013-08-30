@@ -4,13 +4,13 @@ class LibRbacUsersTest extends PHPRBAC_Test
 {
 	function testAssign()
 	{
-		$ID1 = Jf::$RBAC->Roles->Add ( "role1", "" );
-		$ID11 = Jf::$RBAC->Roles->Add ( "role1-1", "", $ID1 );
-		$ID111 = Jf::$RBAC->Roles->Add ( "role1-1-1", "", $ID11 );
+		$ID1 = Jf::$RBAC->Roles->add ( "role1", "" );
+		$ID11 = Jf::$RBAC->Roles->add ( "role1-1", "", $ID1 );
+		$ID111 = Jf::$RBAC->Roles->add ( "role1-1-1", "", $ID11 );
 		
-		$ID2 = Jf::$RBAC->Roles->Add ( "role2", "" );
-		$ID21 = Jf::$RBAC->Roles->Add ( "role2-1", "", $ID2 );
-		$ID211 = Jf::$RBAC->Roles->Add ( "role2-1-1", "", $ID21 );
+		$ID2 = Jf::$RBAC->Roles->add ( "role2", "" );
+		$ID21 = Jf::$RBAC->Roles->add ( "role2-1", "", $ID2 );
+		$ID211 = Jf::$RBAC->Roles->add ( "role2-1-1", "", $ID21 );
 		
 
 		$UID = 3;
@@ -23,13 +23,13 @@ class LibRbacUsersTest extends PHPRBAC_Test
 	 */
 	function testUnassign()
 	{
-		$ID1 = Jf::$RBAC->Roles->Add ( "role1", "" );
-		$ID11 = Jf::$RBAC->Roles->Add ( "role1-1", "", $ID1 );
-		$ID111 = Jf::$RBAC->Roles->Add ( "role1-1-1", "", $ID11 );
+		$ID1 = Jf::$RBAC->Roles->add ( "role1", "" );
+		$ID11 = Jf::$RBAC->Roles->add ( "role1-1", "", $ID1 );
+		$ID111 = Jf::$RBAC->Roles->add ( "role1-1-1", "", $ID11 );
 		
-		$ID2 = Jf::$RBAC->Roles->Add ( "role2", "" );
-		$ID21 = Jf::$RBAC->Roles->Add ( "role2-1", "", $ID2 );
-		$ID211 = Jf::$RBAC->Roles->Add ( "role2-1-1", "", $ID21 );
+		$ID2 = Jf::$RBAC->Roles->add ( "role2", "" );
+		$ID21 = Jf::$RBAC->Roles->add ( "role2-1", "", $ID2 );
+		$ID211 = Jf::$RBAC->Roles->add ( "role2-1-1", "", $ID21 );
 		
 
 		$UID = 2;
@@ -40,13 +40,13 @@ class LibRbacUsersTest extends PHPRBAC_Test
 	}
 	function testallRoles()
 	{
-		$ID1 = Jf::$RBAC->Roles->Add ( "role1", "" );
-		$ID11 = Jf::$RBAC->Roles->Add ( "role1-1", "", $ID1 );
-		$ID111 = Jf::$RBAC->Roles->Add ( "role1-1-1", "", $ID11 );
+		$ID1 = Jf::$RBAC->Roles->add ( "role1", "" );
+		$ID11 = Jf::$RBAC->Roles->add ( "role1-1", "", $ID1 );
+		$ID111 = Jf::$RBAC->Roles->add ( "role1-1-1", "", $ID11 );
 		
-		$ID2 = Jf::$RBAC->Roles->Add ( "role2", "" );
-		$ID21 = Jf::$RBAC->Roles->Add ( "role2-1", "", $ID2 );
-		$ID211 = Jf::$RBAC->Roles->Add ( "role2-1-1", "", $ID21 );
+		$ID2 = Jf::$RBAC->Roles->add ( "role2", "" );
+		$ID21 = Jf::$RBAC->Roles->add ( "role2-1", "", $ID2 );
+		$ID211 = Jf::$RBAC->Roles->add ( "role2-1-1", "", $ID21 );
 		
 		
 		$UID = 2;
@@ -67,13 +67,13 @@ class LibRbacUsersTest extends PHPRBAC_Test
 	}
 	function testRoleCount()
 	{
-		$ID1 = Jf::$RBAC->Roles->Add ( "role1", "" );
-		$ID11 = Jf::$RBAC->Roles->Add ( "role1-1", "", $ID1 );
-		$ID111 = Jf::$RBAC->Roles->Add ( "role1-1-1", "", $ID11 );
+		$ID1 = Jf::$RBAC->Roles->add ( "role1", "" );
+		$ID11 = Jf::$RBAC->Roles->add ( "role1-1", "", $ID1 );
+		$ID111 = Jf::$RBAC->Roles->add ( "role1-1-1", "", $ID11 );
 		
-		$ID2 = Jf::$RBAC->Roles->Add ( "role2", "" );
-		$ID21 = Jf::$RBAC->Roles->Add ( "role2-1", "", $ID2 );
-		$ID211 = Jf::$RBAC->Roles->Add ( "role2-1-1", "", $ID21 );
+		$ID2 = Jf::$RBAC->Roles->add ( "role2", "" );
+		$ID21 = Jf::$RBAC->Roles->add ( "role2-1", "", $ID2 );
+		$ID211 = Jf::$RBAC->Roles->add ( "role2-1-1", "", $ID21 );
 		
 
 		$UID = 2;
@@ -100,13 +100,13 @@ class LibRbacUsersTest extends PHPRBAC_Test
 	 */
 	function testHasRole()
 	{
-		$ID1 = Jf::$RBAC->Roles->Add ( "role1", "" );
-		$ID11 = Jf::$RBAC->Roles->Add ( "role1-1", "", $ID1 );
-		$ID111 = Jf::$RBAC->Roles->Add ( "role1-1-1", "", $ID11 );
+		$ID1 = Jf::$RBAC->Roles->add ( "role1", "" );
+		$ID11 = Jf::$RBAC->Roles->add ( "role1-1", "", $ID1 );
+		$ID111 = Jf::$RBAC->Roles->add ( "role1-1-1", "", $ID11 );
 		
-		$ID2 = Jf::$RBAC->Roles->Add ( "role2", "" );
-		$ID21 = Jf::$RBAC->Roles->Add ( "role2-1", "", $ID2 );
-		$ID211 = Jf::$RBAC->Roles->Add ( "role2-1-1", "", $ID21 );
+		$ID2 = Jf::$RBAC->Roles->add ( "role2", "" );
+		$ID21 = Jf::$RBAC->Roles->add ( "role2-1", "", $ID2 );
+		$ID211 = Jf::$RBAC->Roles->add ( "role2-1-1", "", $ID21 );
 		
 
 		$UID = 2;
@@ -125,13 +125,13 @@ class LibRbacUsersTest extends PHPRBAC_Test
 	
 	function testResetAssignments()
 	{
-		$ID1 = Jf::$RBAC->Roles->Add ( "role1", "" );
-		$ID11 = Jf::$RBAC->Roles->Add ( "role1-1", "", $ID1 );
-		$ID111 = Jf::$RBAC->Roles->Add ( "role1-1-1", "", $ID11 );
+		$ID1 = Jf::$RBAC->Roles->add ( "role1", "" );
+		$ID11 = Jf::$RBAC->Roles->add ( "role1-1", "", $ID1 );
+		$ID111 = Jf::$RBAC->Roles->add ( "role1-1-1", "", $ID11 );
 		
-		$ID2 = Jf::$RBAC->Roles->Add ( "role2", "" );
-		$ID21 = Jf::$RBAC->Roles->Add ( "role2-1", "", $ID2 );
-		$ID211 = Jf::$RBAC->Roles->Add ( "role2-1-1", "", $ID21 );
+		$ID2 = Jf::$RBAC->Roles->add ( "role2", "" );
+		$ID21 = Jf::$RBAC->Roles->add ( "role2-1", "", $ID2 );
+		$ID211 = Jf::$RBAC->Roles->add ( "role2-1-1", "", $ID21 );
 		
 		
 		$UID = 2;
