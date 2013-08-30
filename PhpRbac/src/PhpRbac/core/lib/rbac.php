@@ -92,7 +92,7 @@ abstract class BaseRbac extends JModel
 	 *        	such as /role1/role2/role3 ( a single slash is root)
 	 * @return integer NULL
 	 */
-	function PathID($Path)
+	function pathId($Path)
 	{
 		$Path = "root" . $Path;
 		if ($Path [strlen ( $Path ) - 1] == "/")
@@ -234,7 +234,7 @@ abstract class BaseRbac extends JModel
 			else
 				$Description = "";
 			$CurrentPath .= "/{$p}";
-			$t = $this->PathID ( $CurrentPath );
+			$t = $this->pathId ( $CurrentPath );
 			if (! $t)
 			{
 				$IID = $this->add ( $p, $Description, $Parent );
@@ -489,7 +489,7 @@ class RBACManager extends JModel
         else
         {
             if (substr ( $Permission, 0, 1 ) == "/")
-                $PermissionID = $this->Permissions->PathID ( $Permission );
+                $PermissionID = $this->Permissions->pathId ( $Permission );
             else
                 $PermissionID = $this->Permissions->TitleID ( $Permission );
         }
@@ -500,7 +500,7 @@ class RBACManager extends JModel
         else
         {
             if (substr ( $Role, 0, 1 ) == "/")
-                $RoleID = $this->Roles->PathID ( $Role );
+                $RoleID = $this->Roles->pathId ( $Role );
             else
                 $RoleID = $this->Roles->TitleID ( $Role );
         }
@@ -543,7 +543,7 @@ class RBACManager extends JModel
         else
         {
             if (substr ( $Permission, 0, 1 ) == "/")
-                $PermissionID = $this->Permissions->PathID ( $Permission );
+                $PermissionID = $this->Permissions->pathId ( $Permission );
             else
                 $PermissionID = $this->Permissions->TitleID ( $Permission );
         }
@@ -911,7 +911,7 @@ class RBACUserManager extends JModel
 		else
 		{
 			if (substr ( $Role, 0, 1 ) == "/")
-				$RoleID = Jf::$RBAC->Roles->PathID ( $Role );
+				$RoleID = Jf::$RBAC->Roles->pathId ( $Role );
 			else
 				$RoleID = Jf::$RBAC->Roles->TitleID ( $Role );
 		}
@@ -947,7 +947,7 @@ class RBACUserManager extends JModel
 		else
 		{
 			if (substr ( $Role, 0, 1 ) == "/")
-				$RoleID = Jf::$RBAC->Roles->PathID ( $Role );
+				$RoleID = Jf::$RBAC->Roles->pathId ( $Role );
 			else
 				$RoleID = Jf::$RBAC->Roles->TitleID ( $Role );
 		}

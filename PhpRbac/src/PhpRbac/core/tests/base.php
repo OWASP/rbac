@@ -57,25 +57,25 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	}
 	function testPathID()
 	{
-		$this->assertEquals ( 1, $this->Instance ()->PathID ( "/" ) );
+		$this->assertEquals ( 1, $this->Instance ()->pathId ( "/" ) );
 		
 		$ID1 = $this->Instance ()->add ( "folder1", "description of foler1" );
 		$ID2 = $this->Instance ()->add ( "folder2", "description of foler2", $ID1 );
 		$ID3 = $this->Instance ()->add ( "folder3", "description of foler3", $ID2 );
 		
-		$Res1 = $this->Instance ()->PathID ( "/folder1/folder2/folder3" );
+		$Res1 = $this->Instance ()->pathId ( "/folder1/folder2/folder3" );
 		$this->assertEquals ( $ID3, $Res1 );
 		
-		$Res1 = $this->Instance ()->PathID ( "/folder1/folder3" );
+		$Res1 = $this->Instance ()->pathId ( "/folder1/folder3" );
 		$this->assertNotEquals ( $ID3, $Res1 );
 		
-		$this->assertEquals ( 1, $this->Instance ()->PathID ( "/" ) );
+		$this->assertEquals ( 1, $this->Instance ()->pathId ( "/" ) );
 		
-		$this->assertEquals ( $ID1, $this->Instance ()->PathID ( "/folder1" ) );
-		$this->assertEquals ( $ID1, $this->Instance ()->PathID ( "/folder1/" ) );
-		$this->assertNotEquals ( $ID1, $this->Instance ()->PathID ( "/folder1/xyz" ) );
+		$this->assertEquals ( $ID1, $this->Instance ()->pathId ( "/folder1" ) );
+		$this->assertEquals ( $ID1, $this->Instance ()->pathId ( "/folder1/" ) );
+		$this->assertNotEquals ( $ID1, $this->Instance ()->pathId ( "/folder1/xyz" ) );
 		
-		// ong one, the current PathID has a limit of 1024 characters for path
+		// ong one, the current pathId has a limit of 1024 characters for path
 		// (because of SQL gorup_concat)
 		$ID = null;
 		$Path = "";
@@ -84,7 +84,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 			$ID = $this->Instance ()->add ( "depth{$i}", "description of depth{$i}", $ID );
 			$Path .= "/depth{$i}";
 		}
-		$this->assertEquals ( $ID, $this->Instance ()->PathID ( $Path ) );
+		$this->assertEquals ( $ID, $this->Instance ()->pathId ( $Path ) );
 	}
 	
 
@@ -94,12 +94,12 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	function testAddPath()
 	{
 		$ID = $this->Instance ()->addPath ( "/some/folder/some/where" );
-		$this->assertEquals ( $ID, $this->Instance ()->PathID ( "/some/folder/some/where" ) );
+		$this->assertEquals ( $ID, $this->Instance ()->pathId ( "/some/folder/some/where" ) );
 		$ID = $this->Instance ()->addPath ( "/some/folder/another/where" );
-		$this->Instance ()->PathID ( "/some/folder/another/where" );
-		$this->assertEquals ( $ID, $this->Instance ()->PathID ( "/some/folder/another/where" ) );
+		$this->Instance ()->pathId ( "/some/folder/another/where" );
+		$this->assertEquals ( $ID, $this->Instance ()->pathId ( "/some/folder/another/where" ) );
 		$ID = $this->Instance ()->addPath ( "/some/folder/another/where" );
-		$this->assertEquals ( $ID, $this->Instance ()->PathID ( "/some/folder/another/where" ) );
+		$this->assertEquals ( $ID, $this->Instance ()->pathId ( "/some/folder/another/where" ) );
 	}
 	function testEdit()
 	{

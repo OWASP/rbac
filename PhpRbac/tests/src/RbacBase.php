@@ -394,7 +394,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->PathID()
+     * Tests for $this->Instance()->pathId()
      */
 
     public function testPathID()
@@ -403,7 +403,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2');
+        $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2');
 
         $this->assertSame('3', $path_id);
     }
@@ -414,7 +414,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/');
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $path_id = $this->Instance()->PathID($this->type() . '_2');
+        $path_id = $this->Instance()->pathId($this->type() . '_2');
 
         $this->assertNull($path_id);
     }
@@ -433,7 +433,7 @@ class RbacBase extends \RbacSetup
             $path .= "/depth{$i}";
         }
 
-        $this->Instance()->PathID($path);
+        $this->Instance()->pathId($path);
     }
 
     /*
@@ -466,7 +466,7 @@ class RbacBase extends \RbacSetup
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
-        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $children = $this->Instance()->Children($path_id);
 
@@ -505,7 +505,7 @@ class RbacBase extends \RbacSetup
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
-        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $descendants = $this->Instance()->Descendants($path_id);
 
@@ -561,7 +561,7 @@ class RbacBase extends \RbacSetup
     public function testDepth()
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
-        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $depth = $this->Instance()->Depth($path_id);
 
@@ -583,7 +583,7 @@ class RbacBase extends \RbacSetup
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
-        $path_id = $this->Instance()->PathID('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
         $parent_node = $this->Instance()->ParentNode($path_id);
 
