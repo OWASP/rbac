@@ -10,10 +10,10 @@ interface NestedSetInterface
     //function Move($ID,$NewPID);
     //function Copy($ID,$NewPID);
     
-    function FullTree();
+    function fullTree();
     function children($ID);
     function descendants($ID,$AbsoluteDepths=false);
-    function Leaves($PID=null);
+    function leaves($PID=null);
     function path($ID);
     
     function depth($ID);
@@ -274,7 +274,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param Integer $PID
      * @return Rowset Leaves
      */
-    function Leaves($PID=null)
+    function leaves($PID=null)
     {
         if ($PID) 
         $Res=Jf::sql("SELECT *
@@ -341,7 +341,7 @@ class BaseNestedSet implements NestedSetInterface
      *
      * @return 2DArray Rowset
      */
-    function FullTree()
+    function fullTree()
     {
         $Res=Jf::sql("SELECT node.*, (COUNT(parent.{$this->ID()}) - 1) AS Depth
             FROM {$this->Table()} AS node,

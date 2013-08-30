@@ -13,7 +13,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 
 	function childrenConditional($ConditionString);
 	function descendantsConditional($AbsoluteDepths=false,$ConditionString);
-	function LeavesConditional($ConditionString=null);
+	function leavesConditional($ConditionString=null);
 	function pathConditional($ConditionString);
 
 	function depthConditional($ConditionString);
@@ -329,7 +329,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Rowset Leaves
      */
-    function LeavesConditional($ConditionString=null,$Rest=null)
+    function leavesConditional($ConditionString=null,$Rest=null)
     {
         if ($ConditionString)
         {
