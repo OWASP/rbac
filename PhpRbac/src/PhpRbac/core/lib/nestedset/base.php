@@ -80,7 +80,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param Integer $ID
      * @return Integer Count
      */
-    function DescendantCount($ID)
+    function descendantCount($ID)
     {
         $Res=Jf::sql("SELECT ({$this->right()}-{$this->left()}-1)/2 AS `Count` FROM
         {$this->table()} WHERE {$this->id()}=?",$ID);
