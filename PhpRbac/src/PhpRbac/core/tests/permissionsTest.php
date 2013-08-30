@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__."/base.php";
-class PHPRBACPermissionsTest extends PHPRBACBaseTest
+class PhpRbacPermissionsTest extends PhpRbacBaseTest
 {
 	/**
 	 * 

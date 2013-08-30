@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__) . '/sql/database/database.config';
 require_once __DIR__."/../lib/Jf.php";
-abstract class PHPRBAC_Test extends PHPUnit_Framework_TestCase
+abstract class PhpRbac_Test extends PHPUnit_Framework_TestCase
 {
 	function setUp()
 	{
@@ -10,7 +10,7 @@ abstract class PHPRBAC_Test extends PHPUnit_Framework_TestCase
 	
 
 }
-abstract class PHPRBACBaseTest extends PHPRBAC_Test
+abstract class PhpRbacBaseTest extends PhpRbac_Test
 {
 	function setUp()
 	{

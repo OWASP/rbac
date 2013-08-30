@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__."/base.php";
-class PHPRBACMainTest extends PHPRBAC_Test
+class PhpRbacMainTest extends PhpRbac_Test
 {
 	function setUp()
 	{
