@@ -576,7 +576,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->ParentNode()
+     * Tests for $this->Instance()->parentNode()
      */
 
     public function testParentNode()
@@ -585,7 +585,7 @@ class RbacBase extends \RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_6/' . $this->type() . '_7');
         $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $parent_node = $this->Instance()->ParentNode($path_id);
+        $parent_node = $this->Instance()->parentNode($path_id);
 
         $expected = array(
             'ID' => '3',
@@ -600,7 +600,7 @@ class RbacBase extends \RbacSetup
 
     public function testParentNodeNullBadID()
     {
-        $parent_node = $this->Instance()->ParentNode(20);
+        $parent_node = $this->Instance()->parentNode(20);
 
         $this->assertNull($parent_node);
     }

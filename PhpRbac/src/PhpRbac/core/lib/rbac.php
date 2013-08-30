@@ -338,9 +338,9 @@ abstract class BaseRbac extends JModel
 	 * @return array including Title, Description and ID
 	 *
 	 */
-	function ParentNode($ID)
+	function parentNode($ID)
 	{
-		return $this->{$this->type ()}->ParentNodeConditional ( "ID=?", $ID );
+		return $this->{$this->type ()}->parentNodeConditional ( "ID=?", $ID );
 	}
 
 	/**

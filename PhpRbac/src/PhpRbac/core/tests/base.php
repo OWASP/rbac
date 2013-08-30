@@ -205,13 +205,13 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$Child12 = $this->Instance ()->add ( "{$this->type()}1-1-2", "", $Child1 );
 		$Child13 = $this->Instance ()->add ( "{$this->type()}1-1-3", "", $Child1 );
 		
-		$t = $this->Instance ()->ParentNode ( 1 );
+		$t = $this->Instance ()->parentNode ( 1 );
 		$this->assertEquals ( null, $t );
-		$t = $this->Instance ()->ParentNode ( $Parent );
+		$t = $this->Instance ()->parentNode ( $Parent );
 		$this->assertEquals ( 1, $t ['ID'] );
-		$t = $this->Instance ()->ParentNode ( $Child2 );
+		$t = $this->Instance ()->parentNode ( $Child2 );
 		$this->assertEquals ( $Parent, $t ['ID'] );
-		$t = $this->Instance ()->ParentNode ( $Child12 );
+		$t = $this->Instance ()->parentNode ( $Child12 );
 		$this->assertEquals ( $Child1, $t ['ID'] );
 	}
 	function testReset()

@@ -17,7 +17,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 	function pathConditional($ConditionString);
 
 	function depthConditional($ConditionString);
-	function ParentNodeConditional($ConditionString);
+	function parentNodeConditional($ConditionString);
 	function SiblingConditional($SiblingDistance=1,$ConditionString);
 	/**/
 }
@@ -123,7 +123,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Arguments=func_get_args();
         $ConditionString=$ConditionString; //prevent warning
         array_shift($Arguments); //Rid $SiblingDistance
-        $Parent=call_user_func_array(array($this,"ParentNodeConditional"),$Arguments);
+        $Parent=call_user_func_array(array($this,"parentNodeConditional"),$Arguments);
         $Siblings=$this->children($Parent[$this->ID()]);
         if (!$Siblings) return null;
         $ID=call_user_func_array(array($this,"GetID"),$Arguments);
@@ -139,10 +139,10 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * Note: this uses path
      * @param string $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
-     * @return Array ParentNode (null on failure)
+     * @return Array parentNode (null on failure)
      * @seealso path
      */
-    function ParentNodeConditional($ConditionString,$Rest=null)
+    function parentNodeConditional($ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
         $Path=call_user_func_array(array($this,"pathConditional"),$Arguments);
