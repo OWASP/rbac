@@ -161,7 +161,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     	$this->Lock();
     	$Arguments=func_get_args();
         array_shift($Arguments);
-        $Query="SELECT {$this->Left()} AS `Left`,{$this->Right()} AS `Right`
+        $Query="SELECT {$this->left()} AS `Left`,{$this->Right()} AS `Right`
 			FROM {$this->table()}
 			WHERE $ConditionString LIMIT 1";
 
@@ -174,11 +174,11 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         }
         $Info=$Info[0];
 
-        $count=Jf::sql("DELETE FROM {$this->table()} WHERE {$this->Left()} = ?",$Info["Left"]);
+        $count=Jf::sql("DELETE FROM {$this->table()} WHERE {$this->left()} = ?",$Info["Left"]);
 
-        Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - 1, {$this->Left()} = {$this->Left()} - 1 WHERE {$this->Left()} BETWEEN ? AND ?",$Info["Left"],$Info["Right"]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - 1, {$this->left()} = {$this->left()} - 1 WHERE {$this->left()} BETWEEN ? AND ?",$Info["Left"],$Info["Right"]);
         Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - 2 WHERE {$this->Right()} > ?",$Info["Right"]);
-        Jf::sql("UPDATE {$this->table()} SET {$this->Left()} = {$this->Left()} - 2 WHERE {$this->Left()} > ?",$Info["Right"]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->left()} = {$this->left()} - 2 WHERE {$this->left()} > ?",$Info["Right"]);
         $this->Unlock();
         return $count==1;
     }
@@ -193,7 +193,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 		$this->Lock();
     	$Arguments=func_get_args();
         array_shift($Arguments);
-        $Query="SELECT {$this->Left()} AS `Left`,{$this->Right()} AS `Right` ,{$this->Right()}-{$this->Left()}+ 1 AS Width
+        $Query="SELECT {$this->left()} AS `Left`,{$this->Right()} AS `Right` ,{$this->Right()}-{$this->left()}+ 1 AS Width
 			FROM {$this->table()}
 			WHERE $ConditionString";
 
@@ -203,14 +203,14 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Info=$Info[0];
 
         $count=Jf::sql("
-            DELETE FROM {$this->table()} WHERE {$this->Left()} BETWEEN ? AND ?
+            DELETE FROM {$this->table()} WHERE {$this->left()} BETWEEN ? AND ?
         ",$Info["Left"],$Info["Right"]);
 
         Jf::sql("
             UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - ? WHERE {$this->Right()} > ?
         ",$Info["Width"],$Info["Right"]);
         Jf::sql("
-            UPDATE {$this->table()} SET {$this->Left()} = {$this->Left()} - ? WHERE {$this->Left()} > ?
+            UPDATE {$this->table()} SET {$this->left()} = {$this->left()} - ? WHERE {$this->left()} > ?
         ",$Info["Width"],$Info["Right"]);
         $this->Unlock();
         return $count>=1;
@@ -240,17 +240,17 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
             		FROM {$this->table()} AS node,
             		{$this->table()} AS parent
-            		WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
+            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
             		AND (node.$ConditionString)
             		GROUP BY node.{$this->id()}
-            		ORDER BY node.{$this->Left()}
+            		ORDER BY node.{$this->left()}
             	) AS sub_tree
-            WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
-            	AND node.{$this->Left()} BETWEEN sub_parent.{$this->Left()} AND sub_parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
+            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->Right()}
             	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
             HAVING Depth > 0
-            ORDER BY node.{$this->Left()}";
+            ORDER BY node.{$this->left()}";
 
         array_unshift($Arguments,$Query);
         $Res=call_user_func_array("Jf::sql",$Arguments);
@@ -279,17 +279,17 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
             		FROM {$this->table()} AS node,
             		{$this->table()} AS parent
-            		WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
+            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
             		AND (node.$ConditionString)
             		GROUP BY node.{$this->id()}
-            		ORDER BY node.{$this->Left()}
+            		ORDER BY node.{$this->left()}
             ) AS sub_tree
-            WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
-            	AND node.{$this->Left()} BETWEEN sub_parent.{$this->Left()} AND sub_parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
+            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->Right()}
             	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
             HAVING Depth = 1
-            ORDER BY node.{$this->Left()}";
+            ORDER BY node.{$this->left()}";
 
         array_unshift($Arguments,$Query);
         $Res=call_user_func_array("Jf::sql",$Arguments);
@@ -313,9 +313,9 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             SELECT parent.*
             FROM {$this->table()} AS node,
             {$this->table()} AS parent
-            WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
             AND ( node.$ConditionString )
-            ORDER BY parent.{$this->Left()}";
+            ORDER BY parent.{$this->left()}";
 
         array_unshift($Arguments,$Query);
         $Res=call_user_func_array("Jf::sql",$Arguments);
@@ -339,9 +339,9 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 
             $Query="SELECT *
                 FROM {$this->table()}
-                WHERE {$this->Right()} = {$this->Left()} + 1
-            	AND {$this->Left()} BETWEEN
-                (SELECT {$this->Left()} FROM {$this->table()} $ConditionString)
+                WHERE {$this->Right()} = {$this->left()} + 1
+            	AND {$this->left()} BETWEEN
+                (SELECT {$this->left()} FROM {$this->table()} $ConditionString)
                 	AND
                 (SELECT {$this->Right()} FROM {$this->table()} $ConditionString)";
 
@@ -352,7 +352,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         else
         $Res=Jf::sql("SELECT *
             FROM {$this->table()}
-            WHERE {$this->Right()} = {$this->Left()} + 1");
+            WHERE {$this->Right()} = {$this->left()} + 1");
         return $Res;
     }
     /**
@@ -383,7 +383,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             $Sibl["Left"]=$Sibl["Right"]=0;
         }
         Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} > ?",$Sibl["Right"]);
-        Jf::sql("UPDATE {$this->table()} SET {$this->Left()} = {$this->Left()} + 2 WHERE {$this->Left()} > ?",$Sibl["Right"]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->left()} = {$this->left()} + 2 WHERE {$this->left()} > ?",$Sibl["Right"]);
 
         $FieldsString=$ValuesString="";
         $Values=array();
@@ -396,7 +396,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             $Values[]=$v;
         }
 
-        $Query= "INSERT INTO {$this->table()} ({$this->Left()},{$this->Right()} $FieldsString) ".
+        $Query= "INSERT INTO {$this->table()} ({$this->left()},{$this->Right()} $FieldsString) ".
         	"VALUES(?,? $ValuesString)";
         array_unshift($Values,$Sibl["Right"]+2);
         array_unshift($Values,$Sibl["Right"]+1);
@@ -422,7 +422,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_shift($Arguments); //first argument, the array
         array_shift($Arguments);
         if ($ConditionString) $ConditionString="WHERE $ConditionString";
-        $Query="SELECT {$this->Right()} AS `Right`, {$this->Left()} AS `Left`".
+        $Query="SELECT {$this->Right()} AS `Right`, {$this->left()} AS `Left`".
         	" FROM {$this->table()} $ConditionString";
         array_unshift($Arguments,$Query);
         $Parent=call_user_func_array("Jf::sql",$Arguments);
@@ -433,7 +433,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             $Parent["Left"]=$Parent["Right"]=0;
         }
         Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} >= ?",$Parent["Right"]);
-        Jf::sql("UPDATE {$this->table()} SET {$this->Left()} = {$this->Left()} + 2 WHERE {$this->Left()} > ?",$Parent["Right"]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->left()} = {$this->left()} + 2 WHERE {$this->left()} > ?",$Parent["Right"]);
 
         $FieldsString=$ValuesString="";
         $Values=array();
@@ -445,7 +445,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             $ValuesString.=",?";
             $Values[]=$v;
         }
-        $Query= "INSERT INTO {$this->table()} ({$this->Left()},{$this->Right()} $FieldsString) ".
+        $Query= "INSERT INTO {$this->table()} ({$this->left()},{$this->Right()} $FieldsString) ".
         	"VALUES(?,? $ValuesString)";
         array_unshift($Values,$Parent["Right"]+1);
         array_unshift($Values,$Parent["Right"]);
