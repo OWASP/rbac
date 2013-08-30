@@ -164,7 +164,7 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @param unknown_type $Title
 	 */
-	function TitleID($Title)
+	function titleId($Title)
 	{
 		return $this->{$this->type ()}->GetID ( "Title=?", $Title );
 	}
@@ -258,7 +258,7 @@ abstract class BaseRbac extends JModel
 	 * @param string $NewDescription
 	 *
 	 */
-	function Edit($ID, $NewTitle = null, $NewDescription = null)
+	function edit($ID, $NewTitle = null, $NewDescription = null)
 	{
 		$Data = array ();
 
@@ -268,7 +268,7 @@ abstract class BaseRbac extends JModel
 		if ($NewDescription !== null)
 			$Data ['Description'] = $NewDescription;
 
-        return $this->{$this->type ()}->EditData ( $Data, "ID=?", $ID ) == 1;
+        return $this->{$this->type ()}->editData ( $Data, "ID=?", $ID ) == 1;
 	}
 
 	/**
@@ -491,7 +491,7 @@ class RBACManager extends JModel
             if (substr ( $Permission, 0, 1 ) == "/")
                 $PermissionID = $this->Permissions->pathId ( $Permission );
             else
-                $PermissionID = $this->Permissions->TitleID ( $Permission );
+                $PermissionID = $this->Permissions->titleId ( $Permission );
         }
         if (is_int ( $Role ))
         {
@@ -502,7 +502,7 @@ class RBACManager extends JModel
             if (substr ( $Role, 0, 1 ) == "/")
                 $RoleID = $this->Roles->pathId ( $Role );
             else
-                $RoleID = $this->Roles->TitleID ( $Role );
+                $RoleID = $this->Roles->titleId ( $Role );
         }
 
         return $this->Roles->assign ( $RoleID, $PermissionID );
@@ -545,7 +545,7 @@ class RBACManager extends JModel
             if (substr ( $Permission, 0, 1 ) == "/")
                 $PermissionID = $this->Permissions->pathId ( $Permission );
             else
-                $PermissionID = $this->Permissions->TitleID ( $Permission );
+                $PermissionID = $this->Permissions->titleId ( $Permission );
         }
 
         // if invalid, throw exception
@@ -913,7 +913,7 @@ class RBACUserManager extends JModel
 			if (substr ( $Role, 0, 1 ) == "/")
 				$RoleID = Jf::$RBAC->Roles->pathId ( $Role );
 			else
-				$RoleID = Jf::$RBAC->Roles->TitleID ( $Role );
+				$RoleID = Jf::$RBAC->Roles->titleId ( $Role );
 		}
 
 		$R = Jf::sql ( "SELECT * FROM {$this->tablePrefix()}userroles AS TUR
@@ -949,7 +949,7 @@ class RBACUserManager extends JModel
 			if (substr ( $Role, 0, 1 ) == "/")
 				$RoleID = Jf::$RBAC->Roles->pathId ( $Role );
 			else
-				$RoleID = Jf::$RBAC->Roles->TitleID ( $Role );
+				$RoleID = Jf::$RBAC->Roles->titleId ( $Role );
 		}
 		$res = Jf::sql ( "INSERT INTO {$this->tablePrefix()}userroles
 				(UserID,RoleID,AssignmentDate)

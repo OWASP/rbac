@@ -95,20 +95,20 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->TitleID()
+     * Tests for $this->Instance()->titleId()
      */
 
     public function testGetTitleId()
     {
         $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $title_id = $this->Instance()->TitleID($this->type() . '_title');
+        $title_id = $this->Instance()->titleId($this->type() . '_title');
 
         $this->assertSame('2', $title_id);
     }
 
     public function testGetTitleIdNull()
     {
-        $title_id = $this->Instance()->TitleID($this->type() . '_title');
+        $title_id = $this->Instance()->titleId($this->type() . '_title');
 
         $this->assertNull($title_id);
     }
@@ -151,13 +151,13 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Edit()
+     * Tests for $this->Instance()->edit()
      */
 
     public function testEditTitle()
     {
         $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $this->Instance()->Edit($type_id, $this->type() . '_title_edited');
+        $this->Instance()->edit($type_id, $this->type() . '_title_edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
@@ -172,7 +172,7 @@ class RbacBase extends \RbacSetup
     public function testEditDescription()
     {
         $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $this->Instance()->Edit($type_id, null, $this->type() . ' Description edited');
+        $this->Instance()->edit($type_id, null, $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
@@ -187,7 +187,7 @@ class RbacBase extends \RbacSetup
     public function testEditAll()
     {
         $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $this->Instance()->Edit($type_id, $this->type() . '_title_edited', $this->type() . ' Description edited');
+        $this->Instance()->edit($type_id, $this->type() . '_title_edited', $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
@@ -202,7 +202,7 @@ class RbacBase extends \RbacSetup
     public function testEditNullId()
     {
         $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $result = $this->Instance()->Edit(intval(3), $this->type() . '_title', $this->type() . ' Description');
+        $result = $this->Instance()->edit(intval(3), $this->type() . '_title', $this->type() . ' Description');
 
         $this->assertFalse($result);
     }
@@ -210,7 +210,7 @@ class RbacBase extends \RbacSetup
     public function testEditNullParameters()
     {
         $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $result = $this->Instance()->Edit($type_id);
+        $result = $this->Instance()->edit($type_id);
 
         $this->assertFalse($result);
     }

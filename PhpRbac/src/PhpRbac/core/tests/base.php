@@ -106,17 +106,17 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$ID = $this->Instance ()->add ( "{$this->type()}1", "description here" );
 		
 		// Change title
-		$this->assertTrue ( $this->Instance ()->Edit ( $ID, "{$this->type()}2" ) );
+		$this->assertTrue ( $this->Instance ()->edit ( $ID, "{$this->type()}2" ) );
 		$this->assertEquals ( "{$this->type()}2", $this->Instance ()->GetTitle ( $ID ) );
 		$this->assertEquals ( "description here", $this->Instance ()->GetDescription ( $ID ) );
 		
 		// change description
-		$this->assertTrue ( $this->Instance ()->Edit ( $ID, null, "new description" ) );
+		$this->assertTrue ( $this->Instance ()->edit ( $ID, null, "new description" ) );
 		$this->assertEquals ( "{$this->type()}2", $this->Instance ()->GetTitle ( $ID ) );
 		$this->assertEquals ( "new description", $this->Instance ()->GetDescription ( $ID ) );
 		
 		// changing both
-		$this->assertTrue ( $this->Instance ()->Edit ( $ID, "new {$this->type()}", "another new description" ) );
+		$this->assertTrue ( $this->Instance ()->edit ( $ID, "new {$this->type()}", "another new description" ) );
 		$this->assertEquals ( "new {$this->type()}", $this->Instance ()->GetTitle ( $ID ) );
 		$this->assertEquals ( "another new description", $this->Instance ()->GetDescription ( $ID ) );
 	}
@@ -144,9 +144,9 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	{
 		$ID = $this->Instance ()->add ( "{$this->type()}-1", "description of the {$this->type()}" );
 		$ID2 = $this->Instance ()->add ( "{$this->type()}-2", "description of the {$this->type()}" );
-		$this->assertEquals ( $this->Instance ()->TitleID ( "{$this->type()}-1" ), $ID );
-		$this->assertNotEquals ( $this->Instance ()->TitleID ( "{$this->type()}-2" ), $ID );
-		$this->assertNotEquals ( $this->Instance ()->TitleID ( "{$this->type()}-3" ), $ID );
+		$this->assertEquals ( $this->Instance ()->titleId ( "{$this->type()}-1" ), $ID );
+		$this->assertNotEquals ( $this->Instance ()->titleId ( "{$this->type()}-2" ), $ID );
+		$this->assertNotEquals ( $this->Instance ()->titleId ( "{$this->type()}-3" ), $ID );
 	}
 	function testDescendants()
 	{
@@ -226,7 +226,7 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$Child13 = $this->Instance ()->add ( "{$this->type()}1-1-3", "", $Child1 );
 		
 		$this->Instance ()->reset ( true );
-		$this->assertEquals ( 1, $this->Instance ()->TitleID ( "root" ) );
+		$this->assertEquals ( 1, $this->Instance ()->titleId ( "root" ) );
 		$this->assertEmpty ( $this->Instance ()->Children ( 1 ) );
 		$this->setExpectedException ( "Exception" );
 		$this->Instance ()->reset ();
@@ -234,11 +234,11 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 	function testRemoveAgain()
 	{
 		$ID = $this->Instance ()->add ( "some_{$this->type()}", "some description" );
-		$this->assertEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
+		$this->assertEquals ( $ID, $this->Instance ()->titleId ( "some_{$this->type()}" ) );
 		
 		$this->Instance ()->remove ( $ID );
-		$this->assertNotEquals ( $ID, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
-		$this->assertEquals ( null, $this->Instance ()->TitleID ( "some_{$this->type()}" ) );
+		$this->assertNotEquals ( $ID, $this->Instance ()->titleId ( "some_{$this->type()}" ) );
+		$this->assertEquals ( null, $this->Instance ()->titleId ( "some_{$this->type()}" ) );
 		
 
 		// ow recursive
@@ -255,9 +255,9 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		$this->Instance ()->remove ( $Child1, true );
 
 		$this->assertEquals ( 3, $this->Instance ()->count () );
-		$this->assertEquals ( $Child2, $this->Instance ()->TitleID ( "{$this->type()}1-2" ) );
-		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->type()}1-1" ) );
-		$this->assertEquals ( null, $this->Instance ()->TitleID ( "{$this->type()}1-1-1" ) );
+		$this->assertEquals ( $Child2, $this->Instance ()->titleId ( "{$this->type()}1-2" ) );
+		$this->assertEquals ( null, $this->Instance ()->titleId ( "{$this->type()}1-1" ) );
+		$this->assertEquals ( null, $this->Instance ()->titleId ( "{$this->type()}1-1-1" ) );
 	}
 	/**
 	 * @depends testAdd
