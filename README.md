@@ -47,6 +47,8 @@ Include autoload.php:
 
 Example:
 
+    require '/path/to/PhpRbac/autoload.php';
+    
 	$rbac = new PhpRbac\Rbac();
 	
 ##Documentation##
