@@ -54,7 +54,7 @@ class BaseNestedSet implements NestedSetInterface
     {
     	return $this->Left;
     }
-    protected function Right()
+    protected function right()
     {
     	return $this->Right;
     }
@@ -82,7 +82,7 @@ class BaseNestedSet implements NestedSetInterface
      */
     function DescendantCount($ID)
     {
-        $Res=Jf::sql("SELECT ({$this->Right()}-{$this->left()}-1)/2 AS `Count` FROM
+        $Res=Jf::sql("SELECT ({$this->right()}-{$this->left()}-1)/2 AS `Count` FROM
         {$this->table()} WHERE {$this->id()}=?",$ID);
         return sprintf("%d",$Res[0]["Count"])*1;
     }
@@ -138,7 +138,7 @@ class BaseNestedSet implements NestedSetInterface
      */
     function delete($ID)
     {
-        $Info=Jf::sql("SELECT {$this->left()} AS `Left`,{$this->Right()} AS `Right` 
+        $Info=Jf::sql("SELECT {$this->left()} AS `Left`,{$this->right()} AS `Right` 
 			FROM {$this->table()}
 			WHERE {$this->id()} = ?;
         ",$ID);
@@ -147,9 +147,9 @@ class BaseNestedSet implements NestedSetInterface
         $count=Jf::sql("DELETE FROM {$this->table()} WHERE {$this->left()} = ?",$Info["Left"]);
 
 
-        Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - 1, `".
+        Jf::sql("UPDATE {$this->table()} SET {$this->right()} = {$this->right()} - 1, `".
             $this->left."` = {$this->left()} - 1 WHERE {$this->left()} BETWEEN ? AND ?",$Info["Left"],$Info["Right"]);
-        Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - 2 WHERE `".
+        Jf::sql("UPDATE {$this->table()} SET {$this->right()} = {$this->right()} - 2 WHERE `".
             $this->Right."` > ?",$Info["Right"]);
         Jf::sql("UPDATE {$this->table()} SET {$this->left()} = {$this->left()} - 2 WHERE `".
             $this->left."` > ?",$Info["Right"]);
@@ -162,7 +162,7 @@ class BaseNestedSet implements NestedSetInterface
      */
     function deleteSubtree($ID)
     {
-        $Info=Jf::sql("SELECT {$this->left()} AS `Left`,{$this->Right()} AS `Right` ,{$this->Right()}-{$this->left()}+ 1 AS Width
+        $Info=Jf::sql("SELECT {$this->left()} AS `Left`,{$this->right()} AS `Right` ,{$this->right()}-{$this->left()}+ 1 AS Width
 			FROM {$this->table()}
 			WHERE {$this->id()} = ?;
         ",$ID);
@@ -173,7 +173,7 @@ class BaseNestedSet implements NestedSetInterface
         ",$Info["Left"],$Info["Right"]);
         
         Jf::sql("
-            UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} - ? WHERE {$this->Right()} > ?
+            UPDATE {$this->table()} SET {$this->right()} = {$this->right()} - ? WHERE {$this->right()} > ?
         ",$Info["Width"],$Info["Right"]);
         Jf::sql("
             UPDATE {$this->table()} SET {$this->left()} = {$this->left()} - ? WHERE {$this->left()} > ?
@@ -202,13 +202,13 @@ class BaseNestedSet implements NestedSetInterface
             		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS depth
             		FROM {$this->table()} AS node,
             		{$this->table()} AS parent
-            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
+            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
             		AND node.{$this->id()} = ?
             		GROUP BY node.{$this->id()}
             		ORDER BY node.{$this->left()}
             	) AS sub_tree
-            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
-            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
+            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
             	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
             HAVING Depth > 0
@@ -233,13 +233,13 @@ class BaseNestedSet implements NestedSetInterface
             		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS depth
             		FROM {$this->table()} AS node,
             		{$this->table()} AS parent
-            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
+            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
             		AND node.{$this->id()} = ?
             		GROUP BY node.{$this->id()}
             		ORDER BY node.{$this->left()}
             ) AS sub_tree
-            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
-            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
+            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
             	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
             HAVING Depth = 1
@@ -262,7 +262,7 @@ class BaseNestedSet implements NestedSetInterface
             SELECT parent.* 
             FROM {$this->table()} AS node,
             ".$this->table." AS parent
-            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
             AND node.{$this->id()} = ?
             ORDER BY parent.{$this->left()}",$ID);
         return $Res;
@@ -279,15 +279,15 @@ class BaseNestedSet implements NestedSetInterface
         if ($PID) 
         $Res=Jf::sql("SELECT *
             FROM {$this->table()}
-            WHERE {$this->Right()} = {$this->left()} + 1 
+            WHERE {$this->right()} = {$this->left()} + 1 
         	AND {$this->left()} BETWEEN 
             (SELECT {$this->left()} FROM {$this->table()} WHERE {$this->id()}=?)
             	AND 
-            (SELECT {$this->Right()} FROM {$this->table()} WHERE {$this->id()}=?)",$PID,$PID);
+            (SELECT {$this->right()} FROM {$this->table()} WHERE {$this->id()}=?)",$PID,$PID);
         else
         $Res=Jf::sql("SELECT *
             FROM {$this->table()}
-            WHERE {$this->Right()} = {$this->left()} + 1");
+            WHERE {$this->right()} = {$this->left()} + 1");
         return $Res;
     }
     /**
@@ -300,16 +300,16 @@ class BaseNestedSet implements NestedSetInterface
     {
 //        $this->DB->AutoQuery("LOCK TABLE {$this->table()} WRITE;");
         //Find the Sibling
-        $Sibl=Jf::sql("SELECT {$this->Right()} AS `Right`".
+        $Sibl=Jf::sql("SELECT {$this->right()} AS `Right`".
         	" FROM {$this->table()} WHERE {$this->id()} = ?",$ID);
         $Sibl=$Sibl[0];
         if ($Sibl==null)
         {
             $Sibl["Right"]=0;
         }
-        Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} > ?",$Sibl["Right"]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->right()} = {$this->right()} + 2 WHERE {$this->right()} > ?",$Sibl["Right"]);
         Jf::sql("UPDATE {$this->table()} SET {$this->left()} = {$this->left()} + 2 WHERE {$this->left()} > ?",$Sibl["Right"]);
-        $Res= Jf::sql("INSERT INTO {$this->table()} ({$this->left()},{$this->Right()}) ".
+        $Res= Jf::sql("INSERT INTO {$this->table()} ({$this->left()},{$this->right()}) ".
         	"VALUES(?,?)",$Sibl["Right"]+1,$Sibl["Right"]+2);
 //        $this->DB->AutoQuery("UNLOCK TABLES");
         return $Res;
@@ -330,9 +330,9 @@ class BaseNestedSet implements NestedSetInterface
         {
             $Sibl["Left"]=0;
         }
-        Jf::sql("UPDATE {$this->table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} > ?",$Sibl["Left"]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->right()} = {$this->right()} + 2 WHERE {$this->right()} > ?",$Sibl["Left"]);
         Jf::sql("UPDATE {$this->table()} SET {$this->left()} = {$this->left()} + 2 WHERE {$this->left()} > ?",$Sibl["Left"]);
-        $Res=Jf::sql("INSERT INTO {$this->table()} ({$this->left()},{$this->Right()}) ".
+        $Res=Jf::sql("INSERT INTO {$this->table()} ({$this->left()},{$this->right()}) ".
         	"VALUES(?,?)",$Sibl["Left"]+1,$Sibl["Left"]+2);
         return $Res;
     }
@@ -346,7 +346,7 @@ class BaseNestedSet implements NestedSetInterface
         $Res=Jf::sql("SELECT node.*, (COUNT(parent.{$this->id()}) - 1) AS Depth
             FROM {$this->table()} AS node,
             {$this->table()} AS parent
-            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->Right()}
+            WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
             GROUP BY node.{$this->id()}
             ORDER BY node.{$this->left()}");
         return $Res;
