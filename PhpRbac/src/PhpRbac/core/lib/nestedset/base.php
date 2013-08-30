@@ -16,7 +16,7 @@ interface NestedSetInterface
     function Leaves($PID=null);
     function path($ID);
     
-    function Depth($ID);
+    function depth($ID);
     function ParentNode($ID);
     function Sibling($ID,$SiblingDistance=1);
 }
@@ -94,7 +94,7 @@ class BaseNestedSet implements NestedSetInterface
      * @return Integer Depth from zero upwards
      * @seealso path
      */
-    function Depth($ID)
+    function depth($ID)
     {
         return count($this->path($ID))-1;
     }

@@ -304,9 +304,9 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @param integer $ID
 	 */
-	function Depth($ID)
+	function depth($ID)
 	{
-		return $this->{$this->type ()}->DepthConditional ( "ID=?", $ID );
+		return $this->{$this->type ()}->depthConditional ( "ID=?", $ID );
 	}
 
 	/**

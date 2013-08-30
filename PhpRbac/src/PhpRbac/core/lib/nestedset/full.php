@@ -16,7 +16,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 	function LeavesConditional($ConditionString=null);
 	function pathConditional($ConditionString);
 
-	function DepthConditional($ConditionString);
+	function depthConditional($ConditionString);
 	function ParentNodeConditional($ConditionString);
 	function SiblingConditional($SiblingDistance=1,$ConditionString);
 	/**/
@@ -102,7 +102,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @return Integer Depth from zero upwards
      * @seealso path
      */
-    function DepthConditional($ConditionString,$Rest=null)
+    function depthConditional($ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
         $Path=call_user_func_array(array($this,"pathConditional"),$Arguments);

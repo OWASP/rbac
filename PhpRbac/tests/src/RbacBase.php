@@ -555,7 +555,7 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->Depth()
+     * Tests for $this->Instance()->depth()
      */
 
     public function testDepth()
@@ -563,14 +563,14 @@ class RbacBase extends \RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3/' . $this->type() . '_4/' . $this->type() . '_5');
         $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
 
-        $depth = $this->Instance()->Depth($path_id);
+        $depth = $this->Instance()->depth($path_id);
 
         $this->assertSame(3, $depth);
     }
 
     public function testDepthBadID()
     {
-        $depth = $this->Instance()->Depth(20);
+        $depth = $this->Instance()->depth(20);
 
         $this->assertSame(-1, $depth);
     }

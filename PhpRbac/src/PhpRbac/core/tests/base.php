@@ -172,9 +172,9 @@ abstract class PHPRBACBaseTest extends PHPRBAC_Test
 		
 		$Child11 = $this->Instance ()->add ( "{$this->type()}1-1-1", "", $Child1 );
 		$Child13 = $this->Instance ()->add ( "{$this->type()}1-1-3", "", $Child1 );
-		$this->assertEquals ( 0, $this->Instance ()->Depth ( 1 ) );
-		$this->assertEquals ( 3, $this->Instance ()->Depth ( $Child13 ) );
-		$this->assertEquals ( 2, $this->Instance ()->Depth ( $Child1 ) );
+		$this->assertEquals ( 0, $this->Instance ()->depth ( 1 ) );
+		$this->assertEquals ( 3, $this->Instance ()->depth ( $Child13 ) );
+		$this->assertEquals ( 2, $this->Instance ()->depth ( $Child1 ) );
 	}
 	function testPath()
 	{
