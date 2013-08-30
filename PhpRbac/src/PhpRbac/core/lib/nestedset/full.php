@@ -7,8 +7,8 @@ interface ExtendedNestedSet extends NestedSetInterface
 	function insertChildData($FieldValueArray=array(),$ConditionString=null);
 	function insertSiblingData($FieldValueArray=array(),$ConditionString=null);
 
-	function DeleteSubtreeConditional($ConditionString);
-	function DeleteConditional($ConditionString);
+	function deleteSubtreeConditional($ConditionString);
+	function deleteConditional($ConditionString);
 
 
 	function childrenConditional($ConditionString);
@@ -156,7 +156,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return boolean
      */
-    function DeleteConditional($ConditionString,$Rest=null)
+    function deleteConditional($ConditionString,$Rest=null)
     {
     	$this->Lock();
     	$Arguments=func_get_args();
@@ -188,7 +188,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param String $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      */
-    function DeleteSubtreeConditional($ConditionString,$Rest=null)
+    function deleteSubtreeConditional($ConditionString,$Rest=null)
     {
 		$this->Lock();
     	$Arguments=func_get_args();

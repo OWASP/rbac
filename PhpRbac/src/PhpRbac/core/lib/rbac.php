@@ -674,9 +674,9 @@ class PermissionManager extends BaseRbac
 	{
 		$this->unassignRoles ( $ID );
 		if (! $Recursive)
-			return $this->permissions->DeleteConditional ( "ID=?", $ID );
+			return $this->permissions->deleteConditional ( "ID=?", $ID );
 		else
-			return $this->permissions->DeleteSubtreeConditional ( "ID=?", $ID );
+			return $this->permissions->deleteSubtreeConditional ( "ID=?", $ID );
 	}
 
 	/**
@@ -772,9 +772,9 @@ class RoleManager extends BaseRbac
 		$this->unassignPermissions ( $ID );
 		$this->unassignUsers ( $ID );
 		if (! $Recursive)
-			return $this->roles->DeleteConditional ( "ID=?", $ID );
+			return $this->roles->deleteConditional ( "ID=?", $ID );
 		else
-			return $this->roles->DeleteSubtreeConditional ( "ID=?", $ID );
+			return $this->roles->deleteSubtreeConditional ( "ID=?", $ID );
 	}
 	/**
 	 * Unassigns all permissions belonging to a role

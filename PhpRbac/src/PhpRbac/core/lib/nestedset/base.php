@@ -4,8 +4,8 @@ interface NestedSetInterface
     public function insertChild($PID=0);
     public function insertSibling($ID=0);
     
-    function DeleteSubtree($ID);
-    function Delete($ID);
+    function deleteSubtree($ID);
+    function delete($ID);
     
     //function Move($ID,$NewPID);
     //function Copy($ID,$NewPID);
@@ -136,7 +136,7 @@ class BaseNestedSet implements NestedSetInterface
      *
      * @param Integer $ID
      */
-    function Delete($ID)
+    function delete($ID)
     {
         $Info=Jf::sql("SELECT {$this->Left()} AS `Left`,{$this->Right()} AS `Right` 
 			FROM {$this->Table()}
@@ -160,7 +160,7 @@ class BaseNestedSet implements NestedSetInterface
      *
      * @param Integer $ID
      */
-    function DeleteSubtree($ID)
+    function deleteSubtree($ID)
     {
         $Info=Jf::sql("SELECT {$this->Left()} AS `Left`,{$this->Right()} AS `Right` ,{$this->Right()}-{$this->Left()}+ 1 AS Width
 			FROM {$this->Table()}
