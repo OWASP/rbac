@@ -184,7 +184,7 @@ abstract class BaseRbac extends JModel
 	 * @param integer $ID
 	 * @return string NULL
 	 */
-	function GetTitle($ID)
+	function getTitle($ID)
 	{
 		$r = $this->getRecord ( "ID=?", $ID );
 		if ($r)

@@ -114,20 +114,20 @@ class RbacBase extends \RbacSetup
     }
 
     /*
-     * Tests for $this->Instance()->GetTitle()
+     * Tests for $this->Instance()->getTitle()
      */
 
     public function testGetTitle()
     {
         $type_id = $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
-        $type_title = $this->Instance()->GetTitle($type_id);
+        $type_title = $this->Instance()->getTitle($type_id);
 
         $this->assertSame($this->type() . '_title', $type_title);
     }
 
     public function testGetTitleNull()
     {
-        $type_title = $this->Instance()->GetTitle(intval(3));
+        $type_title = $this->Instance()->getTitle(intval(3));
 
         $this->assertNull($type_title);
     }
