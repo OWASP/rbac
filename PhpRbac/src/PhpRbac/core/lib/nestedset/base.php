@@ -1,8 +1,8 @@
 <?php
 interface NestedSetInterface
 {
-    public function InsertChild($PID=0);
-    public function InsertSibling($ID=0);
+    public function insertChild($PID=0);
+    public function insertSibling($ID=0);
     
     function DeleteSubtree($ID);
     function Delete($ID);
@@ -296,7 +296,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param Integer $ID
      * @return Integer SiblingID
      */
-    function InsertSibling($ID=0)
+    function insertSibling($ID=0)
     {
 //        $this->DB->AutoQuery("LOCK TABLE {$this->Table()} WRITE;");
         //Find the Sibling
@@ -320,7 +320,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param Integer $PID
      * @return Integer ChildID
      */
-    function InsertChild($PID=0)
+    function insertChild($PID=0)
     {
         //Find the Sibling
         $Sibl=Jf::sql("SELECT {$this->Left()} AS `Left`".

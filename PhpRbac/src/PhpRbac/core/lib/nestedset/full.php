@@ -5,7 +5,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 	function GetID($ConditionString);
 
 	function insertChildData($FieldValueArray=array(),$ConditionString=null);
-	function InsertSiblingData($FieldValueArray=array(),$ConditionString=null);
+	function insertSiblingData($FieldValueArray=array(),$ConditionString=null);
 
 	function DeleteSubtreeConditional($ConditionString);
 	function DeleteConditional($ConditionString);
@@ -363,7 +363,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string
      * @return Integer SiblingID
      */
-    function InsertSiblingData($FieldValueArray=array(),$ConditionString=null,$Rest=null)
+    function insertSiblingData($FieldValueArray=array(),$ConditionString=null,$Rest=null)
     {
 		$this->Lock();
     	//Find the Sibling
