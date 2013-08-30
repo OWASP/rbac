@@ -6,7 +6,7 @@ namespace PhpRbac;
  * Unit Tests for PhpRbac PSR Wrapper
  *
  * @defgroup phprbac_unit_test_wrapper_permission_manager Unit Tests for PermissionManager Functionality
- * @ingroup phprbac
+ * @ingroup phprbac_unit_tests
  * @{
  * Documentation for all Unit Tests regarding PermissionManager functionality.
  */
