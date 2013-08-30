@@ -18,7 +18,7 @@ interface NestedSetInterface
     
     function depth($ID);
     function parentNode($ID);
-    function Sibling($ID,$SiblingDistance=1);
+    function sibling($ID,$SiblingDistance=1);
 }
 
 /**
@@ -106,7 +106,7 @@ class BaseNestedSet implements NestedSetInterface
      * @param Integer $SiblingDistance from current node (negative or positive)
      * @return Array Node on success, null on failure 
      */
-    function Sibling($ID,$SiblingDistance=1)
+    function sibling($ID,$SiblingDistance=1)
     {
         $Parent=$this->parentNode($ID);
         $Siblings=$this->children($Parent[$this->ID()]);

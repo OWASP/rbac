@@ -18,7 +18,7 @@ interface ExtendedNestedSet extends NestedSetInterface
 
 	function depthConditional($ConditionString);
 	function parentNodeConditional($ConditionString);
-	function SiblingConditional($SiblingDistance=1,$ConditionString);
+	function siblingConditional($SiblingDistance=1,$ConditionString);
 	/**/
 }
 /**
@@ -118,7 +118,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Array Node on success, null on failure
      */
-    function SiblingConditional($SiblingDistance=1,$ConditionString,$Rest=null)
+    function siblingConditional($SiblingDistance=1,$ConditionString,$Rest=null)
     {
         $Arguments=func_get_args();
         $ConditionString=$ConditionString; //prevent warning
