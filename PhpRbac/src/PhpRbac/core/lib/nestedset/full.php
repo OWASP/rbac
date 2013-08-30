@@ -82,7 +82,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Array Record
      */
-    function GetRecord($ConditionString,$Rest=null)
+    function getRecord($ConditionString,$Rest=null)
     {
         $args=func_get_args();
         array_shift($args);

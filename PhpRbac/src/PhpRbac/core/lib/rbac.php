@@ -173,10 +173,10 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @param integer $ID
 	 */
-	protected function GetRecord($ID)
+	protected function getRecord($ID)
 	{
 		$args = func_get_args ();
-		return call_user_func_array ( array ($this->{$this->type ()}, "GetRecord" ), $args );
+		return call_user_func_array ( array ($this->{$this->type ()}, "getRecord" ), $args );
 	}
 	/**
 	 * Returns title of entity
@@ -186,7 +186,7 @@ abstract class BaseRbac extends JModel
 	 */
 	function GetTitle($ID)
 	{
-		$r = $this->GetRecord ( "ID=?", $ID );
+		$r = $this->getRecord ( "ID=?", $ID );
 		if ($r)
 			return $r ['Title'];
 		else
@@ -200,7 +200,7 @@ abstract class BaseRbac extends JModel
 	 */
 	function GetDescription($ID)
 	{
-		$r = $this->GetRecord ( "ID=?", $ID );
+		$r = $this->getRecord ( "ID=?", $ID );
 		if ($r)
 			return $r ['Description'];
 		else
