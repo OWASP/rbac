@@ -23,7 +23,7 @@ class Jf
 	}
 
 	/**
-	 * The Jf::SQL function. The behavior of this function is as follows:
+	 * The Jf::sql function. The behavior of this function is as follows:
 	 *
 	 * * On queries with no parameters, it should use query function and fetch all results (no prepared statement)
 	 * * On queries with parameters, parameters are provided as question marks (?) and then additional function arguments will be
@@ -38,19 +38,19 @@ class Jf
 	 * @throws Exception
 	 * @return array|integer|null
 	 */
-	static function SQL($Query)
+	static function sql($Query)
 	{
 		$args = func_get_args ();
 		if (get_class ( self::$Db ) == "PDO")
-			return call_user_func_array ( "self::SQL_pdo", $args );
+			return call_user_func_array ( "self::sqlPdo", $args );
 		else
 			if (get_class ( self::$Db ) == "mysqli")
-				return call_user_func_array ( "self::SQL_mysqli", $args );
+				return call_user_func_array ( "self::sqlMysqli", $args );
 			else
 				throw new Exception ( "Unknown database interface type." );
 	}
 
-	static function SQL_pdo($Query)
+	static function sqlPdo($Query)
 	{
 		$args = func_get_args ();
 		if (count ( $args ) == 1)
@@ -99,7 +99,7 @@ class Jf
 		}
 	}
 
-	static function SQL_mysqli( $Query)
+	static function sqlMysqli( $Query)
 	{
 		$args = func_get_args ();
 		if (count ( $args ) == 1)

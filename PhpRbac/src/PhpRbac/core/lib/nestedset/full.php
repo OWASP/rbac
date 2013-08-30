@@ -50,11 +50,11 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     **/
     protected function Lock()
     {
-    	Jf::SQL("LOCK TABLE {$this->Table()} WRITE");
+    	Jf::sql("LOCK TABLE {$this->Table()} WRITE");
     }
     protected function Unlock()
     {
-    	Jf::SQL("UNLOCK TABLES");
+    	Jf::sql("UNLOCK TABLES");
     }
     /**
      * Returns the ID of a node based on a SQL conditional string
@@ -69,7 +69,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_shift($args);
         $Query="SELECT {$this->ID()} AS ID FROM {$this->Table()} WHERE $ConditionString LIMIT 1";
         array_unshift($args,$Query);
-        $Res=call_user_func_array(("Jf::SQL"),$args);
+        $Res=call_user_func_array(("Jf::sql"),$args);
         if ($Res)
         return $Res[0]["ID"];
         else
@@ -88,7 +88,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_shift($args);
         $Query="SELECT * FROM {$this->Table()} WHERE $ConditionString";
         array_unshift($args,$Query);
-        $Res=call_user_func_array(("Jf::SQL"),$args);
+        $Res=call_user_func_array(("Jf::sql"),$args);
         if ($Res)
 	        return $Res[0];
         else
@@ -166,7 +166,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 			WHERE $ConditionString LIMIT 1";
 
         array_unshift($Arguments,$Query);
-        $Info=call_user_func_array("Jf::SQL",$Arguments);
+        $Info=call_user_func_array("Jf::sql",$Arguments);
         if (!$Info)
         {
         	$this->Unlock();
@@ -174,11 +174,11 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         }
         $Info=$Info[0];
 
-        $count=Jf::SQL("DELETE FROM {$this->Table()} WHERE {$this->Left()} = ?",$Info["Left"]);
+        $count=Jf::sql("DELETE FROM {$this->Table()} WHERE {$this->Left()} = ?",$Info["Left"]);
 
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} - 1, {$this->Left()} = {$this->Left()} - 1 WHERE {$this->Left()} BETWEEN ? AND ?",$Info["Left"],$Info["Right"]);
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} - 2 WHERE {$this->Right()} > ?",$Info["Right"]);
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} - 2 WHERE {$this->Left()} > ?",$Info["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} - 1, {$this->Left()} = {$this->Left()} - 1 WHERE {$this->Left()} BETWEEN ? AND ?",$Info["Left"],$Info["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} - 2 WHERE {$this->Right()} > ?",$Info["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} - 2 WHERE {$this->Left()} > ?",$Info["Right"]);
         $this->Unlock();
         return $count==1;
     }
@@ -198,18 +198,18 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 			WHERE $ConditionString";
 
         array_unshift($Arguments,$Query);
-        $Info=call_user_func_array("Jf::SQL",$Arguments);
+        $Info=call_user_func_array("Jf::sql",$Arguments);
 
         $Info=$Info[0];
 
-        $count=Jf::SQL("
+        $count=Jf::sql("
             DELETE FROM {$this->Table()} WHERE {$this->Left()} BETWEEN ? AND ?
         ",$Info["Left"],$Info["Right"]);
 
-        Jf::SQL("
+        Jf::sql("
             UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} - ? WHERE {$this->Right()} > ?
         ",$Info["Width"],$Info["Right"]);
-        Jf::SQL("
+        Jf::sql("
             UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} - ? WHERE {$this->Left()} > ?
         ",$Info["Width"],$Info["Right"]);
         $this->Unlock();
@@ -253,7 +253,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             ORDER BY node.{$this->Left()}";
 
         array_unshift($Arguments,$Query);
-        $Res=call_user_func_array("Jf::SQL",$Arguments);
+        $Res=call_user_func_array("Jf::sql",$Arguments);
 
         return $Res;
     }
@@ -292,7 +292,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             ORDER BY node.{$this->Left()}";
 
         array_unshift($Arguments,$Query);
-        $Res=call_user_func_array("Jf::SQL",$Arguments);
+        $Res=call_user_func_array("Jf::sql",$Arguments);
         if ($Res)
         foreach ($Res as &$v)
             unset($v["Depth"]);
@@ -318,7 +318,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             ORDER BY parent.{$this->Left()}";
 
         array_unshift($Arguments,$Query);
-        $Res=call_user_func_array("Jf::SQL",$Arguments);
+        $Res=call_user_func_array("Jf::sql",$Arguments);
         return $Res;
     }
 
@@ -347,10 +347,10 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 
             $Arguments=array_merge($Arguments,$Arguments);
             array_unshift($Arguments,$Query);
-            $Res=call_user_func_array("Jf::SQL",$Arguments);
+            $Res=call_user_func_array("Jf::sql",$Arguments);
         }
         else
-        $Res=Jf::SQL("SELECT *
+        $Res=Jf::sql("SELECT *
             FROM {$this->Table()}
             WHERE {$this->Right()} = {$this->Left()} + 1");
         return $Res;
@@ -375,15 +375,15 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         	" FROM {$this->Table()} $ConditionString";
 
         array_unshift($Arguments,$Query);
-        $Sibl=call_user_func_array("Jf::SQL",$Arguments);
+        $Sibl=call_user_func_array("Jf::sql",$Arguments);
 
         $Sibl=$Sibl[0];
         if ($Sibl==null)
         {
             $Sibl["Left"]=$Sibl["Right"]=0;
         }
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} > ?",$Sibl["Right"]);
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} + 2 WHERE {$this->Left()} > ?",$Sibl["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} > ?",$Sibl["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} + 2 WHERE {$this->Left()} > ?",$Sibl["Right"]);
 
         $FieldsString=$ValuesString="";
         $Values=array();
@@ -402,7 +402,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_unshift($Values,$Sibl["Right"]+1);
         array_unshift($Values,$Query);
 
-        $Res=call_user_func_array("Jf::SQL",$Values);
+        $Res=call_user_func_array("Jf::sql",$Values);
 		$this->Unlock();
         return $Res;
     }
@@ -425,15 +425,15 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Query="SELECT {$this->Right()} AS `Right`, {$this->Left()} AS `Left`".
         	" FROM {$this->Table()} $ConditionString";
         array_unshift($Arguments,$Query);
-        $Parent=call_user_func_array("Jf::SQL",$Arguments);
+        $Parent=call_user_func_array("Jf::sql",$Arguments);
 
         $Parent=$Parent[0];
         if ($Parent==null)
         {
             $Parent["Left"]=$Parent["Right"]=0;
         }
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} >= ?",$Parent["Right"]);
-        Jf::SQL("UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} + 2 WHERE {$this->Left()} > ?",$Parent["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Right()} = {$this->Right()} + 2 WHERE {$this->Right()} >= ?",$Parent["Right"]);
+        Jf::sql("UPDATE {$this->Table()} SET {$this->Left()} = {$this->Left()} + 2 WHERE {$this->Left()} > ?",$Parent["Right"]);
 
         $FieldsString=$ValuesString="";
         $Values=array();
@@ -450,7 +450,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_unshift($Values,$Parent["Right"]+1);
         array_unshift($Values,$Parent["Right"]);
         array_unshift($Values,$Query);
-        $Res=call_user_func_array("Jf::SQL",$Values);
+        $Res=call_user_func_array("Jf::sql",$Values);
         $this->Unlock();
         return $Res;
     }
@@ -486,7 +486,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_unshift($Values,$Query);
         $Arguments=array_merge($Values,$Arguments);
 
-        return call_user_func_array("Jf::SQL",$Arguments);
+        return call_user_func_array("Jf::sql",$Arguments);
     }
 
 }
