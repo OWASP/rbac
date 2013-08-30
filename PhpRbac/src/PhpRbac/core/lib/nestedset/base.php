@@ -42,7 +42,7 @@ class BaseNestedSet implements NestedSetInterface
     private $Table;
     private $Left,$Right;
     private $ID;
-    protected function ID()
+    protected function id()
     {
     	return $this->ID;
     }
@@ -83,7 +83,7 @@ class BaseNestedSet implements NestedSetInterface
     function DescendantCount($ID)
     {
         $Res=Jf::sql("SELECT ({$this->Right()}-{$this->Left()}-1)/2 AS `Count` FROM
-        {$this->Table()} WHERE {$this->ID()}=?",$ID);
+        {$this->Table()} WHERE {$this->id()}=?",$ID);
         return sprintf("%d",$Res[0]["Count"])*1;
     }
     
@@ -109,11 +109,11 @@ class BaseNestedSet implements NestedSetInterface
     function sibling($ID,$SiblingDistance=1)
     {
         $Parent=$this->parentNode($ID);
-        $Siblings=$this->children($Parent[$this->ID()]);
+        $Siblings=$this->children($Parent[$this->id()]);
         if (!$Siblings) return null;
         foreach ($Siblings as &$Sibling)
         {
-            if ($Sibling[$this->ID()]==$ID) break;
+            if ($Sibling[$this->id()]==$ID) break;
             $n++;
         }
         return $Siblings[$n+$SiblingDistance];
@@ -140,7 +140,7 @@ class BaseNestedSet implements NestedSetInterface
     {
         $Info=Jf::sql("SELECT {$this->Left()} AS `Left`,{$this->Right()} AS `Right` 
 			FROM {$this->Table()}
-			WHERE {$this->ID()} = ?;
+			WHERE {$this->id()} = ?;
         ",$ID);
         $Info=$Info[0];
 
@@ -164,7 +164,7 @@ class BaseNestedSet implements NestedSetInterface
     {
         $Info=Jf::sql("SELECT {$this->Left()} AS `Left`,{$this->Right()} AS `Right` ,{$this->Right()}-{$this->Left()}+ 1 AS Width
 			FROM {$this->Table()}
-			WHERE {$this->ID()} = ?;
+			WHERE {$this->id()} = ?;
         ",$ID);
         $Info=$Info[0];
         
@@ -194,23 +194,23 @@ class BaseNestedSet implements NestedSetInterface
            if (!$AbsoluteDepths)
                $DepthConcat="- (sub_tree.depth )";
         $Res=Jf::sql("
-            SELECT node.*, (COUNT(parent.{$this->ID()})-1 $DepthConcat ) AS Depth
+            SELECT node.*, (COUNT(parent.{$this->id()})-1 $DepthConcat ) AS Depth
             FROM {$this->Table()} AS node,
             	{$this->Table()} AS parent,
             	{$this->Table()} AS sub_parent,
             	(
-            		SELECT node.{$this->ID()}, (COUNT(parent.{$this->ID()}) - 1) AS depth
+            		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS depth
             		FROM {$this->Table()} AS node,
             		{$this->Table()} AS parent
             		WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
-            		AND node.{$this->ID()} = ?
-            		GROUP BY node.{$this->ID()}
+            		AND node.{$this->id()} = ?
+            		GROUP BY node.{$this->id()}
             		ORDER BY node.{$this->Left()}
             	) AS sub_tree
             WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
             	AND node.{$this->Left()} BETWEEN sub_parent.{$this->Left()} AND sub_parent.{$this->Right()}
-            	AND sub_parent.{$this->ID()} = sub_tree.{$this->ID()}
-            GROUP BY node.{$this->ID()}
+            	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
+            GROUP BY node.{$this->id()}
             HAVING Depth > 0
             ORDER BY node.{$this->Left()}",$ID);
         return $Res;
@@ -225,23 +225,23 @@ class BaseNestedSet implements NestedSetInterface
     function children($ID)
     {
         $Res=Jf::sql("
-            SELECT node.*, (COUNT(parent.{$this->ID()})-1 - (sub_tree.depth )) AS Depth
+            SELECT node.*, (COUNT(parent.{$this->id()})-1 - (sub_tree.depth )) AS Depth
             FROM {$this->Table()} AS node,
             	{$this->Table()} AS parent,
             	{$this->Table()} AS sub_parent,
            	(
-            		SELECT node.{$this->ID()}, (COUNT(parent.{$this->ID()}) - 1) AS depth
+            		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS depth
             		FROM {$this->Table()} AS node,
             		{$this->Table()} AS parent
             		WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
-            		AND node.{$this->ID()} = ?
-            		GROUP BY node.{$this->ID()}
+            		AND node.{$this->id()} = ?
+            		GROUP BY node.{$this->id()}
             		ORDER BY node.{$this->Left()}
             ) AS sub_tree
             WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
             	AND node.{$this->Left()} BETWEEN sub_parent.{$this->Left()} AND sub_parent.{$this->Right()}
-            	AND sub_parent.{$this->ID()} = sub_tree.{$this->ID()}
-            GROUP BY node.{$this->ID()}
+            	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
+            GROUP BY node.{$this->id()}
             HAVING Depth = 1
             ORDER BY node.{$this->Left()};
         ",$ID);
@@ -263,7 +263,7 @@ class BaseNestedSet implements NestedSetInterface
             FROM {$this->Table()} AS node,
             ".$this->Table." AS parent
             WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
-            AND node.{$this->ID()} = ?
+            AND node.{$this->id()} = ?
             ORDER BY parent.{$this->Left()}",$ID);
         return $Res;
     }
@@ -281,9 +281,9 @@ class BaseNestedSet implements NestedSetInterface
             FROM {$this->Table()}
             WHERE {$this->Right()} = {$this->Left()} + 1 
         	AND {$this->Left()} BETWEEN 
-            (SELECT {$this->Left()} FROM {$this->Table()} WHERE {$this->ID()}=?)
+            (SELECT {$this->Left()} FROM {$this->Table()} WHERE {$this->id()}=?)
             	AND 
-            (SELECT {$this->Right()} FROM {$this->Table()} WHERE {$this->ID()}=?)",$PID,$PID);
+            (SELECT {$this->Right()} FROM {$this->Table()} WHERE {$this->id()}=?)",$PID,$PID);
         else
         $Res=Jf::sql("SELECT *
             FROM {$this->Table()}
@@ -301,7 +301,7 @@ class BaseNestedSet implements NestedSetInterface
 //        $this->DB->AutoQuery("LOCK TABLE {$this->Table()} WRITE;");
         //Find the Sibling
         $Sibl=Jf::sql("SELECT {$this->Right()} AS `Right`".
-        	" FROM {$this->Table()} WHERE {$this->ID()} = ?",$ID);
+        	" FROM {$this->Table()} WHERE {$this->id()} = ?",$ID);
         $Sibl=$Sibl[0];
         if ($Sibl==null)
         {
@@ -324,7 +324,7 @@ class BaseNestedSet implements NestedSetInterface
     {
         //Find the Sibling
         $Sibl=Jf::sql("SELECT {$this->Left()} AS `Left`".
-        	" FROM {$this->Table()} WHERE {$this->ID()} = ?",$PID);
+        	" FROM {$this->Table()} WHERE {$this->id()} = ?",$PID);
         $Sibl=$Sibl[0];
         if ($Sibl==null)
         {
@@ -343,11 +343,11 @@ class BaseNestedSet implements NestedSetInterface
      */
     function fullTree()
     {
-        $Res=Jf::sql("SELECT node.*, (COUNT(parent.{$this->ID()}) - 1) AS Depth
+        $Res=Jf::sql("SELECT node.*, (COUNT(parent.{$this->id()}) - 1) AS Depth
             FROM {$this->Table()} AS node,
             {$this->Table()} AS parent
             WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
-            GROUP BY node.{$this->ID()}
+            GROUP BY node.{$this->id()}
             ORDER BY node.{$this->Left()}");
         return $Res;
     }
@@ -369,23 +369,23 @@ class BaseNestedSet implements NestedSetInterface
             if ($cur[$LastKey]['Depth']==$R['Depth'])
             {
                 echo "adding 0 ".$R['Title'].BR;
-                $cur[$R[$this->ID()]]=$R;
-                $LastKey=$R[$this->ID()];
+                $cur[$R[$this->id()]]=$R;
+                $LastKey=$R[$this->id()];
             }
             elseif ($cur[$LastKey]['Depth']<$R['Depth'])
             {
                 echo "adding 1 ".$R['Title'].BR;
                 array_push($stack,$cur);
                 $cur=&$cur[$LastKey];
-                $cur[$R[$this->ID()]]=$R;
-                $LastKey=$R[$this->ID()];
+                $cur[$R[$this->id()]]=$R;
+                $LastKey=$R[$this->id()];
             }
             elseif ($cur[$LastKey]['Depth']>$R['Depth'])
             {
                 echo "adding 2 ".$R['Title'].BR;
                 $cur=array_pop($stack);
-                $cur[$R[$this->ID()]]=$R;
-                $LastKey=$R[$this->ID()];
+                $cur[$R[$this->id()]]=$R;
+                $LastKey=$R[$this->id()];
             }
             
         }

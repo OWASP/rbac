@@ -67,7 +67,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     {
         $args=func_get_args();
         array_shift($args);
-        $Query="SELECT {$this->ID()} AS ID FROM {$this->Table()} WHERE $ConditionString LIMIT 1";
+        $Query="SELECT {$this->id()} AS ID FROM {$this->Table()} WHERE $ConditionString LIMIT 1";
         array_unshift($args,$Query);
         $Res=call_user_func_array(("Jf::sql"),$args);
         if ($Res)
@@ -124,12 +124,12 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $ConditionString=$ConditionString; //prevent warning
         array_shift($Arguments); //Rid $SiblingDistance
         $Parent=call_user_func_array(array($this,"parentNodeConditional"),$Arguments);
-        $Siblings=$this->children($Parent[$this->ID()]);
+        $Siblings=$this->children($Parent[$this->id()]);
         if (!$Siblings) return null;
         $ID=call_user_func_array(array($this,"GetID"),$Arguments);
         foreach ($Siblings as &$Sibling)
         {
-            if ($Sibling[$this->ID()]==$ID) break;
+            if ($Sibling[$this->id()]==$ID) break;
             $n++;
         }
         return $Siblings[$n+$SiblingDistance];
@@ -232,23 +232,23 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_shift($Arguments);
         array_shift($Arguments); //second argument, $AbsoluteDepths
         $Query="
-            SELECT node.*, (COUNT(parent.{$this->ID()})-1 $DepthConcat) AS Depth
+            SELECT node.*, (COUNT(parent.{$this->id()})-1 $DepthConcat) AS Depth
             FROM {$this->Table()} AS node,
             	{$this->Table()} AS parent,
             	{$this->Table()} AS sub_parent,
             	(
-            		SELECT node.{$this->ID()}, (COUNT(parent.{$this->ID()}) - 1) AS innerDepth
+            		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
             		FROM {$this->Table()} AS node,
             		{$this->Table()} AS parent
             		WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
             		AND (node.$ConditionString)
-            		GROUP BY node.{$this->ID()}
+            		GROUP BY node.{$this->id()}
             		ORDER BY node.{$this->Left()}
             	) AS sub_tree
             WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
             	AND node.{$this->Left()} BETWEEN sub_parent.{$this->Left()} AND sub_parent.{$this->Right()}
-            	AND sub_parent.{$this->ID()} = sub_tree.{$this->ID()}
-            GROUP BY node.{$this->ID()}
+            	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
+            GROUP BY node.{$this->id()}
             HAVING Depth > 0
             ORDER BY node.{$this->Left()}";
 
@@ -271,23 +271,23 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Arguments=func_get_args();
         array_shift($Arguments);
         $Query="
-            SELECT node.*, (COUNT(parent.{$this->ID()})-1 - (sub_tree.innerDepth )) AS Depth
+            SELECT node.*, (COUNT(parent.{$this->id()})-1 - (sub_tree.innerDepth )) AS Depth
             FROM {$this->Table()} AS node,
             	{$this->Table()} AS parent,
             	{$this->Table()} AS sub_parent,
            	(
-            		SELECT node.{$this->ID()}, (COUNT(parent.{$this->ID()}) - 1) AS innerDepth
+            		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
             		FROM {$this->Table()} AS node,
             		{$this->Table()} AS parent
             		WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
             		AND (node.$ConditionString)
-            		GROUP BY node.{$this->ID()}
+            		GROUP BY node.{$this->id()}
             		ORDER BY node.{$this->Left()}
             ) AS sub_tree
             WHERE node.{$this->Left()} BETWEEN parent.{$this->Left()} AND parent.{$this->Right()}
             	AND node.{$this->Left()} BETWEEN sub_parent.{$this->Left()} AND sub_parent.{$this->Right()}
-            	AND sub_parent.{$this->ID()} = sub_tree.{$this->ID()}
-            GROUP BY node.{$this->ID()}
+            	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
+            GROUP BY node.{$this->id()}
             HAVING Depth = 1
             ORDER BY node.{$this->Left()}";
 
