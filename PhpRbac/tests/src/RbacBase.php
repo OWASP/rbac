@@ -95,6 +95,42 @@ class RbacBase extends \RbacSetup
     }
 
     /*
+     * Tests for $this->Instance()->getId()
+     */
+
+    public function getIdTitle()
+    {
+        $this->Instance()->addPath('/'. $this->type() . '_1/'. $this->type() . '_2');
+
+        $entityId = $this->Instance()->getId($this->type() . '_2');
+
+        $this->assertEquals('3', $entityId);
+    }
+
+    public function getIdPath()
+    {
+        $this->Instance()->addPath('/'. $this->type() . '_1/'. $this->type() . '_2');
+
+        $entityId = $this->Instance()->getId('/'. $this->type() . '_1/'. $this->type() . '_2');
+
+        $this->assertEquals('3', $entityId);
+    }
+
+    public function getIdNullBadParameters()
+    {
+        $entityId = $this->Instance()->getId($this->type() . '_2');
+
+        $this->assertSame(null, $entityId);
+    }
+
+    public function getIdNullNoParameters()
+    {
+        $entityId = $this->Instance()->getId();
+
+        $this->assertSame(null, $entityId);
+    }
+
+    /*
      * Tests for $this->Instance()->titleId()
      */
 

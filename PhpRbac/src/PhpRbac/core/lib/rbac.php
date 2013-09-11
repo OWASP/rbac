@@ -85,6 +85,23 @@ abstract class BaseRbac extends JModel
 	}
 
 	/**
+	 * Returns ID of entity
+	 *
+	 * @param string $entity (Path or Title)
+	 *
+	 * @return mixed ID of entity or null
+	 */
+	public function getId($entity = null)
+	{
+	    if (substr ( $entity, 0, 1 ) == "/")
+	        $entityID = $this->pathId ( $entity );
+	    else
+	        $entityID = $this->titleId ( $entity );
+
+	    return $entityID;
+	}
+
+	/**
 	 * Returns ID of a path
 	 *
 	 * @todo this has a limit of 1000 characters on $Path
@@ -637,9 +654,9 @@ $res = $res and $this->Roles->reset ( true );
  * @defgroup phprbac_permission_manager Documentation regarding Permission Manager Functionality
  * @ingroup phprbac
  * @{
- * 
+ *
  * Documentation regarding Permission Manager functionality.
- * 
+ *
  * Permission Manager: Contains functionality specific to Permissions
  *
  * @author abiusx
@@ -704,7 +721,7 @@ class PermissionManager extends BaseRbac
 	function roles($Permission, $OnlyIDs = true)
 	{
 		if (! is_numeric ( $Permission ))
-			$Permission = $this->Permission_ID ( $Permission );
+			$Permission = $this->getId($Permission);
 		if ($OnlyIDs)
 		{
 			$Res = Jf::sql ( "SELECT RoleID AS `ID` FROM
@@ -720,9 +737,9 @@ class PermissionManager extends BaseRbac
 				return null;
 		}
 		else
-			return Jf::sql ( "SELECT `TP`.* FROM {$this->tablePrefix()}rolepermissions AS `TR`
+			return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}rolepermissions AS `TR`
 				RIGHT JOIN {$this->tablePrefix()}roles AS `TP` ON (`TR`.RoleID=`TP`.ID)
-				WHERE PermissionID=? ORDER BY TP.RoleID", $Permission );
+				WHERE PermissionID=? ORDER BY TP.ID", $Permission );
 	}
 }
 
@@ -732,9 +749,9 @@ class PermissionManager extends BaseRbac
  * @defgroup phprbac_role_manager Documentation regarding Role Manager Functionality
  * @ingroup phprbac
  * @{
- * 
+ *
  * Documentation regarding Role Manager functionality.
- * 
+ *
  * Role Manager: Contains functionality specific to Roles
  *
  * @author abiusx
@@ -852,6 +869,8 @@ class RoleManager extends BaseRbac
 	 */
 	function permissions($Role, $OnlyIDs = true)
 	{
+	    if (! is_numeric ($Role))
+	        $Role = $this->getId($Role);
 		if ($OnlyIDs)
 		{
 			$Res = Jf::sql ( "SELECT PermissionID AS `ID` FROM {$this->tablePrefix()}rolepermissions WHERE RoleID=? ORDER BY PermissionID", $Role );
@@ -866,9 +885,9 @@ class RoleManager extends BaseRbac
 				return null;
 		}
 		else
-			return Jf::sql ( "SELECT `TP`.* FROM {$this->tablePrefix()}rolepermissions AS `TR`
+			return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}rolepermissions AS `TR`
 			RIGHT JOIN {$this->tablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
-			WHERE RoleID=? ORDER BY TP.PermissionID", $Role );
+			WHERE RoleID=? ORDER BY TP.ID", $Role );
 	}
 }
 
@@ -878,9 +897,9 @@ class RoleManager extends BaseRbac
  * @defgroup phprbac_user_manager Documentation regarding Rbac User Manager Functionality
  * @ingroup phprbac
  * @{
- * 
+ *
  * Documentation regarding Rbac User Manager functionality.
- * 
+ *
  * Rbac User Manager: Contains functionality specific to Users
  *
  * @author abiusx
