@@ -27,7 +27,7 @@ We are in the process of refactoring PhpRbac in order to meet PHP-FIG PSR compli
 
 Point your Autoloader to 'PhpRbac/src' using the 'PhpRbac' namespace:
 
-Example:
+Example using AuraPHP's autoloader:
     
     $loader->add('PhpRbac\\', '/path/to/PhpRbac/src');
     
@@ -44,12 +44,20 @@ Include autoload.php:
 ##Usage##
 
 **Instantiating a PhpRbac Object**
+	
+With a 'use' statement:
 
-Example:
+    use PhpRbac;
 
-    require '/path/to/PhpRbac/autoload.php';
-    
-	$rbac = new PhpRbac\Rbac();
+    $rbac = new Rbac();
+
+Without a 'use' statement, outside of a namespace - 
+
+    $rbac = new PhpRbac\Rbac();
+
+Without a 'use' statement, inside of another namespace (notice the leading backslash) -
+
+    $rbac = new \PhpRbac\Rbac();
 	
 ##Documentation##
 
