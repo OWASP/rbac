@@ -22,7 +22,7 @@ elseif ($adapter=="pdo_sqlite")
 		Jf::$Db=new PDO("sqlite:{$dbname}",$user,$pass);
 // 		Jf::$Db=new PDO("sqlite::memory:",$user,$pass);
 }
-else # default to mysqli 
+else # default to mysqli
 {
 	Jf::$Db=new mysqli($host,$user,$pass,$dbname);
 	if(Jf::$Db->connect_errno==1049);
