@@ -25,7 +25,7 @@ elseif ($adapter=="pdo_sqlite")
 else # default to mysqli 
 {
 	jf::$Db=new mysqli($host,$user,$pass,$dbname);
-	if(jf::$Db->connect_errno==1049);
+	if(jf::$Db->connect_errno==1049)
 		InstallMySQLi($host,$user,$pass,$dbname);
 }
 function GetSQLs($dbms)
