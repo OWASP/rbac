@@ -656,7 +656,7 @@ class RoleManager extends BaseRbac
 		else
 			return jf::SQL ( "SELECT `TP`.* FROM {$this->tablePrefix()}rolepermissions AS `TR`
 			RIGHT JOIN {$this->tablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
-			WHERE RoleID=? ORDER BY TP.PermissionID", $Role );
+			WHERE RoleID=? ORDER BY TP.ID", $Role );
 	}
 }
 
