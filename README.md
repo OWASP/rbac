@@ -1,7 +1,14 @@
 #PhpRbac v2.0 Beta
 
 Home Page: [http://phprbac.net/](http://phprbac.net/)
+
 Github Project Page: [https://github.com/OWASP/rbac](https://github.com/OWASP/rbac)
+
+##What is an Rbac System?
+
+To get a better idea as to where an Rbac system fits into the scheme of things, see this comment from Issue #19:
+
+[https://github.com/OWASP/rbac/issues/19#issuecomment-31597103](https://github.com/OWASP/rbac/issues/19#issuecomment-31597103)
 
 ##PhpRbac's Move Towards PSR Compliance
 
