@@ -1,3 +1,6 @@
+/*
+ * Create Tables
+ */
 
 CREATE TABLE `PREFIX_permissions` (
   `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -28,3 +31,19 @@ CREATE TABLE `PREFIX_userroles` (
   `AssignmentDate` INTEGER NOT NULL,
   PRIMARY KEY  (`UserID`,`RoleID`)
 );
+
+/*
+ * Insert Initial Table Data
+ */
+
+INSERT INTO `PREFIX_permissions` (`ID`, `Lft`, `Rght`, `Title`, `Description`)
+VALUES (1, 0, 1, 'root', 'root');
+
+INSERT INTO `PREFIX_rolepermissions` (`RoleID`, `PermissionID`, `AssignmentDate`)
+VALUES (1, 1, strftime('%s', 'now'));
+
+INSERT INTO `PREFIX_roles` (`ID`, `Lft`, `Rght`, `Title`, `Description`)
+VALUES (1, 0, 1, 'root', 'root');
+
+INSERT INTO `PREFIX_userroles` (`UserID`, `RoleID`, `AssignmentDate`)
+VALUES (1, 1, strftime('%s', 'now'));
