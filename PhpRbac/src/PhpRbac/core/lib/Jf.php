@@ -53,6 +53,7 @@ class Jf
 	static function sqlPdo($Query)
 	{
 		$args = func_get_args ();
+
 		if (count ( $args ) == 1)
 		{
 			$result = self::$Db->query ( $Query );

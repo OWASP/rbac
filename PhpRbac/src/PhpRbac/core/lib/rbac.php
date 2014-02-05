@@ -112,6 +112,10 @@ abstract class BaseRbac extends JModel
 	function pathId($Path)
 	{
 		$Path = "root" . $Path;
+
+		if (strlen($Path) > 1024)
+		    throw new Exception ( "Path exceeds character count limit." );
+
 		if ($Path [strlen ( $Path ) - 1] == "/")
 			$Path = substr ( $Path, 0, strlen ( $Path ) - 1 );
 		$Parts = explode ( "/", $Path );
@@ -119,24 +123,11 @@ abstract class BaseRbac extends JModel
 		$Adapter = get_class(Jf::$Db);
 		if ($Adapter == "mysqli" or ($Adapter == "PDO" and Jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="mysql")) {
 			$GroupConcat="GROUP_CONCAT(parent.Title ORDER BY parent.Lft SEPARATOR '/')";
-
-            $query = Jf::sql ( "SELECT sum(char_length(Title)) FROM " . $this->tablePrefix() . $this->type());
-            $query_char_count = $query[0]['sum(char_length(Title))'];
 		} elseif ($Adapter == "PDO" and Jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite") {
 			$GroupConcat="GROUP_CONCAT(parent.Title,'/')";
-
-            $query = Jf::sql ( "SELECT sum(length(Title)) FROM " . $this->tablePrefix() . $this->type());
-            $query_char_count = $query[0]['sum(length(Title))'];
 		} else {
 			throw new \Exception ("Unknown Group_Concat on this type of database: {$Adapter}");
 		}
-
-		$row_count = Jf::sql ( "SELECT count(*) FROM " . $this->tablePrefix() . $this->type());
-		$separator_count = --$row_count[0]['count(*)'];
-		$total_char_count = $query_char_count + $separator_count;
-
-		if ((int) $total_char_count >= 1024)
-		    throw new Exception ( "Path exceeds character count limit." );
 
 		$res = Jf::sql ( "SELECT node.ID,{$GroupConcat} AS Path
 				FROM {$this->tablePrefix()}{$this->type()} AS node,
@@ -146,6 +137,7 @@ abstract class BaseRbac extends JModel
 				GROUP BY node.ID
 				HAVING Path = ?
 				", $Parts [count ( $Parts ) - 1], $Path );
+
 		if ($res)
 			return $res [0] ['ID'];
 		else
@@ -170,6 +162,7 @@ abstract class BaseRbac extends JModel
 
 		print_ ( $PartsRev );
 		$res = call_user_func_array ( "Jf::sql", $PartsRev );
+
 		if ($res)
 			return $res [0] ['ID'];
 		else
@@ -886,8 +879,8 @@ class RoleManager extends BaseRbac
 		}
 		else
 			return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}rolepermissions AS `TR`
-			RIGHT JOIN {$this->tablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
-			WHERE RoleID=? ORDER BY TP.ID", $Role );
+			    RIGHT JOIN {$this->tablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
+			    WHERE RoleID=? ORDER BY TP.ID", $Role );
 	}
 }
 
