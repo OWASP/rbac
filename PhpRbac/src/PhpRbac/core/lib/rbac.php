@@ -113,9 +113,6 @@ abstract class BaseRbac extends JModel
 	{
 		$Path = "root" . $Path;
 
-		if (strlen($Path) > 1024)
-		    throw new Exception ( "Path exceeds character count limit." );
-
 		if ($Path [strlen ( $Path ) - 1] == "/")
 			$Path = substr ( $Path, 0, strlen ( $Path ) - 1 );
 		$Parts = explode ( "/", $Path );

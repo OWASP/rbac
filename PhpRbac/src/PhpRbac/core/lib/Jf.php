@@ -12,12 +12,14 @@ class Jf
 
 	public static $TABLE_PREFIX;
 
-	static function setTablePrefix($tablePrefix)
+	private static $groupConcatLimitChanged = false;
+
+	public static function setTablePrefix($tablePrefix)
 	{
 	    self::$TABLE_PREFIX = $tablePrefix;
 	}
 
-	static function tablePrefix()
+	public static function tablePrefix()
 	{
 	    return self::$TABLE_PREFIX;
 	}
@@ -52,6 +54,18 @@ class Jf
 
 	static function sqlPdo($Query)
 	{
+	    $debug_backtrace = debug_backtrace();
+
+	    if((isset($debug_backtrace[3])) && ($debug_backtrace[3]['function'] == 'pathId')) {
+    	    if (!self::$groupConcatLimitChanged) {
+    	        $success = self::$Db->query ("SET SESSION group_concat_max_len = 1000000");
+
+    	        if ($success) {
+    	            self::$groupConcatLimitChanged = true;
+    	        }
+    	    }
+	    }
+
 		$args = func_get_args ();
 
 		if (count ( $args ) == 1)
@@ -102,6 +116,18 @@ class Jf
 
 	static function sqlMysqli( $Query)
 	{
+	    $debug_backtrace = debug_backtrace();
+
+	    if((isset($debug_backtrace[3])) && ($debug_backtrace[3]['function'] == 'pathId')) {
+    	    if (!self::$groupConcatLimitChanged) {
+    	        $success = self::$Db->query ("SET SESSION group_concat_max_len = 1000000");
+
+    	        if ($success) {
+    	            self::$groupConcatLimitChanged = true;
+    	        }
+    	    }
+	    }
+
 		$args = func_get_args ();
 		if (count ( $args ) == 1)
 		{
