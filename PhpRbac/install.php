@@ -1,3 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>PHP-RBAC Installation</title>
+
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.1/pure-min.css">
+
+    </head>
+
+    <body>
+
+        <div class="pure-g-r">
+            <div class="pure-u-1-3"></div>
+
+            <div class="pure-u-1-3">
+
 <?php if ((!isset($_POST['submit'])) && (!isset($_GET['process'])) && (!isset($_GET['success']))): ?>
 
 <?php
@@ -69,24 +88,24 @@ if (isset($_GET['errorsExist'])) {
 <?php if (isset($fieldsRequired)): ?>
 
 <p>
-    <strong style="color: red">* All Fields Are Required</strong>
+    <strong style="color: red">All Fields Are Required</strong>
 </p>
 
 <?php elseif (isset($_GET['error_pw_match'])) :?>
 
 <p>
-    <strong style="color: red">* Passwords Do Not Match</strong>
+    <strong style="color: red">Passwords Do Not Match</strong>
 </p>
 
 <?php endif; ?>
 
-<form name="dbInfo" action="" method="POST">
-    <table>
+<form class="pure-form pure-form-aligned" name="dbInfo" action="" method="POST">
 
-        <tr>
-            <td>Database Adapter:</td>
-            <td>
-                <select name="dbAdapter">
+    <fieldset>
+
+        <div class="pure-control-group">
+            <label for="dbAdapter">Database Adapter:</label>
+            <select id="dbAdapter" name="dbAdapter">
 
                     <?php if ($dbAdapter == 'MySQL'): ?>
                         <option selected="selected">MySQL</option>
@@ -107,42 +126,44 @@ if (isset($_GET['errorsExist'])) {
                     <?php endif; ?>
 
                 </select>
-            </td>
-        </tr>
+        </div>
 
-        <tr>
-            <td>Database Host Name/IP:</td>
-            <td><input type="text" name="dbHost" value="<?php echo $dbHost; ?>" /></td>
-        </tr>
+        <div class="pure-control-group">
+            <label for="dbHost">Database Host Name/IP:</label>
+            <input id="dbHost" type="text" name="dbHost" value="<?php echo $dbHost; ?>" required />
+        </div>
 
-        <tr>
-            <td>Database Name:</td>
-            <td><input type="text" name="dbName" value="<?php echo $dbName; ?>" /></td>
-        </tr>
+        <div class="pure-control-group">
+            <label for="dbName">Database Name:</label>
+            <input id="dbName" type="text" name="dbName" value="<?php echo $dbName; ?>" required />
+        </div>
 
-        <tr>
-            <td>Table Prefix:</td>
-            <td><input type="text" name="dbTablePrefix" value="<?php echo ($dbTablePrefix == '') ? 'phprbac_' : $dbTablePrefix;  ?>" /></td>
-        </tr>
+        <div class="pure-control-group">
+            <label for="dbTablePrefix">Table Prefix:</label>
+            <input id="dbTablePrefix" type="text" name="dbTablePrefix" value="<?php echo ($dbTablePrefix == '') ? 'phprbac_' : $dbTablePrefix;  ?>" required />
+        </div>
 
-        <tr>
-            <td>Database User:</td>
-            <td><input type="text" name="dbUser" value="<?php echo $dbUser; ?>" /></td>
-        </tr>
+        <div class="pure-control-group">
+            <label for="dbUser">Database User:</label>
+            <input id="dbUser" type="text" name="dbUser" value="<?php echo $dbUser; ?>" required />
+        </div>
 
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" name="dbPassword" value="" /></td>
-        </tr>
+        <div class="pure-control-group">
+            <label for="dbPassword">Password:</label>
+            <input id="dbPassword" type="password" name="dbPassword" value="" required />
+        </div>
 
-        <tr>
-            <td>Confirm Password:</td>
-            <td><input type="password" name="dbPasswordConfirm" value="" /></td>
-        </tr>
+        <div class="pure-control-group">
+            <label for="dbPasswordConfirm">Confirm Password:</label>
+            <input id="dbPasswordConfirm" type="password" name="dbPasswordConfirm" value="" required />
+        </div>
 
-    </table>
+        <div class="pure-controls">
+            <button type="submit" name="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
 
-    <input type="submit" name="submit" value="Submit">
+    </fieldset>
+
 </form>
 
 <?php elseif(isset($_POST['submit'])): ?>
@@ -265,16 +286,11 @@ $pass="' . $_GET['dbPassword'] . '";
     }
 
     // Instantiate PhpRbac\Rbac object
-
     require_once 'autoload.php';
 
     $rbac = new PhpRbac\Rbac();
 
     // execute '$rbac->reset(true);'
-
-    /**
-     * @todo: Rbac::reset does not create a database
-     */
     $rbac->reset(true);
 
     // Send to Success Message
@@ -294,3 +310,12 @@ $pass="' . $_GET['dbPassword'] . '";
     </p>
 
 <?php endif; ?>
+
+            </div>
+
+            <div class="pure-u-1-3"></div>
+
+        </div>
+
+    </body>
+</html>
