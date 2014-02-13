@@ -419,14 +419,34 @@ abstract class BaseRbac extends JModel
 	/**
 	 * Unassigns a role-permission relation
 	 *
-	 * @param integer $Role
-	 * @param integer $Permission
+	 * @param mixed $Role: accepts Id, Title and Path
+	 * @param mixed $Permission: accepts Id, Title and Path
 	 * @return boolean
 	 */
 	function unassign($Role, $Permission)
 	{
-		return Jf::sql ( "DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
-	RoleID=? AND PermissionID=?", $Role, $Permission ) == 1;
+	    if (is_int($Role))
+	    {
+	        $RoleID = $Role;
+	    }  else {
+	        if (substr($Role, 0, 1) == "/")
+	            $RoleID = Jf::$Rbac->Roles->pathId($Role);
+	        else
+	            $RoleID = Jf::$Rbac->Roles->titleId($Role);
+	    }
+
+	    if (is_int($Permission))
+	    {
+	        $PermissionID = $Permission;
+	    }  else {
+	        if (substr($Permission, 0, 1) == "/")
+	            $PermissionID = Jf::$Rbac->Permissions->pathId($Permission);
+	        else
+	            $PermissionID = Jf::$Rbac->Permissions->titleId($Permission);
+	    }
+
+		return Jf::sql("DELETE FROM {$this->tablePrefix()}rolepermissions WHERE
+		    RoleID=? AND PermissionID=?", $RoleID, $PermissionID) == 1;
 	}
 
 	/**
@@ -980,6 +1000,7 @@ class RbacUserManager extends JModel
 			else
 				$RoleID = Jf::$Rbac->Roles->titleId ( $Role );
 		}
+
 		$res = Jf::sql ( "INSERT INTO {$this->tablePrefix()}userroles
 				(UserID,RoleID,AssignmentDate)
 				VALUES (?,?,?)
