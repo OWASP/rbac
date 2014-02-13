@@ -970,7 +970,7 @@ class RbacUserManager extends JModel
 	 * Unassigns a role from a user
 	 *
 	 * @param integer $Role
-	 *        	ID
+	 *        	Id, Title, Path
 	 * @param integer $UserID
 	 *        	UserID (use 0 for guest)
 	 *
@@ -979,11 +979,30 @@ class RbacUserManager extends JModel
 	 */
 	function unassign($Role, $UserID = null)
 	{
-	   if ($UserID === null)
-		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
+	    /*
+	    if ($UserID === null)
+	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
 		return Jf::sql ( "DELETE FROM {$this->tablePrefix()}userroles
 		WHERE UserID=? AND RoleID=?", $UserID, $Role ) >= 1;
+		//*/
+
+	    if ($UserID === null)
+	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
+
+	    if (is_int($Role))
+	    {
+	        $RoleID = $Role;
+
+	    } else {
+
+	        if (substr($Role, 0, 1) == "/")
+	            $RoleID = Jf::$Rbac->Roles->pathId($Role);
+	        else
+	            $RoleID = Jf::$Rbac->Roles->titleId($Role);
+	    }
+
+	    return Jf::sql("DELETE FROM {$this->tablePrefix()}userroles WHERE UserID=? AND RoleID=?", $UserID, $RoleID) >= 1;
 	}
 
 	/**
