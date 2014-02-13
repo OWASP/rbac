@@ -656,28 +656,29 @@ class RbacManager extends JModel
             }
 
             return true;
-}
+	}
 
-/**
-* Remove all roles, permissions and assignments
-* mostly used for testing
-*
-* @param boolean $Ensure
-	 *        	must set or throws error
-	 * @return boolean
+    /**
+    * Remove all roles, permissions and assignments
+    * mostly used for testing
+    *
+    * @param boolean $Ensure
+	*        	must set or throws error
+	* @return boolean
     */
-function reset($Ensure = false)
-{
-if ($Ensure !== true)
-{
-throw new \Exception ("You must pass true to this function, otherwise it won't work.");
-return;
-}
-$res = true;
-$res = $res and $this->Roles->resetAssignments ( true );
-$res = $res and $this->Roles->reset ( true );
+    function reset($Ensure = false)
+    {
+        if ($Ensure !== true) {
+            throw new \Exception ("You must pass true to this function, otherwise it won't work.");
+            return;
+        }
+
+        $res = true;
+        $res = $res and $this->Roles->resetAssignments ( true );
+        $res = $res and $this->Roles->reset ( true );
 		$res = $res and $this->Permissions->reset ( true );
 		$res = $res and $this->Users->resetAssignments ( true );
+
 		return $res;
 	}
 }
