@@ -234,18 +234,21 @@ abstract class BaseRbac extends JModel
 		$Parent = 1;
 		$index = 0;
 		$CurrentPath = "";
-		foreach ( $Parts as $p )
+		$NodesCreated = 0;
+
+		foreach ($Parts as $p)
 		{
-			if (isset ( $Descriptions [$index] ))
-				$Description = $Descriptions [$index];
+			if (isset ($Descriptions[$index]))
+				$Description = $Descriptions[$index];
 			else
 				$Description = "";
 			$CurrentPath .= "/{$p}";
-			$t = $this->pathId ( $CurrentPath );
+			$t = $this->pathId($CurrentPath);
 			if (! $t)
 			{
-				$IID = $this->add ( $p, $Description, $Parent );
+				$IID = $this->add($p, $Description, $Parent);
 				$Parent = $IID;
+				$NodesCreated++;
 			}
 			else
 			{
@@ -254,7 +257,8 @@ abstract class BaseRbac extends JModel
 
 			$index += 1;
 		}
-		return (int)$Parent;
+
+		return (int)$NodesCreated;
 	}
 
 	/**
