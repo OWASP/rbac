@@ -71,7 +71,7 @@ class RbacRolesTest extends \RbacBase
             ),
         );
 
-        $this->assertSame($expected, $rolesAssigned);
+        $this->assertSame($expected, $permissionsAssigned);
     }
 
     public function testRolesNotOnlyIDNullBadParameters()

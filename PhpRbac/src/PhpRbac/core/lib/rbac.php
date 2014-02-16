@@ -91,12 +91,13 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @return mixed ID of entity or null
 	 */
-	public function getId($entity = null)
+	public function returnId($entity = null)
 	{
-	    if (substr ( $entity, 0, 1 ) == "/")
-	        $entityID = $this->pathId ( $entity );
-	    else
-	        $entityID = $this->titleId ( $entity );
+	    if (substr ($entity, 0, 1) == "/") {
+	        $entityID = $this->pathId($entity);
+	    } else {
+	        $entityID = $this->titleId($entity);
+	    }
 
 	    return $entityID;
 	}
@@ -109,7 +110,7 @@ abstract class BaseRbac extends JModel
 	 *        	such as /role1/role2/role3 ( a single slash is root)
 	 * @return integer NULL
 	 */
-	function pathId($Path)
+	public function pathId($Path)
 	{
 		$Path = "root" . $Path;
 
@@ -171,7 +172,7 @@ abstract class BaseRbac extends JModel
 	 *
 	 * @param unknown_type $Title
 	 */
-	function titleId($Title)
+	public function titleId($Title)
 	{
 		return $this->{$this->type ()}->getID ( "Title=?", $Title );
 	}
@@ -533,30 +534,7 @@ class RbacManager extends JModel
      */
     function assign($Role, $Permission)
     {
-        if (is_int ( $Permission ))
-        {
-            $PermissionID = $Permission;
-        }
-        else
-        {
-            if (substr ( $Permission, 0, 1 ) == "/")
-                $PermissionID = $this->Permissions->pathId ( $Permission );
-            else
-                $PermissionID = $this->Permissions->titleId ( $Permission );
-        }
-        if (is_int ( $Role ))
-        {
-            $RoleID = $Role;
-        }
-        else
-        {
-            if (substr ( $Role, 0, 1 ) == "/")
-                $RoleID = $this->Roles->pathId ( $Role );
-            else
-                $RoleID = $this->Roles->titleId ( $Role );
-        }
-
-        return $this->Roles->assign ( $RoleID, $PermissionID );
+        return $this->Roles->assign($Role, $Permission);
     }
 
     /**
@@ -755,12 +733,14 @@ class PermissionManager extends BaseRbac
 	 */
 	function roles($Permission, $OnlyIDs = true)
 	{
-		if (! is_numeric ( $Permission ))
-			$Permission = $this->getId($Permission);
+		if (!is_numeric($Permission))
+			$Permission = $this->returnId($Permission);
+
 		if ($OnlyIDs)
 		{
 			$Res = Jf::sql ( "SELECT RoleID AS `ID` FROM
 				{$this->tablePrefix()}rolepermissions WHERE PermissionID=? ORDER BY RoleID", $Permission );
+
 			if (is_array ( $Res ))
 			{
 				$out = array ();
@@ -905,7 +885,8 @@ class RoleManager extends BaseRbac
 	function permissions($Role, $OnlyIDs = true)
 	{
 	    if (! is_numeric ($Role))
-	        $Role = $this->getId($Role);
+	        $Role = $this->returnId($Role);
+
 		if ($OnlyIDs)
 		{
 			$Res = Jf::sql ( "SELECT PermissionID AS `ID` FROM {$this->tablePrefix()}rolepermissions WHERE RoleID=? ORDER BY PermissionID", $Role );
@@ -1025,14 +1006,6 @@ class RbacUserManager extends JModel
 	 */
 	function unassign($Role, $UserID = null)
 	{
-	    /*
-	    if ($UserID === null)
-	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
-
-		return Jf::sql ( "DELETE FROM {$this->tablePrefix()}userroles
-		WHERE UserID=? AND RoleID=?", $UserID, $Role ) >= 1;
-		//*/
-
 	    if ($UserID === null)
 	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
