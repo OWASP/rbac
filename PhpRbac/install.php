@@ -273,6 +273,7 @@ $tablePrefix = "' . $_GET['dbTablePrefix'] . '";
 
 $user="' . $_GET['dbUser'] . '";
 $pass="' . $_GET['dbPassword'] . '";
+
 ';
 
     $dbConnFile = 'database' . DIRECTORY_SEPARATOR . 'database.config';
