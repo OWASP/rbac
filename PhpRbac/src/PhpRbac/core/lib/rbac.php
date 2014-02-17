@@ -223,7 +223,7 @@ abstract class BaseRbac extends JModel
 	 * @param array $Descriptions
 	 *        	array of descriptions (will add with empty description if not available)
 	 *
-	 * @return integer NULL components ID
+	 * @return integer Number of nodes created (0 if none created)
 	 */
 	function addPath($Path, array $Descriptions = null)
 	{
@@ -397,17 +397,17 @@ abstract class BaseRbac extends JModel
 	 */
 	function assign($Role, $Permission)
 	{
-	    if (is_int($Role))
+	    if (is_numeric($Role))
 	    {
 	        $RoleID = $Role;
-	    }  else {
+	    } else {
 	        if (substr($Role, 0, 1) == "/")
 	            $RoleID = Jf::$Rbac->Roles->pathId($Role);
 	        else
 	            $RoleID = Jf::$Rbac->Roles->titleId($Role);
 	    }
 
-	    if (is_int($Permission))
+	    if (is_numeric($Permission))
 	    {
 	        $PermissionID = $Permission;
 	    }  else {
@@ -430,7 +430,7 @@ abstract class BaseRbac extends JModel
 	 */
 	function unassign($Role, $Permission)
 	{
-	    if (is_int($Role))
+	    if (is_numeric($Role))
 	    {
 	        $RoleID = $Role;
 	    }  else {
@@ -440,7 +440,7 @@ abstract class BaseRbac extends JModel
 	            $RoleID = Jf::$Rbac->Roles->titleId($Role);
 	    }
 
-	    if (is_int($Permission))
+	    if (is_numeric($Permission))
 	    {
 	        $PermissionID = $Permission;
 	    }  else {
@@ -565,7 +565,7 @@ class RbacManager extends JModel
             throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
         // convert permission to ID
-        if (is_int ( $Permission ))
+        if (is_numeric ( $Permission ))
         {
             $PermissionID = $Permission;
         }
@@ -631,9 +631,9 @@ class RbacManager extends JModel
 		if (! $this->check($Permission, $UserID)) {
             header('HTTP/1.1 403 Forbidden');
             die("<strong>Forbidden</strong>: You do not have permission to access this resource.");
-            }
+        }
 
-            return true;
+        return true;
 	}
 
     /**
@@ -939,7 +939,7 @@ class RbacUserManager extends JModel
 	    if ($UserID === null)
 		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
-		if (is_int ( $Role ))
+		if (is_numeric ( $Role ))
 		{
 			$RoleID = $Role;
 		}
@@ -972,19 +972,17 @@ class RbacUserManager extends JModel
 	 */
 	function assign($Role, $UserID = null)
 	{
-	   if ($UserID === null)
+	    if ($UserID === null)
 		    throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
-		if (is_int ( $Role ))
+		if (is_numeric($Role))
 		{
 			$RoleID = $Role;
-		}
-		else
-		{
-			if (substr ( $Role, 0, 1 ) == "/")
-				$RoleID = Jf::$Rbac->Roles->pathId ( $Role );
+		} else {
+			if (substr($Role, 0, 1) == "/")
+				$RoleID = Jf::$Rbac->Roles->pathId($Role);
 			else
-				$RoleID = Jf::$Rbac->Roles->titleId ( $Role );
+				$RoleID = Jf::$Rbac->Roles->titleId($Role);
 		}
 
 		$res = Jf::sql ( "INSERT INTO {$this->tablePrefix()}userroles
@@ -1009,7 +1007,7 @@ class RbacUserManager extends JModel
 	    if ($UserID === null)
 	        throw new \RbacUserNotProvidedException ("\$UserID is a required argument.");
 
-	    if (is_int($Role))
+	    if (is_numeric($Role))
 	    {
 	        $RoleID = $Role;
 

@@ -150,7 +150,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertNull($result);
     }
 
-    public function testRolesNotOnlyID()
+    public function testPermissionsRolesNotOnlyID()
     {
         self::$rbac->Roles->addPath("/roles_1/roles_2");
         self::$rbac->Permissions->addPath("/permissions_1/permissions_2");
@@ -170,7 +170,7 @@ class RbacPermissionsTest extends \RbacBase
         $this->assertSame($expected, $rolesAssigned);
     }
 
-    public function testRolesNotOnlyIDNullBadParameters()
+    public function testPermissionsRolesNotOnlyIDNullBadParameters()
     {
         $rolesAssigned = self::$rbac->Permissions->roles('/permissions_1/permissions_2', false);
 

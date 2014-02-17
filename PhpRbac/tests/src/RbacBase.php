@@ -1,5 +1,4 @@
 <?php
-//namespace PhpRbac;
 
 use PhpRbac\Rbac;
 
@@ -420,6 +419,23 @@ class RbacBase extends \RbacSetup
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
 
+    public function testAddPathReturnNodesCreatedCountTwoCreated()
+    {
+        $this->Instance()->addPath('/' . $this->type() . '_1/');
+        $nodes_created = $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+
+        $this->assertSame(2, $nodes_created);
+    }
+
+    public function testAddPathReturnNodesCreatedCountNoneCreated()
+    {
+        $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+        $nodes_created = $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');
+
+        $this->assertSame(0, $nodes_created);
+    }
+
+
     /**
      * @expectedException Exception
      */
@@ -665,7 +681,51 @@ class RbacBase extends \RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '_id.xml');
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
+
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+
+    public function testAssignWithTitle()
+    {
+        self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        self::$rbac->Roles->add('roles_1', 'roles Description 1');
+
+        $this->Instance()->assign('roles_1', 'permissions_1');
+
+        $dataSet = $this->getConnection()->createDataSet();
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addExcludeTables(array($this->Instance()->tablePrefix() . 'userroles'));
+
+        $filterDataSet->setExcludeColumnsForTable(
+            $this->Instance()->tablePrefix() . 'rolepermissions',
+            array('AssignmentDate')
+        );
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
+
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+
+    public function testAssignWithPath()
+    {
+        self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        self::$rbac->Roles->add('roles_1', 'roles Description 1');
+
+        $this->Instance()->assign('/roles_1', '/permissions_1');
+
+        $dataSet = $this->getConnection()->createDataSet();
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addExcludeTables(array($this->Instance()->tablePrefix() . 'userroles'));
+
+        $filterDataSet->setExcludeColumnsForTable(
+            $this->Instance()->tablePrefix() . 'rolepermissions',
+            array('AssignmentDate')
+        );
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -674,13 +734,63 @@ class RbacBase extends \RbacSetup
      * Tests for $this->Instance()->unassign()
      */
 
-    public function testUnassign()
+    public function testUnassignId()
     {
         $perm_id = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
         $role_id = self::$rbac->Roles->add('roles_1', 'roles Description 1');
 
         $this->Instance()->assign($role_id, $perm_id);
         $this->Instance()->unassign($role_id, $perm_id);
+
+        $dataSet = $this->getConnection()->createDataSet();
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addIncludeTables(array(
+            self::$rbac->Users->tablePrefix() . 'rolepermissions',
+        ));
+
+        $filterDataSet->setExcludeColumnsForTable(
+            $this->Instance()->tablePrefix() . 'rolepermissions',
+            array('AssignmentDate')
+        );
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
+
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+
+    public function testUnassignTitle()
+    {
+        $perm_id = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        $role_id = self::$rbac->Roles->add('roles_1', 'roles Description 1');
+
+        $this->Instance()->assign($role_id, $perm_id);
+        $this->Instance()->unassign('roles_1', 'permissions_1');
+
+        $dataSet = $this->getConnection()->createDataSet();
+
+        $filterDataSet = new \PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+        $filterDataSet->addIncludeTables(array(
+            self::$rbac->Users->tablePrefix() . 'rolepermissions',
+        ));
+
+        $filterDataSet->setExcludeColumnsForTable(
+            $this->Instance()->tablePrefix() . 'rolepermissions',
+            array('AssignmentDate')
+        );
+
+        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
+
+        $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
+    }
+
+    public function testUnassignPath()
+    {
+        $perm_id = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
+        $role_id = self::$rbac->Roles->add('roles_1', 'roles Description 1');
+
+        $this->Instance()->assign($role_id, $perm_id);
+        $this->Instance()->unassign('/roles_1', '/permissions_1');
 
         $dataSet = $this->getConnection()->createDataSet();
 
