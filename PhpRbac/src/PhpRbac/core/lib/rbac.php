@@ -750,11 +750,11 @@ class PermissionManager extends BaseRbac
 			}
 			else
 				return null;
+		} else {
+		    return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}roles AS `TP`
+    		    LEFT JOIN {$this->tablePrefix()}rolepermissions AS `TR` ON (`TR`.RoleID=`TP`.ID)
+    		    WHERE PermissionID=? ORDER BY TP.ID", $Permission );
 		}
-		else
-			return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}rolepermissions AS `TR`
-				RIGHT JOIN {$this->tablePrefix()}roles AS `TP` ON (`TR`.RoleID=`TP`.ID)
-				WHERE PermissionID=? ORDER BY TP.ID", $Permission );
 	}
 }
 
@@ -899,11 +899,11 @@ class RoleManager extends BaseRbac
 			}
 			else
 				return null;
+		} else {
+	        return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}permissions AS `TP`
+		        LEFT JOIN {$this->tablePrefix()}rolepermissions AS `TR` ON (`TR`.PermissionID=`TP`.ID)
+		        WHERE RoleID=? ORDER BY TP.ID", $Role );
 		}
-		else
-			return Jf::sql ( "SELECT `TP`.ID, `TP`.Title, `TP`.Description FROM {$this->tablePrefix()}rolepermissions AS `TR`
-			    RIGHT JOIN {$this->tablePrefix()}permissions AS `TP` ON (`TR`.PermissionID=`TP`.ID)
-			    WHERE RoleID=? ORDER BY TP.ID", $Role );
 	}
 }
 
