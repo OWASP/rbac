@@ -30,7 +30,7 @@ else # default to mysqli
 }
 function getSqls($dbms)
 {
-	$sql=file_get_contents(__DIR__."/sql/{$dbms}.sql");
+	$sql=file_get_contents(dirname(dirname(dirname(__DIR__))) . "/database/{$dbms}.sql");
 	$sql=str_replace("PREFIX_",Jf::tablePrefix(),$sql);
 	return explode(";",$sql);
 }

@@ -1,7 +1,0 @@
-<phpunit bootstrap="./bootstrap.php">
-    <testsuites>
-        <testsuite name="Core">
-            <directory>../src/PhpRbac/core/tests</directory>
-        </testsuite>
-    </testsuites>
-</phpunit>

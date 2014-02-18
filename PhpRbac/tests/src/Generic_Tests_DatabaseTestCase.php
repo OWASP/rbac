@@ -31,7 +31,7 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
                 if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
                     self::$pdo = new PDO('sqlite:' . dirname(dirname(__FILE__)) . '/database/' . $GLOBALS['DB_DBNAME']);
 
-                    $sql = file_get_contents(dirname(dirname(__DIR__))."/src/PhpRbac/core/sql/sqlite.sql");
+                    $sql = file_get_contents(dirname(dirname(__DIR__))."/database/sqlite.sql");
                     $sql = str_replace("PREFIX_", $GLOBALS['DB_PREFIX'], $sql);
                     $statements = explode(";", $sql);
 
