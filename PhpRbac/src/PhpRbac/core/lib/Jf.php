@@ -101,8 +101,8 @@ class Jf
 					return $stmt->rowCount ();
 				return $res;
 			}
-			elseif ($type == "DELETE" or $type == "UPDATE" or $type == "REPLAC")
-				return $stmt->rowCount ();
+			elseif ($type == "DELETE" or $type == "UPDATE" or $type == "REPLACE")
+				return $stmt->rowCount();
 			elseif ($type == "SELECT")
 			{
 				$res=$stmt->fetchAll ( PDO::FETCH_ASSOC );
