@@ -33,6 +33,7 @@ class JModel
 		return $Adapter == "mysqli" or ($Adapter == "PDO" and Jf::$Db->getAttribute(PDO::ATTR_DRIVER_NAME)=="mysql");
 	}
 }
+
 /**
  * Rbac base class, it contains operations that are essentially the same for
  * permissions and roles
@@ -55,13 +56,14 @@ abstract class BaseRbac extends JModel
 	 * @return string
 	 */
 	abstract protected function type();
+
 	/**
 	 * Adds a new role or permission
 	 * Returns new entry's ID
 	 *
 	 * @param string $Title
 	 *        	Title of the new entry
-	 * @param integer $Description
+	 * @param string $Description
 	 *        	Description of the new entry
 	 * @param integer $ParentID
 	 *        	optional ID of the parent node in the hierarchy
@@ -73,6 +75,55 @@ abstract class BaseRbac extends JModel
 			$ParentID = $this->rootId ();
 		return (int)$this->{$this->type ()}->insertChildData ( array ("Title" => $Title, "Description" => $Description ), "ID=?", $ParentID );
 	}
+
+	/**
+	 * Adds a path and all its components.
+	 * Will not replace or create siblings if a component exists.
+	 *
+	 * @param string $Path
+	 *        	such as /some/role/some/where - Must begin with a / (slash)
+	 * @param array $Descriptions
+	 *        	array of descriptions (will add with empty description if not available)
+	 *
+	 * @return integer Number of nodes created (0 if none created)
+	 */
+	function addPath($Path, array $Descriptions = null)
+	{
+	    if ($Path[0] !== "/")
+	        throw new \Exception ("The path supplied is not valid.");
+
+	    $Path = substr ( $Path, 1 );
+	    $Parts = explode ( "/", $Path );
+	    $Parent = 1;
+	    $index = 0;
+	    $CurrentPath = "";
+	    $NodesCreated = 0;
+
+	    foreach ($Parts as $p)
+	    {
+	        if (isset ($Descriptions[$index]))
+	            $Description = $Descriptions[$index];
+	        else
+	            $Description = "";
+	        $CurrentPath .= "/{$p}";
+	        $t = $this->pathId($CurrentPath);
+	        if (! $t)
+	        {
+	            $IID = $this->add($p, $Description, $Parent);
+	            $Parent = $IID;
+	            $NodesCreated++;
+	        }
+	        else
+	        {
+	            $Parent = $t;
+	        }
+
+	        $index += 1;
+	    }
+
+	    return (int)$NodesCreated;
+	}
+
 	/**
 	 * Return count of the entity
 	 *
@@ -176,6 +227,7 @@ abstract class BaseRbac extends JModel
 	{
 		return $this->{$this->type ()}->getID ( "Title=?", $Title );
 	}
+
 	/**
 	 * Return the whole record of a single entry (including Rght and Lft fields)
 	 *
@@ -186,6 +238,7 @@ abstract class BaseRbac extends JModel
 		$args = func_get_args ();
 		return call_user_func_array ( array ($this->{$this->type ()}, "getRecord" ), $args );
 	}
+
 	/**
 	 * Returns title of entity
 	 *
@@ -200,6 +253,29 @@ abstract class BaseRbac extends JModel
 		else
 			return null;
 	}
+
+	/**
+	 * Returns path of a node
+	 *
+	 * @param integer $ID
+	 * @return string path
+	 */
+	function getPath($ID)
+	{
+	    $res = $this->{$this->type ()}->pathConditional ( "ID=?", $ID );
+	    $out = null;
+	    if (is_array ( $res ))
+	        foreach ( $res as $r )
+	            if ($r ['ID'] == 1)
+	                $out = '/';
+	            else
+	                $out .= "/" . $r ['Title'];
+	            if (strlen ( $out ) > 1)
+	                return substr ( $out, 1 );
+	            else
+	                return $out;
+	}
+
 	/**
 	 * Return description of entity
 	 *
@@ -208,62 +284,15 @@ abstract class BaseRbac extends JModel
 	 */
 	function getDescription($ID)
 	{
-		$r = $this->getRecord ( "ID=?", $ID );
-		if ($r)
-			return $r ['Description'];
-		else
-			return null;
-	}
-	/**
-	 * Adds a path and all its components.
-	 * Will not replace or create siblings if a component exists.
-	 *
-	 * @param string $Path
-	 *        	such as /some/role/some/where - Must begin with a / (slash)
-	 * @param array $Descriptions
-	 *        	array of descriptions (will add with empty description if not available)
-	 *
-	 * @return integer Number of nodes created (0 if none created)
-	 */
-	function addPath($Path, array $Descriptions = null)
-	{
-		if ($Path[0] !== "/")
-	        throw new \Exception ("The path supplied is not valid.");
-
-		$Path = substr ( $Path, 1 );
-		$Parts = explode ( "/", $Path );
-		$Parent = 1;
-		$index = 0;
-		$CurrentPath = "";
-		$NodesCreated = 0;
-
-		foreach ($Parts as $p)
-		{
-			if (isset ($Descriptions[$index]))
-				$Description = $Descriptions[$index];
-			else
-				$Description = "";
-			$CurrentPath .= "/{$p}";
-			$t = $this->pathId($CurrentPath);
-			if (! $t)
-			{
-				$IID = $this->add($p, $Description, $Parent);
-				$Parent = $IID;
-				$NodesCreated++;
-			}
-			else
-			{
-				$Parent = $t;
-			}
-
-			$index += 1;
-		}
-
-		return (int)$NodesCreated;
+	    $r = $this->getRecord ( "ID=?", $ID );
+	    if ($r)
+	        return $r ['Description'];
+	    else
+	        return null;
 	}
 
 	/**
-	 * Edits an entity, changing title and/or description
+	 * Edits an entity, changing title and/or description. Maintains Id.
 	 *
 	 * @param integer $ID
 	 * @param string $NewTitle
@@ -322,28 +351,6 @@ abstract class BaseRbac extends JModel
 	}
 
 	/**
-	 * Returns path of a node
-	 *
-	 * @param integer $ID
-	 * @return string path
-	 */
-	function path($ID)
-	{
-		$res = $this->{$this->type ()}->pathConditional ( "ID=?", $ID );
-		$out = null;
-		if (is_array ( $res ))
-			foreach ( $res as $r )
-				if ($r ['ID'] == 1)
-					$out = '/';
-				else
-					$out .= "/" . $r ['Title'];
-		if (strlen ( $out ) > 1)
-			return substr ( $out, 1 );
-		else
-			return $out;
-	}
-
-	/**
 	 * Returns parent of a node
 	 *
 	 * @param integer $ID
@@ -384,12 +391,13 @@ abstract class BaseRbac extends JModel
 		return (int)$res;
 	}
 
-
 	/**
-	 * Assigns a role to a permission (or vice-versa)
+	 * Assigns a role to a permission (or vice-verse)
 	 *
-	 * @param mixed $Role: accepts Id, Title and Path
-	 * @param mixed $Permission: accepts Id, Title and Path
+	 * @param mixed $Role
+	 *         Id, Title and Path
+	 * @param mixed $Permission
+	 *         Id, Title and Path
 	 * @return boolean inserted or existing
 	 *
 	 * @todo: Check for valid permissions/roles
@@ -421,11 +429,14 @@ abstract class BaseRbac extends JModel
 	        (RoleID,PermissionID,AssignmentDate)
 	        VALUES (?,?,?)", $RoleID, $PermissionID, Jf::time()) >= 1;
 	}
+
 	/**
 	 * Unassigns a role-permission relation
 	 *
-	 * @param mixed $Role: accepts Id, Title and Path
-	 * @param mixed $Permission: accepts Id, Title and Path
+	 * @param mixed $Role
+	 *         Id, Title and Path
+	 * @param mixed $Permission:
+	 *         Id, Title and Path
 	 * @return boolean
 	 */
 	function unassign($Role, $Permission)
@@ -505,31 +516,33 @@ class RbacManager extends JModel
         $this->Roles = new RoleManager ();
         $this->Permissions = new PermissionManager ();
     }
+
     /**
      *
      * @var \Jf\PermissionManager
      */
     public $Permissions;
+
     /**
      *
      * @var \Jf\RoleManager
      */
     public $Roles;
+
     /**
      *
      * @var \Jf\RbacUserManager
      */
     public $Users;
 
-
     /**
      * Assign a role to a permission.
      * Alias for what's in the base class
      *
      * @param string|integer $Role
-     *        	path or string title or integer id
+     *        	Id, Title or Path
      * @param string|integer $Permission
-     *        	path or string title or integer id
+     *        	Id, Title or Path
      * @return boolean
      */
     function assign($Role, $Permission)
@@ -610,19 +623,19 @@ class RbacManager extends JModel
             ) $LastPart",
             $UserID, $PermissionID );
 
-            return $Res [0] ['Result'] >= 1;
-            }
+        return $Res [0] ['Result'] >= 1;
+    }
 
-            /**
-            * Enforce a permission on a user
-            *
-            * @param string|integer $Permission
-            *        	path or title or ID of permission
-            *
-            * @param integer $UserID
-            *
-            * @throws RbacUserNotProvidedException
-	 */
+    /**
+    * Enforce a permission on a user
+    *
+    * @param string|integer $Permission
+    *        	path or title or ID of permission
+    *
+    * @param integer $UserID
+    *
+    * @throws RbacUserNotProvidedException
+    */
 	function enforce($Permission, $UserID = null)
 	{
 	if ($UserID === null)
@@ -683,16 +696,19 @@ class PermissionManager extends BaseRbac
 	 * @var FullNestedSet
 	 */
 	protected $permissions;
+
 	protected function type()
 	{
 		return "permissions";
 	}
+
 	function __construct()
 	{
 		$this->permissions = new FullNestedSet ( $this->tablePrefix () . "permissions", "ID", "Lft", "Rght" );
 	}
+
 	/**
-	 * Remove a permission from system
+	 * Remove permissions from system
 	 *
 	 * @param integer $ID
 	 *        	permission id
@@ -713,6 +729,7 @@ class PermissionManager extends BaseRbac
 	 * Unassignes all roles of this permission, and returns their number
 	 *
 	 * @param integer $ID
+	 *      Permission Id
 	 * @return integer
 	 */
 	function unassignRoles($ID)
@@ -780,10 +797,12 @@ class RoleManager extends BaseRbac
 	 * @var FullNestedSet
 	 */
 	protected $roles = null;
+
 	protected function type()
 	{
 		return "roles";
 	}
+
 	function __construct()
 	{
 		$this->type = "roles";
@@ -791,7 +810,7 @@ class RoleManager extends BaseRbac
 	}
 
 	/**
-	 * Remove a role from system
+	 * Remove roles from system
 	 *
 	 * @param integer $ID
 	 *        	role id
@@ -808,6 +827,7 @@ class RoleManager extends BaseRbac
 		else
 			return $this->roles->deleteSubtreeConditional ( "ID=?", $ID );
 	}
+
 	/**
 	 * Unassigns all permissions belonging to a role
 	 *
@@ -821,6 +841,7 @@ class RoleManager extends BaseRbac
 			RoleID=? ", $ID );
 		return $r;
 	}
+
 	/**
 	 * Unassign all users that have a certain role
 	 *
@@ -872,6 +893,7 @@ class RoleManager extends BaseRbac
 					", $Role, $Role, $Permission );
 		return $Res [0] ['Result'] >= 1;
 	}
+
 	/**
 	 * Returns all permissions assigned to a role
 	 *
@@ -959,16 +981,17 @@ class RbacUserManager extends JModel
 			TUR.UserID=? AND TR.ID=?", $UserID, $RoleID );
 		return $R !== null;
 	}
+
 	/**
 	 * Assigns a role to a user
 	 *
-	 * @param integer|string $Role
-	 *        	id or path or title
+	 * @param mixed $Role
+	 *        	Id, Path or Title
 	 * @param integer $UserID
 	 *        	UserID (use 0 for guest)
 	 *
 	 * @throws RbacUserNotProvidedException
-	 * @return inserted or existing
+	 * @return boolean inserted or existing
 	 */
 	function assign($Role, $UserID = null)
 	{
@@ -991,10 +1014,11 @@ class RbacUserManager extends JModel
 				", $UserID, $RoleID, Jf::time () );
 		return $res >= 1;
 	}
+
 	/**
 	 * Unassigns a role from a user
 	 *
-	 * @param integer $Role
+	 * @param mixed $Role
 	 *        	Id, Title, Path
 	 * @param integer $UserID
 	 *        	UserID (use 0 for guest)
@@ -1044,6 +1068,7 @@ class RbacUserManager extends JModel
 			(`TRel`.RoleID=`TR`.ID)
 			WHERE TRel.UserID=?", $UserID );
 	}
+
 	/**
 	 * Return count of roles for a user
 	 *
