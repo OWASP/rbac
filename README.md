@@ -72,7 +72,7 @@ We welcome all contributions that will help make PHP-RBAC even better tomorrow t
 **How You Can Help:**
 
 * Report Bugs, Enhancement Requests or Documentation errors using our [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
-* [Choose a Bug](https://github.com/OWASP/rbac/issues?state=open) to work on and submit a Pull Request
+* [Choose a Bug](https://github.com/OWASP/rbac/issues?state=open) to work on and submit a [Pull Request](https://help.github.com/articles/using-pull-requests)
 * Make helpful suggestions and contributions to the [Documentation](http://phprbac.net/docs_contents.php) using our [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
 * Spread the word about PHP-RBAC by:
     * Creating Tutorials
