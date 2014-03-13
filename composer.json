@@ -6,7 +6,7 @@
         "rbac",
         "owasp",
         "security"
-    ]
+    ],
 	"homepage" : "http://phprbac.net/",
     "license" : "CC-BY-SA-3.0",
     "authors" : [{
@@ -34,4 +34,10 @@
 			"PhpRbac" : "PhpRbac/src"
 		}
 	}
+	
+	"extra": {
+        "branch-alias": {
+            "dev-master": "2.0.0"
+        }
+    }
 }
