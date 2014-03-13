@@ -29,15 +29,15 @@
 		}
 	],
 	
-	"autoload" : {
+	"autoload" : [{
 		"psr-0" : {
 			"PhpRbac" : "PhpRbac/src"
 		}
-	}
+	}],
 	
-	"extra": {
+	"extra": [{
         "branch-alias": {
             "dev-master": "2.0.0"
         }
-    }
+    }]
 }
