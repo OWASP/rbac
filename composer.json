@@ -23,7 +23,7 @@
 	],
 	"repositories" : [{
 			"type" : "vcs",
-			"url" : "https://github.com/OWASP/rbac"
+			"url" : "https://github.com/OWASP/rbac.git"
 		}
 	],
 	"minimum-stability" : "dev"
