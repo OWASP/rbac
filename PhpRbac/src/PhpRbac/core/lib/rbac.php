@@ -221,7 +221,8 @@ abstract class BaseRbac extends JModel
 	/**
 	 * Returns ID belonging to a title, and the first one on that
 	 *
-	 * @param unknown_type $Title
+	 * @param string $Title
+	 * @return integer Id of specified Title
 	 */
 	public function titleId($Title)
 	{
@@ -315,6 +316,7 @@ abstract class BaseRbac extends JModel
 	/**
 	 * Returns children of an entity
 	 *
+	 * @param integer $ID
 	 * @return array
 	 *
 	 */
@@ -367,7 +369,7 @@ abstract class BaseRbac extends JModel
 	 * Keep in mind that this will not touch relations
 	 *
 	 * @param boolean $Ensure
-	 *        	must be true to work, otherwise error
+	 *        	must be true to work, otherwise an \Exception is thrown
 	 * @throws \Exception
 	 * @return integer number of deleted entries
 	 *
@@ -470,8 +472,8 @@ abstract class BaseRbac extends JModel
 	 * mostly used for testing
 	 *
 	 * @param boolean $Ensure
-	 *        	must set or throws error
-	 * @return number of deleted relations
+	 *        	must be set to true or throws an \Exception
+	 * @return number of deleted assignments
 	 */
 	function resetAssignments($Ensure = false)
 	{
@@ -742,10 +744,10 @@ class PermissionManager extends BaseRbac
 	/**
 	 * Returns all roles assigned to a permission
 	 *
-	 * @param integer $Permission
-	 *        	ID
+	 * @param mixed $Permission
+	 *        	Id, Title, Path
 	 * @param boolean $OnlyIDs
-	 *        	if true, result would be a 1D array of IDs
+	 *        	if true, result will be a 1D array of IDs
 	 * @return Array 2D or 1D or null
 	 */
 	function roles($Permission, $OnlyIDs = true)
@@ -1070,12 +1072,12 @@ class RbacUserManager extends JModel
 	}
 
 	/**
-	 * Return count of roles for a user
+	 * Return count of roles assigned to a user
 	 *
 	 * @param integer $UserID
 	 *
 	 * @throws RbacUserNotProvidedException
-	 * @return integer
+	 * @return integer Count of Roles assigned to a User
 	 */
 	function roleCount($UserID = null)
 	{
@@ -1091,7 +1093,7 @@ class RbacUserManager extends JModel
 	 * mostly used for testing
 	 *
 	 * @param boolean $Ensure
-	 *        	must set or throws error
+	 *        	must set to true or throws an Exception
 	 * @return number of deleted relations
 	 */
 	function resetAssignments($Ensure = false)
