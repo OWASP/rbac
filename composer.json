@@ -1,43 +1,30 @@
 {
 	"name" : "owasp/phprbac",
 	"type" : "library",
-    "description" : "PHP-RBAC is the de-facto authorization library for PHP. It provides developers with NIST Level 2 Standard Role Based Access Control and more, in the fastest implementation yet.",
-    "keywords" : [
-        "rbac",
-        "owasp",
-        "security"
-    ],
+	"description" : "PHP-RBAC is the de-facto authorization library for PHP. It provides developers with NIST Level 2 Standard Role Based Access Control and more, in the fastest implementation yet.",
+	"keywords" : [
+		"rbac",
+		"owasp",
+		"security"
+	],
 	"homepage" : "http://phprbac.net/",
-    "license" : "CC-BY-SA-3.0",
-    "authors" : [{
-            "name" : "AbiusX",
-            "email" : "me@abiusx.com/",
-            "homepage" : "http://abiusx.com/",
-            "role" : "Lead Developer"
-        }, {
-            "name" : "Jesse Burns",
-            "email" : "jesse.burns@alliancecms.com",
-            "homepage" : "http://www.jbwebware.com",
-            "role" : "Developer"
-        }
-    ],
-	
-	
+	"license" : "CC-BY-SA-3.0",
+	"authors" : [{
+			"name" : "AbiusX",
+			"email" : "me@abiusx.com/",
+			"homepage" : "http://abiusx.com/",
+			"role" : "Lead Developer"
+		}, {
+			"name" : "Jesse Burns",
+			"email" : "jesse.burns@alliancecms.com",
+			"homepage" : "http://www.jbwebware.com",
+			"role" : "Developer"
+		}
+	],
 	"repositories" : [{
 			"type" : "vcs",
 			"url" : "https://github.com/OWASP/rbac"
 		}
 	],
-	
-	"autoload" : [{
-		"psr-0" : {
-			"PhpRbac" : "PhpRbac/src"
-		}
-	}],
-	
-	"extra": [{
-        "branch-alias": {
-            "dev-master": "2.0.0"
-        }
-    }]
+	"minimum-stability" : "dev"
 }
