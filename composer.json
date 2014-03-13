@@ -21,10 +21,15 @@
 			"role" : "Developer"
 		}
 	],
-	"repositories" : [{
-			"type" : "vcs",
-			"url" : "https://github.com/OWASP/rbac.git"
+	"autoload" : {
+		"psr-0" : {
+			"PhpRbac" : "PhpRbac/src"
 		}
-	],
-	"minimum-stability" : "dev"
+	},
+	"repositories" : [{
+			"type" : "git",
+			"url" : "https://github.com/OWASP/rbac.git",
+			"name" : "OWASP/rbac"
+		}
+	]
 }
