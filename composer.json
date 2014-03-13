@@ -27,9 +27,8 @@
 		}
 	},
 	"repositories" : [{
-			"type" : "vcs",
-			"url" : "https://github.com/OWASP/rbac.git",
-			"name" : "OWASP/rbac"
-		}
-	]
+            "type" : "vcs",
+            "url" : "https://github.com/OWASP/rbac.git"
+        }
+    ]
 }
