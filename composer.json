@@ -1,5 +1,5 @@
 {
-	"name" : "owasp/phprbac",
+	"name" : "jburns131/phprbac",
 	"repositories" : [{
 			"type" : "vcs",
 			"url" : "https://github.com/OWASP/rbac"
