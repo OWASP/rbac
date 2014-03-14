@@ -22,6 +22,8 @@ For more great resources see the [NIST RBAC Group Page](http://csrc.nist.gov/gro
 
 ##Installation
 
+You can now use [Composer](https://getcomposer.org/) to install the PHP-RBAC code base.
+
 For Installation Instructions please refer to the "[Getting Started](http://phprbac.net/docs_getting_started.php)" section of our [Documentation](http://phprbac.net/docs_contents.php).
 
 ##Usage##
