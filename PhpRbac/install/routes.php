@@ -16,8 +16,8 @@ $routes = array(
     ),
 
     array(
-        'request' => '/phprbac/start',
-        'action' => 'phpRbacStart',
+        'request' => '/library/start',
+        'action' => 'libraryStart',
     ),
 
     array(

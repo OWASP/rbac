@@ -12,9 +12,9 @@ class InstallController
         return $content;
     }
 
-    public function phpRbacStart()
+    public function libraryStart()
     {
-        $content = new Template(dirname(dirname(dirname(__FILE__))) . '/views/start_phprbac_install.tpl.php');
+        $content = new Template(dirname(dirname(dirname(__FILE__))) . '/views/start_library_install.tpl.php');
 
         return $content;
     }
@@ -35,14 +35,14 @@ class InstallController
         //exit;
         //*/
 
-        if ($_POST['component'] === 'core') {
-            header('Location: phprbac/start');
+        if ($_POST['component'] === 'library') {
+            header('Location: library/start');
             exit;
         } elseif ($_POST['component'] === 'tests') {
             header('Location: tests/start');
             exit;
         } else {
-            throw \Exception('This is not a valid choice');
+            throw new \Exception('Error 404: Page not found!');
         }
     }
 

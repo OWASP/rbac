@@ -10,7 +10,11 @@ $match = Route::matchURI();
 $controller = new $match['controller'];
 $action = $match['action'];
 
-$content = $controller->$action();
+try {
+    $content = $controller->$action();
+} catch (Exception $e) {
+    $content = $e->getMessage();
+}
 
 $tpl = new Template();
 

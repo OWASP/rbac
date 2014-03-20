@@ -1,4 +1,4 @@
-<h1>PHP-RBAC Installer</h1>
+<h1>PHP-RBAC: Installation Wizard</h1>
 
 <h2>Choose a component to install.</h2>
 
@@ -11,13 +11,13 @@
             <select id="component" name="component">
 
                     <?php if ($dbAdapter == 'Core'): ?>
-                        <option value="core" selected="selected">PHP-RBAC - Core</option>
+                        <option value="library" selected="selected">PHP-RBAC - Library</option>
                     <?php else: ?>
-                        <option value="core">PHP-RBAC - Core</option>
+                        <option value="library">PHP-RBAC - Library</option>
                     <?php endif; ?>
 
                     <?php if ($dbAdapter == 'MySQLi'): ?>
-                        <option value="core" selected="selected">PHP-RBAC - Unit Tests</option>
+                        <option value="tests" selected="selected">PHP-RBAC - Unit Tests</option>
                     <?php else: ?>
                         <option value="tests">PHP-RBAC - Unit Tests</option>
                     <?php endif; ?>
