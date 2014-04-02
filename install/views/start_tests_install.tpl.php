@@ -85,7 +85,7 @@ if (isset($_GET['errorsExist'])) {
     <fieldset>
 
         <div class="pure-control-group">
-            <label for="dbAdapter">Database Adapter:</label>
+            <label for="dbAdapter">Adapter:</label>
             <select id="dbAdapter" name="dbAdapter">
 
                     <?php if ($dbAdapter == 'MySQL'): ?>
@@ -110,7 +110,7 @@ if (isset($_GET['errorsExist'])) {
         </div>
 
         <div class="pure-control-group">
-            <label for="dbHost">Database Host Name/IP:</label>
+            <label for="dbHost">Host Name/IP:</label>
             <input id="dbHost" type="text" name="dbHost" value="<?php echo $dbHost; ?>" required />
         </div>
 
@@ -140,7 +140,7 @@ if (isset($_GET['errorsExist'])) {
         </div>
 
         <div class="pure-controls">
-            <button type="submit" name="submit" class="pure-button pure-button-primary">Submit</button>
+            <button type="submit" name="submit" value="tests" class="pure-button pure-button-primary">Submit</button>
         </div>
 
     </fieldset>

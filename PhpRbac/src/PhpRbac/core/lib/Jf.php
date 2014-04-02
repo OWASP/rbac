@@ -71,6 +71,19 @@ class Jf
 		if (count ( $args ) == 1)
 		{
 			$result = self::$Db->query ( $Query );
+
+			/*
+			echo '<br />$Query is: ' . $Query . '<br />';
+			//exit;
+			//*/
+
+			/*
+			echo '<br /><pre>$result: ';
+			echo var_dump($result);
+			echo '</pre><br />';
+			//exit;
+			//*/
+
 			if ($result===false)
 				return null;
 			$res=$result->fetchAll ( PDO::FETCH_ASSOC );
@@ -84,12 +97,27 @@ class Jf
 			{
 				return false;
 			}
+
+			/*
+			echo '<br /><pre>$stmt: ';
+			echo var_dump($stmt);
+			echo '</pre><br />';
+			//exit;
+			//*/
+
 			array_shift ( $args ); // remove $Query from args
 			$i = 0;
 			foreach ( $args as &$v )
 				$stmt->bindValue ( ++ $i, $v );
 
 			$success=$stmt->execute ();
+
+			/*
+			echo '<br /><pre>$success: ';
+			echo var_dump($success);
+			echo '</pre><br />';
+			//exit;
+			//*/
 
 			$type = substr ( trim ( strtoupper ( $Query ) ), 0, 6 );
 			if ($type == "INSERT")
@@ -132,6 +160,7 @@ class Jf
 		if (count ( $args ) == 1)
 		{
 			$result = self::$Db->query ( $Query );
+
 			if ($result===true)
 				return true;
 			if ($result && $result->num_rows)
@@ -145,8 +174,13 @@ class Jf
 		}
 		else
 		{
-			if (! $preparedStatement = self::$Db->prepare ( $Query ))
+			if (! $preparedStatement = self::$Db->prepare ( $Query )) {
+			    /*
 				trigger_error ( "Unable to prepare statement: {$Query}, reason: ".self::$Db->error );
+			    exit;
+			    //*/
+				throw new \Exception("Exception: Unable to prepare statement: {$Query}, reason: ".self::$Db->error);
+			}
 			array_shift ( $args ); // remove $Query from args
 			$a = array ();
 			foreach ( $args as $k => &$v )

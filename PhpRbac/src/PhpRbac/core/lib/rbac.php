@@ -492,6 +492,18 @@ abstract class BaseRbac extends JModel
 		else
 			throw new \Exception ( "Rbac can not reset table on this type of database: {$Adapter}" );
 		$this->assign ( $this->rootId(), $this->rootId());
+
+		//*
+		echo '<br /><pre>$res1: ';
+		echo var_dump($res);
+		echo '</pre><br />';
+		//exit;
+		//*/
+
+		if (is_null($res))
+		    return false;
+
+		echo 'True';
 		return $res;
 	}
 }
@@ -667,10 +679,41 @@ class RbacManager extends JModel
         }
 
         $res = true;
-        $res = $res and $this->Roles->resetAssignments ( true );
+        $res = $res && $this->Roles->resetAssignments ( true );
+
+		//*
+		echo '<br /><pre>$res2: ';
+		echo var_dump($res);
+		echo '</pre><br />';
+		//exit;
+		//*/
+
         $res = $res and $this->Roles->reset ( true );
+
+		/*
+		echo '<br /><pre>$res: ';
+		echo var_dump($res);
+		echo '</pre><br />';
+		//exit;
+		//*/
+
 		$res = $res and $this->Permissions->reset ( true );
+
+		/*
+		echo '<br /><pre>$res: ';
+		echo var_dump($res);
+		echo '</pre><br />';
+		//exit;
+		//*/
+
 		$res = $res and $this->Users->resetAssignments ( true );
+
+		/*
+		echo '<br /><pre>$res: ';
+		echo var_dump($res);
+		echo '</pre><br />';
+		//exit;
+		//*/
 
 		return $res;
 	}

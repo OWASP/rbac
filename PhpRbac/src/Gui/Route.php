@@ -2,7 +2,7 @@
 /**
  * Original Class from: Simple Route - http://www.phpclasses.org/package/7405-PHP-Parse-and-build-URIs-from-routing-rules.html
  */
-namespace Install;
+namespace Gui;
 
 class Route
 {
@@ -15,10 +15,43 @@ class Route
         self::$routes[] = $routes;
     }
 
-    public static function setRoutes()
+    /*
+    public static function getBaseUrl()
     {
-        require_once '/../../routes.php';
-        self::add($routes);
+        if (isset($_SERVER['HTTPS'])) {
+            $baseUrl = 'https://' . $_SERVER['SERVER_NAME'];
+        } else {
+            $baseUrl = 'http://' . $_SERVER['SERVER_NAME'];
+        }
+
+        $phpSelf = ltrim($_SERVER['PHP_SELF'], '/');
+
+        $phpSelf = explode('/', $phpSelf);
+
+        foreach ($phpSelf as $val) {
+            if ($val !== 'PhpRbac') {
+                $baseUrl .= '/' . $val;
+            } else {
+                $baseUrl .= '/' . $val;
+                break;
+            }
+        }
+
+        return $baseUrl;
+    }
+    //*/
+
+    public static function setRoutes($locationDir = null)
+    {
+        if ($locationDir !== null) {
+            require_once $locationDir;
+            self::add($routes);
+
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public static function matchURI($uri = null)
@@ -43,7 +76,7 @@ class Route
                     if (is_array($v) and $k !== 'param') {
                         self::$param = self::$routes[$i]['param'];
                         $v['request'] = preg_replace_callback("/\<(?<key>[0-9a-z_]+)\>/",
-                            'Install\Route::_replacer',
+                            'Gui\Route::_replacer',
                             str_replace(")",")?", $v['request'])
                         );
                         $rulleTemp = array_merge((array)self::$routes[$i], (array)$v);

@@ -2,7 +2,7 @@
 
 <h2>Choose a component to install.</h2>
 
-<form class="pure-form pure-form-aligned" name="start_installation" action="install.php/hub" method="POST">
+<form class="pure-form pure-form-aligned" name="start_installation" action="<?php echo $baseUrl; ?>/hub" method="POST">
 
     <fieldset>
 

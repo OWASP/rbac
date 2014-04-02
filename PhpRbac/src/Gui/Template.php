@@ -1,6 +1,6 @@
 <?php
 
-namespace Install;
+namespace Gui;
 
 class Template {
     private $vars; /// Holds all the template variables

@@ -11,11 +11,6 @@ $routes = array(
     ),
 
     array(
-        'request' => '/success',
-        'action' => 'success',
-    ),
-
-    array(
         'request' => '/library/start',
         'action' => 'libraryStart',
     ),
@@ -25,6 +20,41 @@ $routes = array(
         'action' => 'testsStart',
     ),
 
+    array(
+        'request' => '/submit',
+        'action' => 'submitDbInfo',
+    ),
+
+    /*
+    array(
+        'request' => '/library/process',
+        'action' => 'installLibrary',
+    ),
+
+    array(
+        'request' => '/tests/process',
+        'action' => 'installTests',
+    ),
+    //*/
+
+    array(
+        'request' => '/library/success',
+        'action' => 'successLibrary',
+    ),
+
+    array(
+        'request' => '/tests/success',
+        'action' => 'successTests',
+    ),
+
+    /*
+    array(
+        'request' => '/test/stuff(/<errors>)',
+        'action' => 'testStuff',
+    ),
+    //*/
+
+    /*
     array(
         'request' => '/<lang>/catalog(/<test>)', // key url section
         'action' => 'catalog_review'
@@ -39,16 +69,15 @@ $routes = array(
         'request' => '/<lang>/<action>', // key url section
         'action' => 'page' // default action in url
     ),
-
-    //'namespace' => 'Install',
+    //*/
 
     'controller' => 'Install\\InstallController',
 
     'param' => array(
-        'lang' => '[a-z]{2}', // regex url parametr <lang>
+        //'lang' => '[a-z]{2}', // regex url parametr <lang>
         'action' => '(contact|servise|go|[a-z]{5,25})', // regex url parametr <action>
-        'page' => '[a-z0-9_\-]{5,25}',
-        'pagination' => '[0-9]{1,2}',
-        'year' => '[0-9]{4}'
+        //'page' => '[a-z0-9_\-]{5,25}',
+        //'pagination' => '[0-9]{1,2}',
+        //'year' => '[0-9]{4}'
     )
 );
