@@ -488,7 +488,44 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 
         return call_user_func_array("Jf::sql",$Arguments);
     }
+    /**
+     * Moves a node with all its descendants to a new parent
+     * @param integer $ID
+     * @param integer $NewParentID
+     * @return number of nodes moved
+     */
+    function move($ID, $NewParentID)
+    {
+        $record=$this->getRecord("ID=?",$ID);
+        $parentRecord=$this->getRecord("ID=?",$NewParentID);
+        
+
+        $size=$record[$this->right()]-$record[$this->left()]+1; //size of nodes to be moved
+        $distance=$parentRecord[$this->right()]-$record[$this->left()]; //distance between current location and next location
+        //widen up parent this much
+
+        //move node and its children temporary out of computation
+        Jf::sql("UPDATE {$this->table()} SET {$this->left()}=-{$this->left()}, {$this->right()}=-{$this->right()} WHERE {$this->left()} BETWEEN ? AND ?"
+             ,$record[$this->left()],$record[$this->right()]);
+
+        //shift everything after parent's right, making room
+        Jf::sql("UPDATE {$this->table()} SET {$this->left()}={$this->left()}+? WHERE {$this->left()}>?"
+            ,$size,$parentRecord[$this->right()]);
+        Jf::sql("UPDATE {$this->table()} SET {$this->right()}={$this->right()}+? WHERE {$this->right()}>=?"
+            ,$size,$parentRecord[$this->right()]);
+
+        //move node inside parent
+         $count=Jf::sql("UPDATE {$this->table()} SET {$this->left()}=-{$this->left()}+?, {$this->right()}=-{$this->right()}+? WHERE {$this->left()} BETWEEN ? AND ?"
+            ,$distance,$distance,-$record[$this->right()],-$record[$this->left()]);
+
+        //fill empty previous node location
+         Jf::sql("UPDATE {$this->table()} SET {$this->left()}={$this->left()}-? WHERE {$this->left()}>=?"
+            ,$size,$record[$this->right()]);
+         Jf::sql("UPDATE {$this->table()} SET {$this->right()}={$this->right()}-? WHERE {$this->right()}>?"
+            ,$size,$record[$this->right()]);
+        return $count;
+
+    }
 
 }
 
-?>
