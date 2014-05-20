@@ -499,7 +499,8 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $this->lock();
         $record=$this->getRecord("ID=?",$ID);
         $parentRecord=$this->getRecord("ID=?",$NewParentID);
-        
+        //TODO: make more efficint by only creating space in parent, and not changing the entire table
+        //TODO: reduce number of queries (don't fetch records first)
 
         $size=$record[$this->right()]-$record[$this->left()]+1; //size of nodes to be moved
         $distance=$parentRecord[$this->right()]-$record[$this->left()]; //distance between current location and next location
