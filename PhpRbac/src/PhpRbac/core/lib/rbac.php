@@ -320,33 +320,7 @@ abstract class BaseRbac extends JModel
 	 */
 	function move($ID, $NewParentID)
 	{
-		$record=$this->getRecord("ID=?",$ID);
-		$parentRecord=$this->getRecord("ID=?",$NewParentID);
-		
-		$size=$record['Rght']-$record['Lft']+1; //size of nodes to be moved
-		$distance=$parentRecord['Rght']-$record['Lft']; //distance between current location and next location
-		//widen up parent this much
-
-		//move node and its children temporary out of computation
-		Jf::sql("UPDATE {$this->tablePrefix()}{$this->type()} SET Lft=-Lft, Rght=-Rght WHERE Lft BETWEEN ? AND ?"
-			 ,$record['Lft'],$record['Rght']);
-
-		//shift everything after parent's right, making room
-		Jf::sql("UPDATE {$this->tablePrefix()}{$this->type()} SET Lft=Lft+? WHERE Lft>?"
-			,$size,$parentRecord['Rght']);
-		Jf::sql("UPDATE {$this->tablePrefix()}{$this->type()} SET Rght=Rght+? WHERE Rght>=?"
-			,$size,$parentRecord['Rght']);
-
-		//move node inside parent
-		 $count=Jf::sql("UPDATE {$this->tablePrefix()}{$this->type()} SET Lft=-Lft+?, Rght=-Rght+? WHERE Lft BETWEEN ? AND ?"
-			,$distance,$distance,-$record['Rght'],-$record['Lft']);
-
-		//fill empty previous node location
-		 Jf::sql("UPDATE {$this->tablePrefix()}{$this->type()} SET Lft=Lft-? WHERE Lft>=?"
-			,$size,$record['Rght']);
-		 Jf::sql("UPDATE {$this->tablePrefix()}{$this->type()} SET Rght=Rght-? WHERE Rght>?"
-			,$size,$record['Rght']);
-		return $count;
+		return $this->{$this->type()}->move($ID,$NewParentID);
 
 	}
 	/**
