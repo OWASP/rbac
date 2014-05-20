@@ -496,6 +496,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      */
     function move($ID, $NewParentID)
     {
+        $this->lock();
         $record=$this->getRecord("ID=?",$ID);
         $parentRecord=$this->getRecord("ID=?",$NewParentID);
         
@@ -523,6 +524,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             ,$size,$record[$this->right()]);
          Jf::sql("UPDATE {$this->table()} SET {$this->right()}={$this->right()}-? WHERE {$this->right()}>?"
             ,$size,$record[$this->right()]);
+        $this->unlock();
         return $count;
 
     }
