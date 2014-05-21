@@ -312,17 +312,7 @@ abstract class BaseRbac extends JModel
 
         return $this->{$this->type ()}->editData ( $Data, "ID=?", $ID ) == 1;
 	}
-	/**
-	 * Moves a node with all its descendants to a new parent
-	 * @param integer $ID
-	 * @param integer $NewParentID
-	 * @return number of nodes moved
-	 */
-	function move($ID, $NewParentID)
-	{
-		return $this->{$this->type()}->move($ID,$NewParentID);
 
-	}
 	/**
 	 * Returns children of an entity
 	 *
