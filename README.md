@@ -6,10 +6,21 @@ PHP-RBAC is the de-facto authorization library for PHP. It provides developers w
 
 ##Repo Branches Explained
 
-* **master**: Contains most current stable release. Should not be touched until a new release is merged from 'dev/v2.x/staging'
-* **dev/v2.x/staging**: Staging area. All changes for next release will be merged here once a change's feature set is complete, including Unit Tests
-* **dev/v2.x/[topic_branch]**: Topic branches used to work on new changes, new features, bug fixes and Unit Tests
-* **PhpRbac/Classic**: PHP-RBAC v1.0
+* **master**:
+
+    Contains most current stable release. Shouldn't be touched until new release is merged from 'dev/v2.x/staging'
+    
+* **dev/v2.x/staging**:
+
+    Staging area. All changes for next release will be merged here once a change's feature set is complete, including Unit Tests
+
+* **dev/v2.x/[topic_branch]**:
+
+    Topic branches used to work on new changes, new features, bug fixes and Unit Tests
+
+* **PhpRbac/Classic**:
+
+    Contains PHP-RBAC v1.0 code base
 
 ##Contact Us
 
