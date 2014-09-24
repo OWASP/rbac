@@ -41,6 +41,26 @@ class InstallController
         return $content;
     }
 
+    public function hub()
+    {
+        /*
+         echo '<br /><pre>$_POST: ';
+         echo print_r($_POST);
+         echo '</pre><br />';
+         exit;
+         //*/
+
+        if ($_POST['component'] === 'library') {
+            header('Location: ' . $this->baseUrl . '/library/start');
+            exit;
+        } elseif ($_POST['component'] === 'tests') {
+            header('Location: ' . $this->baseUrl . '/tests/start');
+            exit;
+        } else {
+            throw new \Exception('Error 404: Page not found!');
+        }
+    }
+
     public function libraryStart()
     {
         $content = new Template(dirname(dirname(dirname(__FILE__))) . '/views/start_library_install.tpl.php');
@@ -273,25 +293,4 @@ $pass="' . $configVars['dbPassword'] . '";
         exit;
         //return true;
     }
-
-    public function hub()
-    {
-        /*
-        echo '<br /><pre>$_POST: ';
-        echo print_r($_POST);
-        echo '</pre><br />';
-        exit;
-        //*/
-
-        if ($_POST['component'] === 'library') {
-            header('Location: ' . $this->baseUrl . '/library/start');
-            exit;
-        } elseif ($_POST['component'] === 'tests') {
-            header('Location: ' . $this->baseUrl . '/tests/start');
-            exit;
-        } else {
-            throw new \Exception('Error 404: Page not found!');
-        }
-    }
-
 }
